@@ -1,0 +1,10 @@
+{
+  "id": "escalation_confirmation",
+  "intent": "transfer_request",
+  "triggers": ["__pre_transfer__", "yes connect me", "transfer me now"],
+  "response_text": "Connecting you now — please hold for just a moment while I brief the specialist.",
+  "fact_ids": ["FACT-DEMO-SPECIALIST-001"],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "transfer"
+}

@@ -1,0 +1,58 @@
+{
+  "$comment": "Blueprint 5 — apply via scripts/setup/sync-retell-config.ts. Strings in ${VAR} are replaced from .env at sync time.",
+  "agent_name": "GVR Travel Savings Specialist",
+  "version_label": "v1.0",
+  "response_engine": {
+    "type": "retell-llm",
+    "llm_id": "${RETELL_LLM_ID}"
+  },
+  "voice_id": "TBD_elevenlabs_clone",
+  "voice_model": "eleven_turbo_v2_5",
+  "fallback_voice_ids": ["cartesia-Cimo"],
+  "voice_temperature": 1.0,
+  "voice_speed": 1.0,
+  "volume": 1.0,
+  "responsiveness": 0.85,
+  "interruption_sensitivity": 0.7,
+  "enable_backchannel": true,
+  "backchannel_frequency": 0.6,
+  "backchannel_words": ["mm-hm", "right", "got it"],
+  "reminder_trigger_ms": 8000,
+  "reminder_max_count": 1,
+  "ambient_sound": null,
+  "language": "en-US",
+  "webhook_url": "${NEXT_PUBLIC_APP_URL}/api/retell/events",
+  "webhook_events": [
+    "call_started",
+    "call_ended",
+    "call_analyzed",
+    "transfer_started",
+    "transfer_bridged",
+    "transfer_cancelled",
+    "transfer_ended",
+    "transfer_failed"
+  ],
+  "webhook_timeout_ms": 10000,
+  "boosted_keywords": [
+    "GVR",
+    "Arrivia",
+    "travel savings dollars",
+    "Government Vacation Rewards",
+    "loyalty"
+  ],
+  "data_storage_setting": "everything_except_pii",
+  "data_storage_retention_days": 90,
+  "pronunciation_dictionary": [
+    { "word": "GVR", "alphabet": "ipa", "phoneme": "dʒiː viː ɑːr" },
+    { "word": "Arrivia", "alphabet": "ipa", "phoneme": "əˈriː vi ə" }
+  ],
+  "end_call_after_silence_ms": 30000,
+  "max_call_duration_ms": 1800000,
+  "stt_mode": "accurate",
+  "vocab_specialization": "general",
+  "allow_user_dtmf": false,
+  "denoising_mode": "noise-cancellation",
+  "pii_config": { "enabled": true },
+  "begin_message_delay_ms": 400,
+  "ring_duration_ms": 20000
+}

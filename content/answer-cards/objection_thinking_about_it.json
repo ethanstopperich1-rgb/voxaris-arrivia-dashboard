@@ -1,0 +1,10 @@
+{
+  "id": "objection_thinking_about_it",
+  "intent": "objection",
+  "triggers": ["I need to think", "let me think about it", "I'll get back to you", "not sure"],
+  "response_text": "Of course. If it'd help, a GVR specialist can email or text you a summary so you have it in writing — want me to set that up before we hang up?",
+  "fact_ids": ["FACT-DEMO-SPECIALIST-001"],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "offer_transfer"
+}

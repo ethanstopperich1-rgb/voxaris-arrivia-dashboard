@@ -1,0 +1,7 @@
+{
+  "event": "transfer_bridged",
+  "call": {
+    "call_id": "call_test_001",
+    "transfer_destination_number": "+15555550300"
+  }
+}

@@ -1,0 +1,12 @@
+[
+  {"id":"bi-001","scenario":"caller interrupts mid-greeting","caller_offset_ms":300},
+  {"id":"bi-002","scenario":"caller interrupts during education explainer at 2s","caller_offset_ms":2000},
+  {"id":"bi-003","scenario":"caller starts speaking right as agent starts response","caller_offset_ms":50},
+  {"id":"bi-004","scenario":"caller interrupts deflection","caller_offset_ms":1000},
+  {"id":"bi-005","scenario":"caller interrupts whisper-context line","caller_offset_ms":500},
+  {"id":"bi-006","scenario":"caller speaks over backchannel","caller_offset_ms":150},
+  {"id":"bi-007","scenario":"caller asks clarifying question mid-pricing-deflection","caller_offset_ms":400},
+  {"id":"bi-008","scenario":"caller hangs up mid-response","caller_offset_ms":1500},
+  {"id":"bi-009","scenario":"long caller utterance overlapping agent","caller_offset_ms":600},
+  {"id":"bi-010","scenario":"caller cough triggers false barge-in","caller_offset_ms":200}
+]

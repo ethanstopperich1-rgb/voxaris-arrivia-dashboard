@@ -1,0 +1,10 @@
+{
+  "id": "booking_transfer",
+  "intent": "transfer_request",
+  "triggers": ["book a trip", "make a reservation", "change my booking", "cancel my reservation"],
+  "response_text": "Bookings, changes, and cancellations are handled by a GVR specialist — let me get you connected.",
+  "fact_ids": ["FACT-BOOKING-TRANSFER-001", "FACT-CANCELLATION-TRANSFER-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": false,
+  "next_action": "transfer"
+}

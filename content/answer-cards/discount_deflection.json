@@ -1,0 +1,10 @@
+{
+  "id": "discount_deflection",
+  "intent": "pricing",
+  "triggers": ["how much do I save", "what discount", "percent off", "save up to", "average savings"],
+  "response_text": "Discount levels depend on the destination, dates, and what's available — a specialist can pull live numbers for the trip you're considering. Want me to connect you?",
+  "fact_ids": ["FACT-DISCOUNT-PERCENTAGE-TRANSFER-ONLY-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": true,
+  "next_action": "offer_transfer"
+}

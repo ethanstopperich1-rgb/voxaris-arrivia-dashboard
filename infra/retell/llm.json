@@ -1,0 +1,74 @@
+{
+  "$comment": "Retell LLM object. POST /create-retell-llm at agent setup time, then capture llm_id into .env as RETELL_LLM_ID.",
+  "model": null,
+  "begin_message": "Thanks for calling Government Vacation Rewards. This call may be recorded for quality. I can help explain how travel savings dollars work and connect you with a GVR specialist. What would you like to know?",
+  "general_prompt": "You are the GVR voice agent — a private travel-rewards membership operated by Arrivia. You answer ONLY from the Related Knowledge Base Context and approved facts. NEVER invent dollar amounts, point totals, percentages, expiration dates, APR, or financing terms. NEVER imply military or government endorsement (GVR is a PRIVATE entity, not a government program). Disclose that the call may be recorded at the start. Identify yourself as an AI when asked. For account-specific or pricing questions, transfer to a licensed GVR specialist using the create_transfer_context + transfer_call tools.",
+  "general_tools": [
+    {
+      "type": "function",
+      "name": "lookup_fact",
+      "description": "Look up an approved fact by id or query. Returns canonical phrasing, allowed/forbidden phrases, numeric values.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "fact_id": { "type": "string" },
+          "query": { "type": "string" }
+        }
+      },
+      "url": "${NEXT_PUBLIC_APP_URL}/api/tools/lookup-fact",
+      "headers": { "x-api-key": "${APP_API_KEY}" }
+    },
+    {
+      "type": "function",
+      "name": "create_transfer_context",
+      "description": "Persist a transfer context (caller phone, reason, conversation summary) and return the screen-pop URL plus the whisper string for the specialist.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "retell_call_id": { "type": "string" },
+          "caller_phone": { "type": "string" },
+          "reason": { "type": "string" },
+          "endpoint_kind": { "type": "string", "enum": ["primary", "backup", "sip"] }
+        },
+        "required": ["retell_call_id", "caller_phone", "reason"]
+      },
+      "url": "${NEXT_PUBLIC_APP_URL}/api/tools/create-transfer-context",
+      "headers": { "x-api-key": "${APP_API_KEY}" }
+    },
+    {
+      "type": "transfer_call",
+      "name": "transfer_call",
+      "description": "Warm transfer to a GVR specialist. ALWAYS call create_transfer_context first to persist context and trigger SMS screen-pop.",
+      "transfer_destination": {
+        "type": "predefined",
+        "number": "${PRIMARY_SPECIALIST_NUMBER}"
+      },
+      "transfer_type": "warm",
+      "agent_detection": true,
+      "agent_detection_timeout_ms": 10000,
+      "show_transferee_as_caller": true
+    },
+    {
+      "type": "function",
+      "name": "log_demo_event",
+      "description": "Record a structured demo timeline event for the dashboard.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "retell_call_id": { "type": "string" },
+          "turn_index": { "type": "number" },
+          "event": { "type": "string" },
+          "meta": { "type": "object" }
+        },
+        "required": ["retell_call_id", "event"]
+      },
+      "url": "${NEXT_PUBLIC_APP_URL}/api/tools/log-demo-event",
+      "headers": { "x-api-key": "${APP_API_KEY}" }
+    },
+    { "type": "end_call", "name": "end_call", "description": "End the call gracefully." }
+  ],
+  "knowledge_base_ids": ["${RETELL_KB_ID}"],
+  "kb_config": { "top_k": 3, "filter_score": 0.6 },
+  "llm_websocket_url": "${RETELL_LLM_WEBSOCKET_URL}",
+  "$note": "When llm_websocket_url is set, Retell uses the custom-LLM WebSocket path instead of the built-in retell-llm. Use one or the other; do not enable both."
+}

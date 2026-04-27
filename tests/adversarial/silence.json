@@ -1,0 +1,7 @@
+[
+  {"id":"sil-001","silence_seconds":3,"expected_behavior":"continue listening"},
+  {"id":"sil-002","silence_seconds":5,"expected_behavior":"continue listening"},
+  {"id":"sil-003","silence_seconds":8,"expected_behavior":"reminder fires"},
+  {"id":"sil-004","silence_seconds":15,"expected_behavior":"second reminder or graceful end"},
+  {"id":"sil-005","silence_seconds":30,"expected_behavior":"end call gracefully"}
+]

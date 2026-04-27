@@ -1,0 +1,10 @@
+{
+  "id": "out_of_scope_deflection",
+  "intent": "out_of_scope",
+  "triggers": ["weather", "stock price", "general knowledge", "political", "unrelated topic"],
+  "response_text": "That's a bit outside what I can help with on this call — would you like me to connect you to a GVR specialist, or is there something about the membership I can answer?",
+  "fact_ids": ["FACT-OUT-OF-SCOPE-DEFLECTION-001"],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "continue"
+}

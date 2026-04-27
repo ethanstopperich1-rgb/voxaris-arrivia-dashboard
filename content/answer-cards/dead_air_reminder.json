@@ -1,0 +1,10 @@
+{
+  "id": "dead_air_reminder",
+  "intent": "small_talk",
+  "triggers": ["__dead_air__"],
+  "response_text": "Are you still there? I can wait, or I can connect you with a GVR specialist if that's easier.",
+  "fact_ids": ["FACT-DEMO-SPECIALIST-001"],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "continue"
+}

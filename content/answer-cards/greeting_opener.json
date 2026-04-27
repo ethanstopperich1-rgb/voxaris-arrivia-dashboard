@@ -1,0 +1,10 @@
+{
+  "id": "greeting_opener",
+  "intent": "greeting",
+  "triggers": ["hello", "hi", "hey", "good morning", "good afternoon", "yes"],
+  "response_text": "Thanks for calling Government Vacation Rewards. This call may be recorded for quality. I can help explain how travel savings dollars work and connect you with a GVR specialist. What would you like to know?",
+  "fact_ids": ["FACT-GREETING-OPENER-001", "FACT-TCPA-RECORDING-001", "FACT-AI-DISCLOSURE-001"],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "continue"
+}

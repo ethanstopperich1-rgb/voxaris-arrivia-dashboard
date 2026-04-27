@@ -1,0 +1,10 @@
+{
+  "id": "safety_unsafe_topics",
+  "intent": "safety",
+  "triggers": ["legal advice", "tax advice", "investment advice", "is this a scam"],
+  "response_text": "I can't give legal, tax, or financial advice — for those questions you'll want to speak with a qualified professional. I can answer questions about how the membership works or connect you to a specialist.",
+  "fact_ids": ["FACT-SAFETY-UNSAFE-TOPICS-001"],
+  "risk_class": "legal_financial",
+  "requires_verifier": true,
+  "next_action": "continue"
+}

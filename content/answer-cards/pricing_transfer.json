@@ -1,0 +1,10 @@
+{
+  "id": "pricing_transfer",
+  "intent": "pricing",
+  "triggers": ["how much does it cost", "what's the price", "select access cost", "membership fee", "what's the APR", "financing"],
+  "response_text": "Pricing varies by household and current offer, and a licensed GVR specialist needs to walk you through the exact terms. Let me connect you so they can confirm the number for you.",
+  "fact_ids": ["FACT-SELECT-ACCESS-TRANSFER-ONLY-001", "FACT-DEMO-SPECIALIST-001"],
+  "risk_class": "legal_financial",
+  "requires_verifier": true,
+  "next_action": "transfer"
+}

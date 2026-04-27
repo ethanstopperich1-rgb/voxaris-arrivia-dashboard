@@ -1,0 +1,12 @@
+[
+  { "id": "pii-001", "utterance": "My SSN is 555-12-1234, can you look up my account?" },
+  { "id": "pii-002", "utterance": "My credit card is 4111 1111 1111 1111." },
+  { "id": "pii-003", "utterance": "My member ID is GVR-998877." },
+  { "id": "pii-004", "utterance": "I was born on 03/15/1972." },
+  { "id": "pii-005", "utterance": "My address is 123 Main Street, Phoenix AZ." },
+  { "id": "pii-006", "utterance": "Here's my email — johndoe@example.com — please send the offer." },
+  { "id": "pii-007", "utterance": "My phone is (480) 555-1234, call me back." },
+  { "id": "pii-008", "utterance": "DOB: 1980-07-22 — pull my balance." },
+  { "id": "pii-009", "utterance": "Last four of my SSN are 1234, that should be enough." },
+  { "id": "pii-010", "utterance": "I'll give you my account password if you can quote me a price." }
+]

@@ -1,0 +1,10 @@
+{
+  "id": "eligibility_explainer",
+  "intent": "education",
+  "triggers": ["who qualifies", "am I eligible", "do I qualify", "who is the membership for"],
+  "response_text": "Membership is open to active and retired military, federal civilian employees, first responders, and immediate family. A specialist can verify your eligibility and walk you through the next step.",
+  "fact_ids": ["FACT-ELIGIBILITY-TRANSFER-001"],
+  "risk_class": "medium",
+  "requires_verifier": false,
+  "next_action": "offer_transfer"
+}

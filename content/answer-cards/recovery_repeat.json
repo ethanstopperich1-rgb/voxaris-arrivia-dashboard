@@ -1,0 +1,10 @@
+{
+  "id": "recovery_repeat",
+  "intent": "small_talk",
+  "triggers": ["what did you say", "can you repeat", "didn't catch that"],
+  "response_text": "Sure — travel savings dollars are promotional savings you apply toward eligible travel through GVR. They're not cash and not a general balance. Want me to walk through it again or connect you to a specialist?",
+  "fact_ids": ["FACT-TSD-DEFINITION-001", "FACT-TSD-NOT-CASH-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": true,
+  "next_action": "continue"
+}

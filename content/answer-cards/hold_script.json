@@ -1,0 +1,10 @@
+{
+  "id": "hold_script",
+  "intent": "small_talk",
+  "triggers": ["hold on", "one moment", "let me check"],
+  "response_text": "Of course — take your time. I'm here when you're ready.",
+  "fact_ids": [],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "continue"
+}

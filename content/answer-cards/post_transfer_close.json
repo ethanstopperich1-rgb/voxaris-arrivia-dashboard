@@ -1,0 +1,10 @@
+{
+  "id": "post_transfer_close",
+  "intent": "transfer_request",
+  "triggers": ["__post_transfer__"],
+  "response_text": "Thanks for holding. I have a GVR specialist on the line and gave them the context.",
+  "fact_ids": ["FACT-DEMO-SPECIALIST-001"],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "end_call"
+}

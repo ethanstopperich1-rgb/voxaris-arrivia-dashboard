@@ -1,0 +1,10 @@
+{
+  "id": "compare_to_credit_card_points",
+  "intent": "education",
+  "triggers": ["like credit card points", "same as airline miles", "compare to other rewards"],
+  "response_text": "It's a different model — credit card points are usually cash-back or transferable miles. Travel savings dollars are promotional savings tied to GVR offers and apply only to eligible travel through the member portal. A specialist can compare options based on what you're looking for.",
+  "fact_ids": ["FACT-COMPARE-CASH-BACK-001", "FACT-TSD-DEFINITION-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": true,
+  "next_action": "offer_transfer"
+}

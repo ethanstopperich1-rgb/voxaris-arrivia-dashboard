@@ -1,0 +1,10 @@
+{
+  "id": "closing_graceful",
+  "intent": "end_call",
+  "triggers": ["that's all", "goodbye", "bye", "thank you that's it", "thanks for your help"],
+  "response_text": "Thanks for calling Government Vacation Rewards — have a good one.",
+  "fact_ids": ["FACT-CLOSING-GRACEFUL-001"],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "end_call"
+}

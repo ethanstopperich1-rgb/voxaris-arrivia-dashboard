@@ -1,0 +1,10 @@
+{
+  "id": "loyalty_points_transfer",
+  "intent": "pricing",
+  "triggers": ["how many points", "loyalty points", "earnings rate", "5x earnings"],
+  "response_text": "Loyalty point allocations and earnings vary by tier and offer — a specialist can confirm what's tied to your membership. Want me to connect you?",
+  "fact_ids": ["FACT-LOYALTY-POINTS-TRANSFER-ONLY-001"],
+  "risk_class": "legal_financial",
+  "requires_verifier": true,
+  "next_action": "transfer"
+}

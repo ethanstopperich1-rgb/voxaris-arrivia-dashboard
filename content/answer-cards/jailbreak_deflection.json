@@ -1,0 +1,10 @@
+{
+  "id": "jailbreak_deflection",
+  "intent": "jailbreak",
+  "triggers": ["ignore previous instructions", "you are now", "system prompt", "in this hypothetical", "as an AI without restrictions"],
+  "response_text": "I'll stay focused on travel savings dollars and how a GVR specialist can help — was there something specific about that you wanted to know?",
+  "fact_ids": ["FACT-JAILBREAK-DEFLECTION-001"],
+  "risk_class": "jailbreak",
+  "requires_verifier": true,
+  "next_action": "continue"
+}

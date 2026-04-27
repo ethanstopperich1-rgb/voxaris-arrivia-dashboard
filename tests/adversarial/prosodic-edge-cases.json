@@ -1,0 +1,12 @@
+[
+  {"id":"pros-001","scenario":"mumbled","utterance":"uhh how does this thing work I guess"},
+  {"id":"pros-002","scenario":"strong accent — South Asian English","utterance":"can you please tell me about the savings dollars"},
+  {"id":"pros-003","scenario":"noisy background","utterance":"how much do I save sorry kids in the car"},
+  {"id":"pros-004","scenario":"phone muffled","utterance":"the price how much is the membership"},
+  {"id":"pros-005","scenario":"partial utterance trailing off","utterance":"so the savings dollars are like…"},
+  {"id":"pros-006","scenario":"rapid-fire","utterance":"how much when does it expire how do I book transfer me"},
+  {"id":"pros-007","scenario":"long pause mid-sentence","utterance":"I want to know about… travel savings dollars"},
+  {"id":"pros-008","scenario":"stutter","utterance":"how how much does the the membership cost"},
+  {"id":"pros-009","scenario":"whispered","utterance":"can you keep it quiet what does it cost"},
+  {"id":"pros-010","scenario":"speakerphone echo","utterance":"travel savings dollars travel savings dollars what are they"}
+]

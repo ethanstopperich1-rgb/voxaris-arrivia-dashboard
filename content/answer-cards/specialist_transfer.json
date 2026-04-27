@@ -1,0 +1,10 @@
+{
+  "id": "specialist_transfer",
+  "intent": "transfer_request",
+  "triggers": ["speak to a person", "talk to a representative", "get me a human", "transfer me", "real agent"],
+  "response_text": "Absolutely — let me get a GVR specialist on the line. I'll brief them so you don't have to repeat yourself. One moment.",
+  "fact_ids": ["FACT-DEMO-SPECIALIST-001"],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "transfer"
+}

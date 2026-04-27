@@ -1,0 +1,10 @@
+{
+  "id": "refund_transfer",
+  "intent": "transfer_request",
+  "triggers": ["refund", "money back", "return my membership"],
+  "response_text": "Refund eligibility depends on your offer terms — a specialist can review what applies to your booking. Let me get one on the line.",
+  "fact_ids": ["FACT-REFUND-TRANSFER-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": false,
+  "next_action": "transfer"
+}

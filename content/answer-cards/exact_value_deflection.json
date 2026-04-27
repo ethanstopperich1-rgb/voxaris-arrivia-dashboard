@@ -1,0 +1,10 @@
+{
+  "id": "exact_value_deflection",
+  "intent": "pricing",
+  "triggers": ["how much", "what's the value", "exact dollar", "how many points do I have"],
+  "response_text": "I can't quote an exact dollar amount over the phone — a GVR specialist can confirm the specific value tied to your offer. Want me to connect you?",
+  "fact_ids": ["FACT-TSD-EXACT-VALUE-TRANSFER-ONLY-001", "FACT-DEMO-SPECIALIST-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": true,
+  "next_action": "transfer"
+}

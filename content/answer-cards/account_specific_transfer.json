@@ -1,0 +1,10 @@
+{
+  "id": "account_specific_transfer",
+  "intent": "account_specific",
+  "triggers": ["my balance", "my points", "my account", "look up my", "check my member id"],
+  "response_text": "Anything tied to your specific account needs to go through a verified specialist for your security — let me connect you.",
+  "fact_ids": ["FACT-ACCOUNT-SPECIFIC-TRANSFER-001"],
+  "risk_class": "pii",
+  "requires_verifier": false,
+  "next_action": "transfer"
+}

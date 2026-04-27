@@ -1,0 +1,10 @@
+{
+  "id": "pii_offered",
+  "intent": "pii",
+  "triggers": ["my SSN is", "social security", "credit card number", "my date of birth", "member id"],
+  "response_text": "Please don't share that with me — for your security, account details should only be shared with a verified specialist. Let me get one on the line.",
+  "fact_ids": ["FACT-ACCOUNT-SPECIFIC-TRANSFER-001"],
+  "risk_class": "pii",
+  "requires_verifier": false,
+  "next_action": "transfer"
+}

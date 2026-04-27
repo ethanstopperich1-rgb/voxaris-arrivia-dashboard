@@ -1,0 +1,25 @@
+{
+  "$comment": "Retell native KB sources. We disable the native KB by default (ENABLE_RETELL_NATIVE_KB=false) and rely on the custom RAG pipeline. This file documents what would be uploaded if you flip the flag.",
+  "sources": [
+    {
+      "title": "GVR product disclosure (TSD definition + non-cash)",
+      "type": "text",
+      "text": "Travel savings dollars are promotional savings that may be applied toward eligible travel through GVR. They are not redeemable as cash and are not a general cash balance. Eligible travel categories and bookings are made through the GVR member portal."
+    },
+    {
+      "title": "GVR brand disclosure",
+      "type": "text",
+      "text": "Government Vacation Rewards is a private travel-rewards membership operated by Arrivia, headquartered in Scottsdale, Arizona. It is not a government agency and is not endorsed by any branch of the U.S. military."
+    },
+    {
+      "title": "TCPA recording disclosure",
+      "type": "text",
+      "text": "Just so you know, this call may be recorded for quality and training purposes."
+    },
+    {
+      "title": "Specialist transfer policy",
+      "type": "text",
+      "text": "Pricing, point allocations, exact dollar values, expiration dates, account-specific lookup, booking, cancellation, and refund questions must be handled by a licensed GVR specialist."
+    }
+  ]
+}

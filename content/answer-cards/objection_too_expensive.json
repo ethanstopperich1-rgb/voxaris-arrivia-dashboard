@@ -1,0 +1,10 @@
+{
+  "id": "objection_too_expensive",
+  "intent": "objection",
+  "triggers": ["too expensive", "can't afford", "costs too much", "not worth it"],
+  "response_text": "Totally fair to want to know what you're getting for your money. I can't quote pricing over the phone — that's something a specialist walks you through with the exact terms tied to your offer. Want me to connect you so you can decide with all the details?",
+  "fact_ids": ["FACT-SELECT-ACCESS-TRANSFER-ONLY-001", "FACT-DEMO-SPECIALIST-001"],
+  "risk_class": "legal_financial",
+  "requires_verifier": true,
+  "next_action": "transfer"
+}

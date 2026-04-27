@@ -1,0 +1,10 @@
+{
+  "id": "transfer_failed_callback",
+  "intent": "transfer_request",
+  "triggers": ["__transfer_failed__"],
+  "response_text": "I'm having trouble connecting cleanly — can I have a GVR specialist call you back at this number in the next five minutes?",
+  "fact_ids": ["FACT-DEMO-SPECIALIST-001"],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "end_call"
+}

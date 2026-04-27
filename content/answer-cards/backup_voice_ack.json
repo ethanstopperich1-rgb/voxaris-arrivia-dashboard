@@ -1,0 +1,10 @@
+{
+  "id": "backup_voice_ack",
+  "intent": "small_talk",
+  "triggers": ["__backup_voice__"],
+  "response_text": "Thanks for bearing with me — let me continue.",
+  "fact_ids": [],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "continue"
+}

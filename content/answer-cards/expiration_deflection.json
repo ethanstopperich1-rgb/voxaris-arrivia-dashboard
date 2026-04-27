@@ -1,0 +1,10 @@
+{
+  "id": "expiration_deflection",
+  "intent": "pricing",
+  "triggers": ["when does it expire", "expiration date", "how long do I have"],
+  "response_text": "Expiration varies by offer — a specialist can confirm the exact dates tied to your account. Want me to connect you?",
+  "fact_ids": ["FACT-TSD-EXPIRATION-TRANSFER-ONLY-001", "FACT-DEMO-SPECIALIST-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": true,
+  "next_action": "transfer"
+}

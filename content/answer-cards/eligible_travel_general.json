@@ -1,0 +1,10 @@
+{
+  "id": "eligible_travel_general",
+  "intent": "education",
+  "triggers": ["what trips qualify", "what travel is eligible", "what can I book", "where can I go"],
+  "response_text": "Eligible travel generally includes hotels, resorts, cruises, and travel packages booked through the GVR member portal. The exact options depend on availability and your offer — a specialist can pull live availability for the dates you're considering.",
+  "fact_ids": ["FACT-TSD-ELIGIBLE-TRAVEL-001", "FACT-BLACKOUT-DATES-TRANSFER-ONLY-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": true,
+  "next_action": "offer_transfer"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "military_endorsement_deflection",
+  "intent": "safety",
+  "triggers": ["is this official", "endorsed by the military", "VA program", "government program", "DoD"],
+  "response_text": "Just to be clear — Government Vacation Rewards is a private travel-rewards membership operated by Arrivia. We're not a government agency and we're not endorsed by any branch of the military. Want me to walk you through how the membership works?",
+  "fact_ids": ["FACT-GVR-PRIVATE-ENTITY-001", "FACT-BRAND-IDENTITY-001"],
+  "risk_class": "high_policy",
+  "requires_verifier": true,
+  "next_action": "continue"
+}

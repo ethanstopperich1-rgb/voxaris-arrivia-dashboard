@@ -1,0 +1,22 @@
+{
+  "id": "travel_savings_dollars_not_cash",
+  "intent": "education",
+  "triggers": [
+    "same as cash",
+    "is it cash",
+    "like a gift card",
+    "cash toward any trip",
+    "can I use it anywhere",
+    "withdraw the savings"
+  ],
+  "response_text": "Good question — they're not the same as cash. Travel savings dollars apply to eligible travel you book through GVR, not toward any trip anywhere. Think of them as savings tied to specific offers, not a general balance. A specialist can show you exactly which trips your savings would apply to.",
+  "fact_ids": [
+    "FACT-TSD-NOT-CASH-001",
+    "FACT-TSD-ELIGIBLE-TRAVEL-001",
+    "FACT-COMPARE-GIFT-CARD-001",
+    "FACT-COMPARE-CASH-BACK-001"
+  ],
+  "risk_class": "high_fact",
+  "requires_verifier": true,
+  "next_action": "offer_transfer"
+}

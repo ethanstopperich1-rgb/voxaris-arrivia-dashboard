@@ -1,0 +1,22 @@
+{
+  "id": "travel_savings_dollars_core",
+  "intent": "education",
+  "triggers": [
+    "what are travel savings dollars",
+    "what is tsd",
+    "how does this work",
+    "explain travel savings",
+    "what do I get",
+    "how does the membership work"
+  ],
+  "response_text": "Travel savings dollars are promotional savings you can apply toward eligible travel through GVR — things like hotels, resorts, cruises, and packages. They're not cash and not a general balance — they're savings tied to offers you book through the member portal. A GVR specialist can walk you through the specifics tied to your offer. Want me to connect you?",
+  "fact_ids": [
+    "FACT-TSD-DEFINITION-001",
+    "FACT-TSD-NOT-CASH-001",
+    "FACT-TSD-ELIGIBLE-TRAVEL-001",
+    "FACT-DEMO-SPECIALIST-001"
+  ],
+  "risk_class": "high_fact",
+  "requires_verifier": true,
+  "next_action": "offer_transfer"
+}
