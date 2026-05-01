@@ -12,3 +12,5 @@ coverage
 .tsbuildinfo
 *.tsbuildinfo
 .turbo
+.playwright-mcp/
+package-lock.json

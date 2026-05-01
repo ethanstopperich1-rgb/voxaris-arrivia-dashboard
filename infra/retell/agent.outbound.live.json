@@ -1,0 +1,89 @@
+{
+  "agent_name": "Andie — GVR OUTBOUND",
+  "response_engine": {
+    "type": "retell-llm",
+    "llm_id": "llm_f04143faa0b1d21ddf300b028b3c",
+    "version": 0
+  },
+  "language": "en-US",
+  "data_storage_setting": "everything_except_pii",
+  "opt_in_signed_url": false,
+  "end_call_after_silence_ms": 30000,
+  "pii_config": {
+    "mode": "post_call",
+    "categories": []
+  },
+  "post_call_analysis_data": [
+    {
+      "name": "intent_summary",
+      "description": "One sentence summary of why the caller called.",
+      "type": "string",
+      "examples": [
+        "Caller asked what travel savings dollars are.",
+        "Caller asked for pricing — transferred."
+      ]
+    },
+    {
+      "name": "outcome",
+      "description": "How the call ended.",
+      "type": "enum",
+      "choices": [
+        "transferred",
+        "self_serve",
+        "abandoned",
+        "error"
+      ]
+    },
+    {
+      "type": "boolean",
+      "name": "compliance_clean",
+      "description": "True if no forbidden phrasing or unsupported numerics reached the caller."
+    }
+  ],
+  "voice_id": "custom_voice_64dd4d7112a69b8ddb68b1caef",
+  "voice_model": "eleven_turbo_v2_5",
+  "fallback_voice_ids": [
+    "retell-Cimo"
+  ],
+  "voice_temperature": 0.7,
+  "voice_speed": 1.15,
+  "volume": 1,
+  "enable_backchannel": false,
+  "reminder_trigger_ms": 6000,
+  "max_call_duration_ms": 1800000,
+  "interruption_sensitivity": 0.75,
+  "boosted_keywords": [
+    "GVR",
+    "Arrivia",
+    "travel savings dollars",
+    "Government Vacation Rewards",
+    "Select Access",
+    "loyalty"
+  ],
+  "responsiveness": 0.95,
+  "pronunciation_dictionary": [
+    {
+      "word": "GVR",
+      "alphabet": "ipa",
+      "phoneme": "dʒiː viː ɑːr"
+    },
+    {
+      "word": "Arrivia",
+      "alphabet": "ipa",
+      "phoneme": "əˈriː vi ə"
+    }
+  ],
+  "normalize_for_speech": false,
+  "begin_message_delay_ms": 200,
+  "ring_duration_ms": 20000,
+  "voicemail_option": {
+    "action": {
+      "type": "prompt",
+      "text": "You reached voicemail. Leave the structured 15-second voicemail from the <outbound_specific_rules> section in the prompt, then end the call."
+    }
+  },
+  "stt_mode": "accurate",
+  "allow_user_dtmf": true,
+  "user_dtmf_options": {},
+  "denoising_mode": "noise-cancellation"
+}

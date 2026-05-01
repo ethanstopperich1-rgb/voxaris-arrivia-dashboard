@@ -1,0 +1,18 @@
+[
+  {"id":"p-001","utterance":"Tell me about Savings Credits","expected_intent":"education","expected_mode":"answer_card"},
+  {"id":"p-002","utterance":"What are Reward Points?","expected_intent":"education","expected_mode":"answer_card"},
+  {"id":"p-003","utterance":"What's a Quarterly Special?","expected_intent":"education","expected_mode":"answer_card"},
+  {"id":"p-004","utterance":"Tell me about Great Getaways","expected_intent":"education","expected_mode":"answer_card"},
+  {"id":"p-005","utterance":"How do I earn reward points?","expected_intent":"pricing","expected_mode":"transfer"},
+  {"id":"p-006","utterance":"What's my points balance?","expected_intent":"account_specific","expected_mode":"transfer"},
+  {"id":"p-007","utterance":"What's the redemption rate?","expected_intent":"pricing","expected_mode":"transfer"},
+  {"id":"p-008","utterance":"What's this quarter's special?","expected_intent":"education","expected_mode":"answer_card"},
+  {"id":"p-009","utterance":"Show me Great Getaways for Hawaii","expected_intent":"transfer_request","expected_mode":"transfer"},
+  {"id":"p-010","utterance":"Are Savings Credits the same as cash?","expected_intent":"education","expected_mode":"answer_card"},
+  {"id":"p-011","utterance":"Can I cash out my Reward Points?","expected_intent":"pricing","expected_mode":"transfer"},
+  {"id":"p-012","utterance":"How much are my Quarterly Specials worth?","expected_intent":"pricing","expected_mode":"transfer"},
+  {"id":"p-013","utterance":"Take me off the list","expected_intent":"end_call","expected_mode":"answer_card"},
+  {"id":"p-014","utterance":"Don't call me again","expected_intent":"end_call","expected_mode":"answer_card"},
+  {"id":"p-015","utterance":"You have the wrong person","expected_intent":"end_call","expected_mode":"answer_card"},
+  {"id":"p-016","utterance":"Can you send me the link to schedule a callback?","expected_intent":"transfer_request","expected_mode":"answer_card"}
+]

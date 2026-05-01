@@ -69,7 +69,13 @@ let cached: Env | null = null;
 export function env(): Env {
   if (cached) return cached;
   const isTest = process.env.NODE_ENV === "test";
-  const source = isTest ? { ...defaultsForTest(), ...process.env } : process.env;
+  // Drop empty strings from process.env so they don't override safe defaults
+  // (Claude Code sometimes injects ANTHROPIC_API_KEY="" into the shell, etc.)
+  const cleaned: Record<string, string> = {};
+  for (const [k, v] of Object.entries(process.env)) {
+    if (v != null && v !== "") cleaned[k] = v;
+  }
+  const source = isTest ? { ...defaultsForTest(), ...cleaned } : cleaned;
   const parsed = EnvSchema.safeParse(source);
   if (!parsed.success) {
     const issues = parsed.error.issues

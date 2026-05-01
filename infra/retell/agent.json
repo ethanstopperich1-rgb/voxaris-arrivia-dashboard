@@ -1,25 +1,17 @@
 {
-  "$comment": "Blueprint 5 — apply via scripts/setup/sync-retell-config.ts. Strings in ${VAR} are replaced from .env at sync time.",
+  "$comment": "GVR agent config aligned to current Retell API (April 2026). Removed: voice_temperature/voice_speed/volume (deprecated), transfer_failed (not a valid webhook_event), version_label/data_storage_retention_days/reminder_max_count/backchannel_frequency/backchannel_words/ambient_sound/vocab_specialization/allow_user_dtmf/pii_config (not in current schema). end_call_after_silence_ms minimum is 10000ms — use 30000.",
   "agent_name": "GVR Travel Savings Specialist",
-  "version_label": "v1.0",
   "response_engine": {
     "type": "retell-llm",
     "llm_id": "${RETELL_LLM_ID}"
   },
-  "voice_id": "TBD_elevenlabs_clone",
+  "voice_id": "11labs-Adrian",
   "voice_model": "eleven_turbo_v2_5",
-  "fallback_voice_ids": ["cartesia-Cimo"],
-  "voice_temperature": 1.0,
-  "voice_speed": 1.0,
-  "volume": 1.0,
+  "fallback_voice_ids": ["retell-Cimo"],
   "responsiveness": 0.85,
   "interruption_sensitivity": 0.7,
   "enable_backchannel": true,
-  "backchannel_frequency": 0.6,
-  "backchannel_words": ["mm-hm", "right", "got it"],
   "reminder_trigger_ms": 8000,
-  "reminder_max_count": 1,
-  "ambient_sound": null,
   "language": "en-US",
   "webhook_url": "${NEXT_PUBLIC_APP_URL}/api/retell/events",
   "webhook_events": [
@@ -29,19 +21,17 @@
     "transfer_started",
     "transfer_bridged",
     "transfer_cancelled",
-    "transfer_ended",
-    "transfer_failed"
+    "transfer_ended"
   ],
-  "webhook_timeout_ms": 10000,
   "boosted_keywords": [
     "GVR",
     "Arrivia",
     "travel savings dollars",
     "Government Vacation Rewards",
+    "Select Access",
     "loyalty"
   ],
   "data_storage_setting": "everything_except_pii",
-  "data_storage_retention_days": 90,
   "pronunciation_dictionary": [
     { "word": "GVR", "alphabet": "ipa", "phoneme": "dʒiː viː ɑːr" },
     { "word": "Arrivia", "alphabet": "ipa", "phoneme": "əˈriː vi ə" }
@@ -49,10 +39,26 @@
   "end_call_after_silence_ms": 30000,
   "max_call_duration_ms": 1800000,
   "stt_mode": "accurate",
-  "vocab_specialization": "general",
-  "allow_user_dtmf": false,
   "denoising_mode": "noise-cancellation",
-  "pii_config": { "enabled": true },
   "begin_message_delay_ms": 400,
-  "ring_duration_ms": 20000
+  "ring_duration_ms": 20000,
+  "post_call_analysis_data": [
+    {
+      "type": "string",
+      "name": "intent_summary",
+      "description": "One sentence summary of why the caller called.",
+      "examples": ["Caller asked what travel savings dollars are.", "Caller asked for pricing — transferred."]
+    },
+    {
+      "type": "enum",
+      "name": "outcome",
+      "description": "How the call ended.",
+      "choices": ["transferred", "self_serve", "abandoned", "error"]
+    },
+    {
+      "type": "boolean",
+      "name": "compliance_clean",
+      "description": "True if no forbidden phrasing or unsupported numerics reached the caller."
+    }
+  ]
 }

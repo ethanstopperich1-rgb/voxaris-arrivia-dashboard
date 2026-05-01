@@ -59,7 +59,7 @@ export async function verifyDraft(input: {
       "verifier",
     );
     const text = res.content
-      .filter((c): c is { type: "text"; text: string } => c.type === "text")
+      .filter((c): c is Extract<typeof c, { type: "text" }> => c.type === "text")
       .map((c) => c.text)
       .join("");
     const json = extractJsonObject(text);

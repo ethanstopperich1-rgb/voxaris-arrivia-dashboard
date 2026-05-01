@@ -7,8 +7,11 @@ export type NumericClaim =
   | { kind: "date"; raw: string; index: number }
   | { kind: "duration"; raw: string; value: number; unit: string; index: number };
 
-const DOLLAR_RE = /\$\s?\d{1,3}(?:[,\d]{0,12})?(?:\.\d+)?/g;
-const PERCENT_RE = /\b\d+(?:\.\d+)?\s?(?:percent|%)\b/gi;
+// Match either "$3,499" / "$3499" OR a bare "3499 dollars" (after wordsToNumbers
+// expands "three thousand four hundred ninety-nine" into digits).
+const DOLLAR_RE = /(?:\$\s?\d{1,3}(?:[,\d]{0,12})?(?:\.\d+)?|\b\d{1,3}(?:[,\d]{0,12})?(?:\.\d+)?\s+dollars?\b)/gi;
+// Drop trailing \b — `%` is a non-word char so \b after it never fires
+const PERCENT_RE = /\b\d+(?:\.\d+)?\s?(?:percent|%)/gi;
 const POINTS_RE = /\b\d{1,3}(?:[,\d]{0,9})\s?points?\b/gi;
 const DATE_RE = /\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}\/\d{1,2}\/\d{2,4})\b/g;
 const DURATION_RE = /\b(\d+)\s?-?(year|yr|yrs|month|mo|day|days|week|weeks)\b/gi;

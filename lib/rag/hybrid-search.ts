@@ -29,27 +29,6 @@ export async function hybridSearch(opts: {
   const sb = supabaseAdmin();
   const embedding = await embedQuery(opts.query);
 
-  const [vecRes, ftsRes] = await Promise.allSettled([
-    withTimeout(
-      sb.rpc("match_kb_chunks", {
-        query_embedding: embedding,
-        match_count: topK,
-        brand_filter: brand,
-      }),
-      TIMEOUTS_MS.RAG_VECTOR,
-      "rag_vector",
-    ),
-    withTimeout(
-      sb.rpc("search_kb_chunks_fulltext", {
-        query_text: opts.query,
-        match_count: topK,
-        brand_filter: brand,
-      }),
-      TIMEOUTS_MS.RAG_BM25,
-      "rag_bm25",
-    ),
-  ]);
-
   type Row = {
     id: string;
     source_doc: string;
@@ -61,11 +40,37 @@ export async function hybridSearch(opts: {
     forbidden_extrapolations: string[];
     metadata: Record<string, unknown>;
   };
+  type RpcResult = { data: Row[] | null; error: { message: string } | null };
+
+  const [vecRes, ftsRes] = await Promise.allSettled([
+    withTimeout<RpcResult>(
+      Promise.resolve(
+        sb.rpc("match_kb_chunks", {
+          query_embedding: embedding,
+          match_count: topK,
+          brand_filter: brand,
+        }) as unknown as Promise<RpcResult>,
+      ),
+      TIMEOUTS_MS.RAG_VECTOR,
+      "rag_vector",
+    ),
+    withTimeout<RpcResult>(
+      Promise.resolve(
+        sb.rpc("search_kb_chunks_fulltext", {
+          query_text: opts.query,
+          match_count: topK,
+          brand_filter: brand,
+        }) as unknown as Promise<RpcResult>,
+      ),
+      TIMEOUTS_MS.RAG_BM25,
+      "rag_bm25",
+    ),
+  ]);
 
   const vec: Row[] =
-    vecRes.status === "fulfilled" && !vecRes.value.error ? (vecRes.value.data as Row[]) : [];
+    vecRes.status === "fulfilled" && !vecRes.value.error ? (vecRes.value.data ?? []) : [];
   const fts: Row[] =
-    ftsRes.status === "fulfilled" && !ftsRes.value.error ? (ftsRes.value.data as Row[]) : [];
+    ftsRes.status === "fulfilled" && !ftsRes.value.error ? (ftsRes.value.data ?? []) : [];
 
   const fused = new Map<string, RetrievedChunk>();
   vec.forEach((r, i) => {

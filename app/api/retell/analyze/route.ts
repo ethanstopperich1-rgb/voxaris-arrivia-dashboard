@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     messages: [{ role: "user", content: transcript }],
   });
   const text = res.content
-    .filter((c): c is { type: "text"; text: string } => c.type === "text")
+    .filter((c): c is Extract<typeof c, { type: "text" }> => c.type === "text")
     .map((c) => c.text)
     .join("");
   return NextResponse.json({ summary: text });
