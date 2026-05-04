@@ -34,7 +34,7 @@ export function AgentSwitcher({ active }: { active: "deedy" | "andie" }) {
   }
 
   return (
-    <div className="inline-flex w-full items-center gap-1 rounded-2xl border border-neutral-800 bg-neutral-950/80 p-1 sm:w-auto">
+    <div className="inline-flex w-full items-center gap-1 overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-950/80 p-1 sm:w-auto">
       {AGENTS.map((a) => {
         const isActive = a.slug === active;
         return (
@@ -70,15 +70,9 @@ export function AgentSwitcher({ active }: { active: "deedy" | "andie" }) {
             >
               {a.sublabel}
             </span>
-            {isActive && (
-              <span
-                aria-hidden
-                className={cn(
-                  "absolute inset-x-3 bottom-1 h-px bg-gradient-to-r",
-                  a.accent,
-                )}
-              />
-            )}
+            {/* Active state communicated via background + ring + colored
+                gradient label above. No underline (it kept escaping the
+                outer rounded container's bottom edge). */}
           </Link>
         );
       })}

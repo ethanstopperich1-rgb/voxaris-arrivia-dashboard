@@ -32,7 +32,9 @@ const POOL_SIZE = 100;
 const BATCH_SIZE = 20;
 const MAX_CONCURRENT_PER_AGENT = 20;
 const SCORE_REFRESH_HOURS = 24;
-const AGENTS = ["andie-gvr", "deedy-vba"] as const;
+// Deedy is INBOUND-ONLY (after-hours QR-scan booking agent — guests
+// dial her, she never dials them). Only Andie runs outbound campaigns.
+const AGENTS = ["andie-gvr"] as const;
 
 type QueueRow = {
   id: string;
