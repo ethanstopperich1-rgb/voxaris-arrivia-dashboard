@@ -14,3 +14,6 @@ coverage
 .turbo
 .playwright-mcp/
 package-lock.json
+.env*.local
+.env.local.bak.*
+Arrivia BYOB/

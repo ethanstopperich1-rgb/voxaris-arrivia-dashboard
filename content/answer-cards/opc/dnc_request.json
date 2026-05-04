@@ -1,0 +1,22 @@
+{
+  "id": "opc_dnc_request",
+  "intent": "end_call",
+  "scope": "opc",
+  "triggers": [
+    "stop",
+    "stop calling",
+    "do not call",
+    "do not contact me",
+    "remove me",
+    "take me off the list",
+    "unsubscribe",
+    "this is harassment",
+    "I'm reporting this",
+    "lawyer"
+  ],
+  "response_text": "Understood — I'll mark this number as do-not-contact for this offer. You will not be contacted about it again. Have a good day.",
+  "fact_ids": ["FACT-OPC-DNC-001"],
+  "risk_class": "legal_financial",
+  "requires_verifier": true,
+  "next_action": "end_dnc_and_log"
+}

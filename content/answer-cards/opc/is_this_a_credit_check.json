@@ -1,0 +1,17 @@
+{
+  "id": "opc_is_this_a_credit_check",
+  "intent": "objection",
+  "scope": "opc",
+  "triggers": [
+    "is this a credit check",
+    "are you checking my credit",
+    "credit pull",
+    "is this going on my credit",
+    "do I need to give you my card"
+  ],
+  "response_text": "No credit check on this call, and I do not take any card information. This is only a yes-or-no eligibility confirmation — do you and your attending partner, if applicable, have a major credit card in good standing? Just yes or no is all I need.",
+  "fact_ids": ["FACT-OPC-NO-CREDIT-CHECK-001", "FACT-OPC-QUAL-CREDIT-001", "FACT-OPC-PCI-001"],
+  "risk_class": "legal_financial",
+  "requires_verifier": true,
+  "next_action": "return_to_qualify_credit"
+}

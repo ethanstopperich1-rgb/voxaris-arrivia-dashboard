@@ -1,0 +1,18 @@
+{
+  "id": "opc_is_this_a_timeshare",
+  "intent": "discovery",
+  "scope": "opc",
+  "triggers": [
+    "is this a timeshare",
+    "is this a timeshare pitch",
+    "vacation ownership",
+    "what's the catch",
+    "what is the preview",
+    "what kind of tour"
+  ],
+  "response_text": "Yes — to be straight with you, the ninety-minute preview is a vacation ownership presentation. It's how the resort introduces what they offer. There is no purchase required to receive the ticket package — you just need to attend the full ninety minutes. Want to keep going, or would you rather skip it?",
+  "fact_ids": ["FACT-OPC-DISCLOSURE-TIMESHARE-001", "FACT-OPC-NO-PURCHASE-001", "FACT-OPC-TOUR-DURATION-001"],
+  "risk_class": "legal_financial",
+  "requires_verifier": true,
+  "next_action": "return_to_previous_node"
+}

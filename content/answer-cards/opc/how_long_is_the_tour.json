@@ -1,0 +1,17 @@
+{
+  "id": "opc_how_long_is_the_tour",
+  "intent": "discovery",
+  "scope": "opc",
+  "triggers": [
+    "how long",
+    "how long does it take",
+    "how long is the tour",
+    "duration",
+    "how much time"
+  ],
+  "response_text": "Ninety minutes total, and both decision-makers — you and your spouse or partner if you have one — need to attend in person.",
+  "fact_ids": ["FACT-OPC-TOUR-DURATION-001", "FACT-OPC-QUAL-PARTNER-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": false,
+  "next_action": "return_to_previous_node"
+}

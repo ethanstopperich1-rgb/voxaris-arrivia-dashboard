@@ -1,0 +1,18 @@
+{
+  "id": "opc_not_interested_polite",
+  "intent": "end_call",
+  "scope": "opc",
+  "triggers": [
+    "not interested",
+    "no thanks",
+    "don't want it",
+    "pass",
+    "I'll skip",
+    "maybe later"
+  ],
+  "response_text": "No problem at all — enjoy your stay at Westgate Lakes. If you change your mind, you can scan the code again any time.",
+  "fact_ids": [],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "end_polite_decline"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "opc_why_income_question",
+  "intent": "objection",
+  "scope": "opc",
+  "triggers": [
+    "why income",
+    "why are you asking my income",
+    "why does income matter",
+    "is this income based",
+    "do I have to tell you my income"
+  ],
+  "response_text": "Totally fair question. I'm not asking for an exact number — just a yes or no on whether combined household income is above seventy-five thousand. It's part of the eligibility guidelines for this specific ticket package, and if it's not a fit I'll let you know right away so we don't waste your time.",
+  "fact_ids": ["FACT-OPC-QUAL-INCOME-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": false,
+  "next_action": "return_to_qualify_income"
+}

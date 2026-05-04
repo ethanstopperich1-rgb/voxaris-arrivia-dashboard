@@ -50,6 +50,15 @@ const EnvSchema = z.object({
   SPECIALIST_EMAIL: z.string().email(),
   SPECIALIST_SCREEN_POP_BASE_URL: z.string().url().optional(),
 
+  // OPC pilot — Westgate welcome team handoff
+  // Optional so devs without a Twilio team number set don't break boot.
+  // The handoff module no-ops gracefully when this is empty.
+  WELCOME_TEAM_SMS_NUMBER: z
+    .string()
+    .refine((v) => v === "" || /^\+\d{10,15}$/.test(v), "must be E.164 phone number or empty")
+    .default(""),
+  WELCOME_TEAM_EMAIL: z.string().email().optional(),
+
   DEMO_MODE: bool.default("true"),
   ANSWER_CARD_ONLY_MODE: bool.default("false"),
   ALLOW_FULL_RAG: bool.default("true"),

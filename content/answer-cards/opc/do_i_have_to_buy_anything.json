@@ -1,0 +1,18 @@
+{
+  "id": "opc_do_i_have_to_buy_anything",
+  "intent": "objection",
+  "scope": "opc",
+  "triggers": [
+    "do I have to buy",
+    "do I have to purchase",
+    "is there a purchase required",
+    "what if I say no",
+    "what if I don't want to buy",
+    "no obligation"
+  ],
+  "response_text": "No purchase required. The ticket package is for attending the full ninety-minute preview — that's the only condition. If you decide it's not for you at the end, you still receive the package.",
+  "fact_ids": ["FACT-OPC-NO-PURCHASE-001", "FACT-OPC-TOUR-DURATION-001", "FACT-OPC-INCENTIVE-CONDITION-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": true,
+  "next_action": "return_to_previous_node"
+}

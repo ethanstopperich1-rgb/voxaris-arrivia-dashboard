@@ -1,0 +1,19 @@
+{
+  "id": "opc_human_callback_request",
+  "intent": "transfer_request",
+  "scope": "opc",
+  "triggers": [
+    "talk to a person",
+    "real person",
+    "human",
+    "agent",
+    "speak to someone",
+    "manager",
+    "representative"
+  ],
+  "response_text": "Of course — I'll have someone from the Westgate welcome team reach out to you shortly. What's the best number, and is it okay if they text or call?",
+  "fact_ids": ["FACT-OPC-CALLBACK-OFFER-001", "FACT-OPC-SMS-CONSENT-001"],
+  "risk_class": "low",
+  "requires_verifier": false,
+  "next_action": "capture_callback_consent_then_log"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "opc_am_i_being_recorded",
+  "intent": "discovery",
+  "scope": "opc",
+  "triggers": [
+    "am I being recorded",
+    "is this recorded",
+    "are you recording me",
+    "are you a real person",
+    "are you AI",
+    "are you a bot",
+    "are you human"
+  ],
+  "response_text": "Yes — I disclosed at the start, and I want to be clear: I am Andie, an AI assistant for Westgate Lakes Resort and Spa, and this call may be recorded. Happy to answer anything else, or we can keep going with the eligibility check.",
+  "fact_ids": ["FACT-OPC-DISCLOSURE-AI-001", "FACT-OPC-DISCLOSURE-RECORDING-001"],
+  "risk_class": "legal_financial",
+  "requires_verifier": true,
+  "next_action": "return_to_previous_node"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "opc_just_wanted_the_tickets",
+  "intent": "objection",
+  "scope": "opc",
+  "triggers": [
+    "I just want the tickets",
+    "can I just get the tickets",
+    "skip the tour",
+    "without the tour",
+    "without going to the preview"
+  ],
+  "response_text": "I get it — the ticket package is tied to attending the full ninety-minute preview, that's the only way the resort offers it. If the preview doesn't work for you, no problem at all and enjoy the rest of your stay. Want me to keep checking eligibility, or close this out?",
+  "fact_ids": ["FACT-OPC-INCENTIVE-CONDITION-001", "FACT-OPC-TOUR-DURATION-001"],
+  "risk_class": "high_fact",
+  "requires_verifier": true,
+  "next_action": "branch_continue_or_decline"
+}

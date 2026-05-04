@@ -1,0 +1,353 @@
+{
+  "_meta": {
+    "agent_name": "Andie",
+    "agent_role": "INBOUND",
+    "agent_id": "agent_963d5a2f8d284889bf225e8d5a",
+    "agent_display_name": "Andie — GVR INBOUND v2",
+    "agent_published": false,
+    "agent_version": 1,
+    "phone_number": "+14072890294",
+    "purpose": "GVR member-services inbound — answers calls dialed to +14072890294. Member calls in for travel savings, reward points, quarterly specials, or transfer to specialist.",
+    "voice_id": "custom_voice_64dd4d7112a69b8ddb68b1caef",
+    "voice_model": "eleven_turbo_v2_5",
+    "language": "en-US",
+    "webhook_url": "https://arrivia-gvr.vercel.app/api/retell/events",
+    "interruption_sensitivity": 0.55,
+    "end_call_after_silence_ms": 30000,
+    "snapshot_at": "2026-05-03",
+    "live_flow_id": "conversation_flow_01102d839745",
+    "live_flow_version": 1,
+    "node_count": 7,
+    "start_node_id": "opener_inbound",
+    "tools_registered": 1,
+    "post_call_analysis_fields": 8
+  },
+  "agent_settings": {
+    "agent_name": "Andie — GVR INBOUND v2",
+    "voice_id": "custom_voice_64dd4d7112a69b8ddb68b1caef",
+    "voice_model": "eleven_turbo_v2_5",
+    "language": "en-US",
+    "response_engine": {
+      "type": "conversation-flow",
+      "version": 1,
+      "conversation_flow_id": "conversation_flow_01102d839745"
+    },
+    "webhook_url": "https://arrivia-gvr.vercel.app/api/retell/events",
+    "boosted_keywords": [
+      "GVR",
+      "Arrivia",
+      "travel savings dollars",
+      "Government Vacation Rewards",
+      "Select Access",
+      "loyalty"
+    ],
+    "begin_message_delay_ms": 200,
+    "end_call_after_silence_ms": 30000,
+    "interruption_sensitivity": 0.55,
+    "enable_backchannel": false,
+    "post_call_analysis_data": [
+      {
+        "type": "boolean",
+        "name": "booked_trip_intent",
+        "description": "True if the caller expressed intent to book travel during the call."
+      },
+      {
+        "name": "objection_raised",
+        "description": "The primary objection the caller raised, if any.",
+        "type": "enum",
+        "choices": [
+          "price",
+          "trust",
+          "not_interested",
+          "other",
+          "none"
+        ]
+      },
+      {
+        "type": "boolean",
+        "name": "transferred",
+        "description": "True if the call was transferred to a human specialist."
+      },
+      {
+        "name": "transfer_reason",
+        "description": "Why the call was transferred (or 'not_transferred').",
+        "type": "enum",
+        "choices": [
+          "pricing",
+          "account",
+          "complaint",
+          "request_human",
+          "scheduled_callback",
+          "not_transferred"
+        ]
+      },
+      {
+        "type": "boolean",
+        "name": "member_verified",
+        "description": "True if the caller's identity matched the dynamic-variable member_name (or true on inbound)."
+      },
+      {
+        "type": "boolean",
+        "name": "promised_callback",
+        "description": "True if the agent committed to a callback or sent a scheduler link."
+      },
+      {
+        "type": "boolean",
+        "name": "compliance_flag",
+        "description": "True if any compliance concern arose: PII volunteered, jailbreak attempt, agent quoted unapproved figure, or do-not-call request."
+      },
+      {
+        "type": "string",
+        "name": "summary",
+        "description": "One-paragraph summary of the call outcome and any next steps for the specialist team."
+      }
+    ],
+    "post_call_analysis_model": "gpt-4.1",
+    "responsiveness": 0.95,
+    "normalize_for_speech": false,
+    "stt_mode": "accurate",
+    "denoising_mode": "noise-cancellation",
+    "max_call_duration_ms": 1800000
+  },
+  "conversation_flow_id": "conversation_flow_01102d839745",
+  "version": 1,
+  "global_prompt": "You are Andie, the AI voice assistant for Government Vacation Rewards (GVR), a private travel-rewards membership operated by Arrivia. GVR is NOT a government agency, NOT endorsed by the U.S. military. Speak in short, clean sentences. Use contractions. Never use filler words (um, uh, like). Stop talking immediately when the caller speaks. Never quote any specific dollar amount, point total, percentage, expiration date, APR, or financing term unless it appears in the dynamic variables for this call. Never imply government or military endorsement. Travel savings dollars are NOT cash and NOT a gift card.",
+  "nodes": [
+    {
+      "name": "Opener (disclosure)",
+      "edges": [
+        {
+          "destination_node_id": "benefits_overview",
+          "id": "edge_opener_to_benefits",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User wants to learn about the membership, the four pillars, savings credits, reward points, quarterly specials, great getaways, or asks 'how does it work'."
+          }
+        },
+        {
+          "destination_node_id": "transfer_with_carrot",
+          "id": "edge_opener_to_transfer_pricing",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User asks anything pricing-related — Select Access cost, membership fee, financing, APR, points value, or any specific dollar amount about their account."
+          }
+        },
+        {
+          "destination_node_id": "transfer_now",
+          "id": "edge_opener_to_transfer_account",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User asks about their specific account — balance, point total, expiration, member ID, or volunteers any PII (SSN, credit card, DOB)."
+          }
+        },
+        {
+          "destination_node_id": "transfer_now",
+          "id": "edge_opener_to_transfer_request",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User asks for an agent, representative, person, or to be transferred to a human."
+          }
+        },
+        {
+          "destination_node_id": "end_graceful",
+          "id": "edge_opener_to_end",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User says goodbye, that's all, or wants to end the call."
+          }
+        }
+      ],
+      "id": "opener_inbound",
+      "type": "conversation",
+      "interruption_sensitivity": 0.3,
+      "instruction": {
+        "type": "static_text",
+        "text": "Hi, this is Andie with Government Vacation Rewards. Just so you know, I'm an AI assistant and this call may be recorded. I can walk you through how your travel benefits work — Savings Credits, Reward Points, Quarterly Specials, Great Getaways — or get you to a specialist if you'd rather. What can I help you with today?"
+      }
+    },
+    {
+      "name": "Benefits Overview (4 pillars)",
+      "edges": [
+        {
+          "destination_node_id": "transfer_with_carrot",
+          "id": "edge_benefits_to_transfer",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User agrees to be connected to a specialist, says yes, please, sure, ok, or asks for more detail."
+          }
+        },
+        {
+          "destination_node_id": "end_graceful",
+          "id": "edge_benefits_to_end",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User declines transfer, says they're done, or wants to end the call."
+          }
+        }
+      ],
+      "id": "benefits_overview",
+      "type": "conversation",
+      "instruction": {
+        "type": "prompt",
+        "text": "Walk the caller through GVR's four membership pillars in plain language, briefly:\n1. **Savings Credits** — promotional credits applied at booking against eligible travel through GVR. NOT cash, NOT a gift card.\n2. **Reward Points** — loyalty currency earned when booking; redemption details handled by a specialist.\n3. **Quarterly Specials** — limited-time partner offers refreshed each quarter.\n4. **Great Getaways** — curated, pre-bundled travel packages.\nKeep the whole walkthrough under 90 spoken seconds. After the walkthrough, ask: 'Want me to connect you with a specialist who can pull up live options?'"
+      }
+    },
+    {
+      "name": "Transfer carrot",
+      "id": "transfer_with_carrot",
+      "type": "conversation",
+      "instruction": {
+        "type": "static_text",
+        "text": "Great — while I get a specialist on the line, I'm going to add another {{transfer_bonus_amount}} to your account. So you'll have {{total_after_bonus}} waiting when they pick up. One moment."
+      },
+      "always_edge": {
+        "destination_node_id": "transfer_node",
+        "id": "always_carrot_to_transfer",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Always"
+        }
+      }
+    },
+    {
+      "name": "Transfer (no carrot)",
+      "id": "transfer_now",
+      "type": "conversation",
+      "instruction": {
+        "type": "static_text",
+        "text": "Of course — let me get a specialist on the line. One moment while I brief them."
+      },
+      "always_edge": {
+        "destination_node_id": "transfer_node",
+        "id": "always_now_to_transfer",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Always"
+        }
+      }
+    },
+    {
+      "name": "Warm transfer",
+      "transfer_destination": {
+        "type": "predefined",
+        "number": "+10000000000"
+      },
+      "edge": {
+        "destination_node_id": "transfer_failed_callback",
+        "id": "edge_transfer_failed",
+        "transition_condition": {
+          "type": "prompt",
+          "prompt": "Transfer failed"
+        }
+      },
+      "id": "transfer_node",
+      "transfer_option": {
+        "on_hold_music": "relaxing_sound",
+        "public_handoff_option": {
+          "type": "static_message",
+          "message": "Thanks for holding. I have a GVR specialist on the line and gave them the context."
+        },
+        "enable_bridge_audio_cue": true,
+        "type": "warm_transfer",
+        "agent_detection_timeout_ms": 12000,
+        "private_handoff_option": {
+          "type": "prompt",
+          "prompt": "Brief the specialist before bridging. In under 12 seconds: caller name (or 'unknown caller'), what they asked, any rebuttal you handled, recommended next step. End with: 'Ready to bridge?'"
+        },
+        "show_transferee_as_caller": true
+      },
+      "type": "transfer_call"
+    },
+    {
+      "name": "Transfer-failed fallback",
+      "edges": [
+        {
+          "destination_node_id": "end_graceful",
+          "id": "edge_failed_to_end",
+          "transition_condition": {
+            "type": "prompt",
+            "prompt": "User accepts the scheduler link or after the link is sent."
+          }
+        }
+      ],
+      "id": "transfer_failed_callback",
+      "type": "conversation",
+      "instruction": {
+        "type": "prompt",
+        "text": "Apologize briefly that the specialist isn't available right now. Ask: 'Would you prefer a text or an email with a link to schedule a callback at a better time?' Then call send_scheduler_link with their channel choice."
+      }
+    },
+    {
+      "name": "End — graceful",
+      "id": "end_graceful",
+      "type": "end",
+      "instruction": {
+        "type": "static_text",
+        "text": "Thanks for calling Government Vacation Rewards — have a good one."
+      }
+    }
+  ],
+  "start_node_id": "opener_inbound",
+  "start_speaker": "agent",
+  "tools": [
+    {
+      "tool_id": "send_scheduler_link",
+      "execution_message_type": "static_text",
+      "headers": {
+        "x-api-key": "69c596f387e289c02c8030654a037d5db28206d72108f69f"
+      },
+      "execution_message_description": "Sending the scheduling link now.",
+      "name": "send_scheduler_link",
+      "description": "Send the caller a Microsoft Bookings link via SMS or email. Use when caller declines transfer but agrees to schedule for later. Ask channel preference first.",
+      "type": "custom",
+      "speak_during_execution": true,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string",
+            "enum": [
+              "sms",
+              "email"
+            ]
+          },
+          "destination": {
+            "type": "string",
+            "description": "Phone (E.164) for SMS or email address for email."
+          },
+          "caller_name": {
+            "type": "string"
+          },
+          "retell_call_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "retell_call_id",
+          "channel",
+          "destination"
+        ]
+      },
+      "url": "https://arrivia-gvr.vercel.app/api/tools/send-scheduler-link"
+    }
+  ],
+  "model_choice": {
+    "type": "cascading",
+    "model": "claude-4.5-haiku"
+  },
+  "model_temperature": 0,
+  "tool_call_strict_mode": true,
+  "default_dynamic_variables": {
+    "is_returning_caller": "false",
+    "total_after_bonus": "$500",
+    "last_call_date": "never",
+    "member_name": "there",
+    "transfer_bonus_amount": "$250",
+    "incentive_amount": "$250"
+  },
+  "kb_config": {
+    "top_k": 3,
+    "filter_score": 0.6
+  },
+  "is_published": false
+}

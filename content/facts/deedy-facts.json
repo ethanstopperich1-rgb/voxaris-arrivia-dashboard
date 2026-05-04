@@ -1,0 +1,308 @@
+{
+  "$schema": "./facts.schema.json",
+  "version": "1.0.0",
+  "agent_name": "Deedy",
+  "product": "Arrivia VBA — Virtual Booking Agent (after-hours AI for QR-initiated tour booking)",
+  "source_documents": [
+    "For Voxaris Arrivia_VBA_Brief_Final.docx (2026-05-01)",
+    "Timeshare_OPC_Qualification_Guide.docx",
+    "TOP 100 OBJECTIONS.docx",
+    "For Voxaris Arrivia_VBA_Pitch_Deck.pptx"
+  ],
+  "single_source_of_truth": "Arrivia spec — when in doubt, defer to the four documents above",
+  "generated_at": "2026-05-02",
+  "regulatory_landmines": ["TCPA", "COPPA", "FL-Chapter-721", "PCI-DSS", "Two-Party-Consent-FL", "FTC-AI-Disclosure", "State-Teen-Privacy"],
+  "two_party_consent_states": ["CA", "WA", "HI", "FL"],
+  "global_forbidden_phrases": [
+    "guaranteed approval",
+    "credit check passed",
+    "you're approved",
+    "free vacation",
+    "risk free",
+    "endorsed by Disney",
+    "Disney is a partner",
+    "Disney sponsored",
+    "official Disney",
+    "VA approved",
+    "military endorsed",
+    "I'm a real person",
+    "I'm human",
+    "I'm not an AI",
+    "you have to buy",
+    "must purchase",
+    "purchase required",
+    "guaranteed savings",
+    "guaranteed returns"
+  ],
+  "pci_forbidden_capture": [
+    "credit card number",
+    "card number",
+    "PAN",
+    "primary account number",
+    "CVV",
+    "CVC",
+    "security code",
+    "expiration date",
+    "exp date",
+    "bank account number",
+    "routing number",
+    "social security number",
+    "SSN",
+    "date of birth",
+    "DOB",
+    "driver's license",
+    "billing zip",
+    "billing address"
+  ],
+  "facts": [
+    {
+      "id": "FACT-VBA-PROGRAM-001",
+      "topic": "program_overview",
+      "canonical": "Arrivia's Virtual Booking Agent (VBA) is an AI-powered, white-labeled engagement tool for timeshare resort partners. It augments OPC reps to drive qualified tour bookings while guests are onsite or at offsite OPC third-party locations. The voice agent (Deedy) is the after-hours fallback; live agents handle business hours.",
+      "risk_class": "low",
+      "source": "VBA_Brief_Final §Program Overview"
+    },
+    {
+      "id": "FACT-VBA-PROPERTY-001",
+      "topic": "property",
+      "canonical": "Westgate Lakes Resort & Spa, Orlando, Florida — pilot deployment.",
+      "value": "Westgate Lakes Resort & Spa",
+      "city": "Orlando",
+      "state": "FL",
+      "coordinates": { "lat": 28.4173, "lng": -81.4783 },
+      "risk_class": "low",
+      "source": "VBA_Brief_Final §How It Works"
+    },
+    {
+      "id": "FACT-VBA-INCENTIVE-001",
+      "topic": "incentive",
+      "canonical": "Premium offer is partner-configurable per QR placement. Default for the Westgate Lakes pilot: two complimentary 2-day Disney park hopper tickets for the qualified guest and one attending partner, awarded after completion of the full preview.",
+      "value": "{{premium_offer}}",
+      "default_value": "two complimentary 2-day Disney park hopper tickets",
+      "qualifier": "after completion of the full preview",
+      "allowed_phrases": [
+        "the premium offer",
+        "the ticket package",
+        "what's tied to the tour",
+        "after the preview"
+      ],
+      "forbidden_phrases": [
+        "free Disney tickets",
+        "endorsed by Disney",
+        "Disney partnership",
+        "guaranteed tickets"
+      ],
+      "risk_class": "high_fact",
+      "source": "VBA_Brief_Final §STEP 1, configurable per partner"
+    },
+    {
+      "id": "FACT-VBA-TOUR-DURATION-001",
+      "topic": "tour_duration",
+      "canonical": "The vacation ownership preview is 90 to 120 minutes. Both decision-makers must attend in person.",
+      "value_minutes_min": 90,
+      "value_minutes_max": 120,
+      "say_as": "about 90 minutes",
+      "attendance_rule": "both_decision_makers_in_person",
+      "risk_class": "high_fact",
+      "source": "Qualification_Guide §9 Attendance Commitment"
+    },
+    {
+      "id": "FACT-VBA-QUAL-AGE-001",
+      "topic": "qualification_age",
+      "canonical": "Minimum 25 years of age. Must be legally able to enter into a contract. No upper age limit.",
+      "min_age": 25,
+      "max_age": null,
+      "risk_class": "high_fact",
+      "source": "Qualification_Guide §1 Age Requirement"
+    },
+    {
+      "id": "FACT-VBA-QUAL-INCOME-001",
+      "topic": "qualification_income",
+      "canonical": "Minimum household income $50,000 per year. Must have discretionary income for travel and financing.",
+      "min_combined_income_usd": 50000,
+      "currency": "USD",
+      "risk_class": "high_fact",
+      "source": "Qualification_Guide §2 Income Requirement, VBA_Brief Core Qualification"
+    },
+    {
+      "id": "FACT-VBA-QUAL-DECISION-MAKERS-001",
+      "topic": "qualification_decision_makers",
+      "canonical": "Married or cohabitating couples must attend together. All financial decision-makers must be present at the tour.",
+      "rule": "all_financial_decision_makers_must_attend_together",
+      "single_adults_allowed": true,
+      "risk_class": "high_fact",
+      "source": "Qualification_Guide §3 Relationship / Decision Makers"
+    },
+    {
+      "id": "FACT-VBA-QUAL-CREDIT-001",
+      "topic": "qualification_credit",
+      "canonical": "Must possess a valid major credit card (NOT prepaid). Must not be in active bankruptcy. This is a yes/no eligibility confirmation only — never a credit check, never a card-number capture on the call.",
+      "answer_format": "yes_no_only",
+      "is_credit_check": false,
+      "captures_card_data": false,
+      "must_be_major": true,
+      "prepaid_disqualifies": true,
+      "active_bankruptcy_disqualifies": true,
+      "risk_class": "legal_financial",
+      "source": "Qualification_Guide §4 Creditworthiness"
+    },
+    {
+      "id": "FACT-VBA-QUAL-EMPLOYMENT-001",
+      "topic": "qualification_employment",
+      "canonical": "Must be employed, self-employed, or retired with income. Yes/no confirmation only — no employer name, no income source detail.",
+      "valid_statuses": ["employed", "self_employed", "retired_with_income"],
+      "risk_class": "high_fact",
+      "source": "Qualification_Guide §5 Employment Status"
+    },
+    {
+      "id": "FACT-VBA-QUAL-PRIOR-TOUR-001",
+      "topic": "qualification_prior_tour",
+      "canonical": "Cannot have attended a timeshare tour within the last 6 to 12 months. No open or incomplete promotional packages.",
+      "lookback_months_min": 6,
+      "lookback_months_max": 12,
+      "say_as": "in the last 6 to 12 months",
+      "risk_class": "high_fact",
+      "source": "Qualification_Guide §6 Tour History / Eligibility"
+    },
+    {
+      "id": "FACT-VBA-QUAL-RESIDENCY-001",
+      "topic": "qualification_residency",
+      "canonical": "Cannot live within the local marketing area of the resort. For Westgate Lakes pilot: guests residing within 75 miles of the resort, or in zip codes flagged as 'local market', are excluded.",
+      "exclusion_type": "local_marketing_area",
+      "default_radius_miles": 75,
+      "default_resort_coordinates": { "lat": 28.4173, "lng": -81.4783 },
+      "say_as": "you don't live in the local Orlando area",
+      "risk_class": "high_fact",
+      "source": "Qualification_Guide §7 Residency Restrictions"
+    },
+    {
+      "id": "FACT-VBA-QUAL-LANGUAGE-001",
+      "topic": "qualification_language",
+      "canonical": "Must understand and participate in the presentation language (typically English).",
+      "default_language": "English",
+      "risk_class": "low",
+      "source": "Qualification_Guide §8 Language Requirement"
+    },
+    {
+      "id": "FACT-VBA-DEPOSIT-001",
+      "topic": "deposit_75",
+      "canonical": "$75 deposit ensures the guest shows up. For on-property guests (staying at the resort), the deposit is a folio hold added at booking and removed when they show up. For off-property guests in the pilot phase, Deedy does NOT capture payment on the call — instead, a Westgate team member follows up separately to handle the deposit securely. Deedy's role is to qualify and reserve the slot.",
+      "amount_usd": 75,
+      "on_property_method": "folio_hold_via_partner_integration",
+      "off_property_method": "team_member_followup_post_call",
+      "refund_trigger": "attended_full_preview",
+      "voice_capture": false,
+      "risk_class": "legal_financial",
+      "source": "Qualification_Guide §9, VBA_Brief Step-by-Step §STEP 5, design clarification 2026-05-02"
+    },
+    {
+      "id": "FACT-VBA-COMPLIANCE-GATE-001",
+      "topic": "front_end_consent_gate",
+      "canonical": "After scanning the QR, the guest hits a landing page only — NO data is captured. Before the ad plays or the call triggers, the guest must check two boxes: (1) 'I confirm I am 18 years of age or older.' (2) 'By continuing, I agree to be contacted about this offer via automated call or text.' This single gate addresses COPPA, state minor privacy laws, and TCPA simultaneously.",
+      "checkbox_age": "I confirm I am 18 years of age or older.",
+      "checkbox_tcpa": "By continuing, I agree to be contacted about this offer via automated call or text.",
+      "decline_message": "This offer is available to resort guests 18 and older.",
+      "risk_class": "legal_financial",
+      "source": "VBA_Brief_Final §STEP 2 + §Compliance Addendum"
+    },
+    {
+      "id": "FACT-VBA-MODELS-001",
+      "topic": "engagement_models",
+      "canonical": "Two test models. Model A — Outbound Dial: VBA auto-calls the guest's phone after consent. TCPA covered by gate consent. Model B — Inbound Dial: A phone number appears on screen; the guest taps to call. Guest-initiated, lowest legal risk, highest intent. Pilot starts with Model B.",
+      "models": {
+        "A": "outbound_autodial_after_consent",
+        "B": "inbound_tap_to_call"
+      },
+      "pilot_default": "B",
+      "risk_class": "legal_financial",
+      "source": "VBA_Brief_Final §STEP 4 (Two Test Models)"
+    },
+    {
+      "id": "FACT-VBA-ROUTING-001",
+      "topic": "routing_business_hours",
+      "canonical": "Business hours: call routes to a live call center. After hours: call routes to AI agent (Deedy). Pilot business hours: 9:00 AM to 9:00 PM Eastern. After hours: Deedy answers.",
+      "business_hours_start_local": "09:00",
+      "business_hours_end_local": "21:00",
+      "timezone": "America/New_York",
+      "live_center_destination": "TBD_per_partner",
+      "ai_after_hours_agent": "Deedy",
+      "risk_class": "low",
+      "source": "VBA_Brief_Final §STEP 4"
+    },
+    {
+      "id": "FACT-VBA-DISCLOSURE-AI-001",
+      "topic": "disclosure_ai",
+      "canonical": "Deedy must disclose she is an AI assistant at the start of every call and any time the guest asks. Several states require AI caller identification — this is mandatory regardless of FL state law to satisfy FTC and state minimum standards.",
+      "required_at": ["call_start", "any_direct_question"],
+      "risk_class": "legal_financial",
+      "source": "VBA_Brief_Final §Recommended Legal Actions §3"
+    },
+    {
+      "id": "FACT-VBA-DISCLOSURE-RECORDING-001",
+      "topic": "disclosure_recording",
+      "canonical": "Deedy must state the call may be recorded at the start of every call. Florida is a two-party consent state.",
+      "required_at": ["call_start"],
+      "two_party_consent": true,
+      "risk_class": "legal_financial",
+      "source": "FL Statute 934.03 + standard practice"
+    },
+    {
+      "id": "FACT-VBA-DISCLOSURE-TIMESHARE-001",
+      "topic": "disclosure_timeshare",
+      "canonical": "Deedy must never hide that the preview is a vacation ownership / timeshare presentation. The phrase 'vacation ownership preview' is required when describing the tour.",
+      "required_phrase": "vacation ownership preview",
+      "risk_class": "legal_financial",
+      "source": "FL Chapter 721 + Qualification_Guide framing"
+    },
+    {
+      "id": "FACT-VBA-NO-PURCHASE-001",
+      "topic": "no_purchase_required",
+      "canonical": "No purchase is required to receive the incentive. The guest must only complete the full preview (90–120 minutes).",
+      "risk_class": "high_fact",
+      "source": "Qualification_Guide §9, Qualification_Outcome §If criteria are not met"
+    },
+    {
+      "id": "FACT-VBA-DNC-001",
+      "topic": "do_not_contact",
+      "canonical": "Any guest request to stop, remove, or do-not-contact must be acknowledged immediately, the call ended politely, and the phone number written to the opc_dnc table.",
+      "trigger_phrases": ["stop", "do not call", "remove me", "take me off", "don't contact me"],
+      "audit_table": "opc_dnc",
+      "risk_class": "legal_financial",
+      "source": "TCPA + standard practice"
+    },
+    {
+      "id": "FACT-VBA-PCI-001",
+      "topic": "pci_scope_avoidance",
+      "canonical": "Deedy never asks for, accepts, repeats, confirms, or acknowledges any payment data, card data, bank data, SSN, full DOB, or driver's license on the voice channel. The $75 deposit is captured via a hosted Stripe link sent by SMS post-call (off-property) or via folio hold (on-property). If a guest begins to read a card number, Deedy interrupts and refuses.",
+      "interrupt_phrase": "Please stop — I do not take any payment or card information on this call.",
+      "deposit_path_on_property": "folio_hold",
+      "deposit_path_off_property": "sms_stripe_link_post_call",
+      "risk_class": "legal_financial",
+      "source": "PCI-DSS v4 + VBA_Brief Step §5"
+    },
+    {
+      "id": "FACT-VBA-OUT-OF-SCOPE-001",
+      "topic": "out_of_scope",
+      "canonical": "Deedy only handles eligibility check + tour booking. For pricing, financing, deposits beyond the $75 hold, contracts, or any product details — she defers to the welcome team at the resort.",
+      "transfer_topics": ["pricing", "financing", "contract", "ownership details", "points cost", "APR", "purchase questions"],
+      "risk_class": "legal_financial",
+      "source": "VBA_Brief Step §5 + standard OPC scope"
+    },
+    {
+      "id": "FACT-VBA-AGENT-FLOW-001",
+      "topic": "agent_qualification_flow",
+      "canonical": "Deedy follows: (1) Introduction & Hook — engage with the premium offer. (2) Rapport Building — friendly conversation, build trust. (3) Soft Qualification — travel habits, occupation, origin. (4) Hard Qualification (Subtle) — income range, decision-makers, tour history, residency. (5) Confirmation & Close — secure attendance commitment, reinforce incentive, set 90-min expectation.",
+      "phases": ["intro_hook", "rapport", "soft_qual", "hard_qual_subtle", "confirm_close"],
+      "risk_class": "low",
+      "source": "VBA_Brief §AI Agent Qualification Flow + Qualification_Guide §Typical Flow"
+    },
+    {
+      "id": "FACT-VBA-BEHAVIORAL-001",
+      "topic": "behavioral_signals",
+      "canonical": "Beyond hard criteria, Deedy assesses: (1) Buyer Indicators — disposable income, travel behavior, lifestyle cues. (2) Decision Dynamics — who decides financially, partner alignment. (3) Travel Habits — frequency, interest in resorts/cruises/ownership. (4) Personality Fit — openness vs resistance.",
+      "signals": ["buyer_indicators", "decision_dynamics", "travel_habits", "personality_fit"],
+      "risk_class": "low",
+      "source": "VBA_Brief §Behavioral Qualification Signals"
+    }
+  ]
+}

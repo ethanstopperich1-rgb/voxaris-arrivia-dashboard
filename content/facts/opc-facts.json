@@ -1,0 +1,262 @@
+{
+  "$schema": "./facts.schema.json",
+  "version": "1.0.0",
+  "brand": "Voxaris-OPC-Westgate",
+  "product": "OPC v2 — Andie voice agent for QR-initiated tour booking",
+  "generated_at": "2026-05-01",
+  "regulatory_landmines": ["TCPA", "FL-Chapter-721", "PCI-DSS", "Two-Party-Consent-FL"],
+  "two_party_consent_states": ["CA", "WA", "HI", "FL"],
+  "global_forbidden_phrases": [
+    "guaranteed approval",
+    "credit check passed",
+    "you're approved",
+    "free vacation",
+    "risk free",
+    "no obligation purchase",
+    "endorsed by Disney",
+    "Disney is a partner",
+    "Disney sponsored",
+    "official Disney",
+    "VA approved",
+    "military endorsed",
+    "I'm a real person",
+    "I'm human",
+    "I'm not an AI",
+    "you have to buy",
+    "must purchase",
+    "purchase required"
+  ],
+  "pci_forbidden_capture": [
+    "credit card number",
+    "card number",
+    "PAN",
+    "primary account number",
+    "CVV",
+    "CVC",
+    "security code",
+    "expiration date",
+    "exp date",
+    "bank account number",
+    "routing number",
+    "social security number",
+    "SSN",
+    "date of birth",
+    "DOB",
+    "driver's license",
+    "billing zip",
+    "billing address"
+  ],
+  "facts": [
+    {
+      "id": "FACT-OPC-PROPERTY-001",
+      "topic": "property",
+      "canonical": "Westgate Lakes Resort & Spa, Orlando, Florida.",
+      "value": "Westgate Lakes Resort & Spa",
+      "city": "Orlando",
+      "state": "FL",
+      "risk_class": "low",
+      "source": "westgate-pilot-msa-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-INCENTIVE-001",
+      "topic": "incentive",
+      "canonical": "Two complimentary 2-day Disney park hopper tickets for the qualified guest and one attending partner, awarded after completion of the full 90-minute vacation ownership preview.",
+      "value": "two complimentary 2-day Disney park hopper tickets",
+      "qualifier": "after completion of the full 90-minute preview",
+      "allowed_phrases": [
+        "park hopper ticket package",
+        "the ticket package",
+        "two-day park hopper",
+        "after the preview"
+      ],
+      "forbidden_phrases": [
+        "free Disney tickets",
+        "endorsed by Disney",
+        "Disney partnership",
+        "guaranteed tickets"
+      ],
+      "risk_class": "high_fact",
+      "source": "westgate-pilot-msa-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-TOUR-DURATION-001",
+      "topic": "tour_duration",
+      "canonical": "The vacation ownership preview is 90 minutes. Both decision-makers must attend in person.",
+      "value_minutes": 90,
+      "attendance_rule": "both_decision_makers_in_person",
+      "risk_class": "high_fact",
+      "source": "westgate-pilot-msa-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-QUAL-AGE-001",
+      "topic": "qualification_age",
+      "canonical": "All attending decision-makers must be between 25 and 70 years old.",
+      "min_age": 25,
+      "max_age": 70,
+      "risk_class": "high_fact",
+      "source": "westgate-pilot-msa-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-QUAL-INCOME-001",
+      "topic": "qualification_income",
+      "canonical": "Combined household income above $75,000 USD per year.",
+      "min_combined_income_usd": 75000,
+      "currency": "USD",
+      "risk_class": "high_fact",
+      "source": "westgate-pilot-msa-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-QUAL-RESIDENCY-001",
+      "topic": "qualification_residency",
+      "canonical": "Guest must be a current resident of the United States or Canada.",
+      "allowed_countries": ["US", "CA"],
+      "risk_class": "high_fact",
+      "source": "westgate-pilot-msa-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-QUAL-CREDIT-001",
+      "topic": "qualification_credit",
+      "canonical": "Guest and attending partner (if applicable) must have a major credit card in good standing. This is a yes/no eligibility confirmation only — never a credit check, never a card-number capture.",
+      "answer_format": "yes_no_only",
+      "is_credit_check": false,
+      "captures_card_data": false,
+      "risk_class": "legal_financial",
+      "source": "westgate-pilot-msa-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-QUAL-PRIOR-TOUR-001",
+      "topic": "qualification_prior_tour",
+      "canonical": "Guest must not have attended a Westgate vacation ownership preview in the prior 12 months.",
+      "lookback_months": 12,
+      "risk_class": "high_fact",
+      "source": "westgate-pilot-msa-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-QUAL-PARTNER-001",
+      "topic": "qualification_partner",
+      "canonical": "If the guest has a spouse or partner, that partner must be present and attend the full preview. Single adult decision-makers may attend alone.",
+      "rule": "spouse_or_partner_must_attend_if_applicable",
+      "single_adults_allowed": true,
+      "risk_class": "high_fact",
+      "source": "westgate-pilot-msa-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-DISCLOSURE-AI-001",
+      "topic": "disclosure_ai",
+      "canonical": "Andie must disclose she is an AI assistant at the start of every call and any time the guest asks.",
+      "required_at": ["call_start", "any_direct_question"],
+      "risk_class": "legal_financial",
+      "source": "voxaris-policy-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-DISCLOSURE-RECORDING-001",
+      "topic": "disclosure_recording",
+      "canonical": "Andie must state the call may be recorded at the start of every call. Florida is a two-party consent state.",
+      "required_at": ["call_start"],
+      "two_party_consent": true,
+      "risk_class": "legal_financial",
+      "source": "fl-statute-934.03",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-DISCLOSURE-TIMESHARE-001",
+      "topic": "disclosure_timeshare",
+      "canonical": "Andie must never hide that the preview is a vacation ownership / timeshare presentation. The phrase 'vacation ownership preview' is required when describing the tour.",
+      "required_phrase": "vacation ownership preview",
+      "risk_class": "legal_financial",
+      "source": "fl-chapter-721",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-NO-PURCHASE-001",
+      "topic": "no_purchase_required",
+      "canonical": "No purchase is required to receive the incentive. The guest must only complete the full 90-minute preview.",
+      "risk_class": "high_fact",
+      "source": "westgate-pilot-msa-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-SMS-CONSENT-001",
+      "topic": "sms_consent",
+      "canonical": "Outbound confirmation SMS requires explicit verbal yes/no consent captured on the recorded call. If consent is not captured, no SMS is sent and the booking confirmation is read aloud only.",
+      "consent_format": "explicit_yes_or_no",
+      "captured_via": "voice_call_recorded",
+      "audit_table": "opc_consent_log",
+      "risk_class": "legal_financial",
+      "source": "tcpa-2026",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-DNC-001",
+      "topic": "do_not_contact",
+      "canonical": "Any guest request to stop, remove, or do-not-contact must be acknowledged immediately, the call ended politely, and the phone number written to the opc_dnc table.",
+      "trigger_phrases": ["stop", "do not call", "remove me", "take me off", "don't contact me"],
+      "audit_table": "opc_dnc",
+      "risk_class": "legal_financial",
+      "source": "tcpa-2026",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-PCI-001",
+      "topic": "pci_scope_avoidance",
+      "canonical": "Andie never asks for, accepts, repeats, confirms, or acknowledges any payment data, card data, bank data, SSN, full DOB, or driver's license. If a guest begins to read a card number, Andie immediately interrupts and refuses.",
+      "interrupt_phrase": "Please stop — I do not take any payment or card information on this call.",
+      "risk_class": "legal_financial",
+      "source": "pci-dss-v4",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-NO-CREDIT-CHECK-001",
+      "topic": "no_credit_check",
+      "canonical": "No credit check is performed on this call. The credit-card question is a yes/no eligibility confirmation only.",
+      "risk_class": "legal_financial",
+      "source": "voxaris-policy-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-INCENTIVE-CONDITION-001",
+      "topic": "incentive_condition",
+      "canonical": "The incentive is only awarded after the guest completes the full 90-minute preview. Andie never says the incentive is guaranteed before completion.",
+      "forbidden_phrases": [
+        "guaranteed tickets",
+        "you'll get the tickets",
+        "your tickets are confirmed"
+      ],
+      "allowed_phrases": [
+        "the ticket package is tied to completing the preview",
+        "the welcome team hands them to you after the preview"
+      ],
+      "risk_class": "high_fact",
+      "source": "westgate-pilot-msa-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-CALLBACK-OFFER-001",
+      "topic": "human_callback",
+      "canonical": "If the guest asks for a human, Andie offers a callback from the resort welcome team rather than a live transfer (pre-pilot stage).",
+      "behavior": "offer_callback_not_transfer",
+      "risk_class": "low",
+      "source": "voxaris-pilot-policy-2026-04",
+      "last_verified": "2026-05-01"
+    },
+    {
+      "id": "FACT-OPC-OUT-OF-SCOPE-001",
+      "topic": "out_of_scope",
+      "canonical": "Andie only handles eligibility check + tour booking. For pricing, financing, deposits, contracts, or any product details — she defers to the welcome team at the resort.",
+      "transfer_topics": ["pricing", "financing", "deposits", "contract", "ownership details", "points cost", "APR"],
+      "risk_class": "legal_financial",
+      "source": "voxaris-pilot-policy-2026-04",
+      "last_verified": "2026-05-01"
+    }
+  ]
+}

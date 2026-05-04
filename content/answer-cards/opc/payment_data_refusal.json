@@ -1,0 +1,22 @@
+{
+  "id": "opc_payment_data_refusal",
+  "intent": "safety",
+  "scope": "opc",
+  "triggers": [
+    "my card number is",
+    "my card is",
+    "the card is",
+    "my SSN",
+    "my social",
+    "my date of birth",
+    "my DOB",
+    "let me give you my card",
+    "ready to pay",
+    "want to pay"
+  ],
+  "response_text": "Please stop — I do not take any payment, card, or personal identifying information on this call. Nothing is owed today, and the welcome team handles anything like that in person and securely at the resort. Let's go back to where we were.",
+  "fact_ids": ["FACT-OPC-PCI-001", "FACT-OPC-NO-PURCHASE-001"],
+  "risk_class": "legal_financial",
+  "requires_verifier": true,
+  "next_action": "interrupt_and_return"
+}
