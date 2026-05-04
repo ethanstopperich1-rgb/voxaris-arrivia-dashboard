@@ -27,6 +27,7 @@ import {
   Calendar,
   MapPin,
   ListChecks,
+  Wrench,
   X,
   Search,
 } from "lucide-react";
@@ -41,12 +42,15 @@ type Item = {
 };
 
 const NAV: Item[] = [
+  // Client-facing — per-agent executive view (default Deedy via top-of-page tabs)
   { id: "overview", name: "Overview", icon: Home, href: "/dashboard" },
-  { id: "outbound", name: "Outbound", icon: PhoneOutgoing, href: "/dashboard/outbound" },
-  { id: "queue", name: "Dial queue", icon: ListChecks, href: "/dashboard/queue" },
-  { id: "calls", name: "Calls", icon: Phone, href: "/dashboard/calls" },
   { id: "calendar", name: "Calendar", icon: Calendar, href: "/dashboard/calendar" },
+  { id: "calls", name: "Calls", icon: Phone, href: "/dashboard/calls" },
   { id: "placements", name: "Placements", icon: MapPin, href: "/dashboard/placements" },
+  // Operations — engineering / admin
+  { id: "ops", name: "Engineering ops", icon: Wrench, href: "/dashboard/ops" },
+  { id: "queue", name: "Dial queue", icon: ListChecks, href: "/dashboard/queue" },
+  { id: "outbound", name: "Outbound", icon: PhoneOutgoing, href: "/dashboard/outbound" },
   { id: "agents", name: "Agents", icon: Users, href: "/dashboard/agents" },
   { id: "cost", name: "Cost", icon: DollarSign, href: "/dashboard/cost" },
   { id: "system", name: "System", icon: Activity, href: "/dashboard/system" },
