@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "GVR Voice Agent · Voxaris",
-  description: "Zero-hallucination Retell voice agent for Government Vacation Rewards",
+  title: "Voxaris · Live Ops",
+  description: "Voxaris voice-agent live operations dashboard for Arrivia.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

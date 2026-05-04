@@ -26,6 +26,7 @@ import {
   Activity,
   Calendar,
   MapPin,
+  ListChecks,
   X,
   Search,
 } from "lucide-react";
@@ -42,6 +43,7 @@ type Item = {
 const NAV: Item[] = [
   { id: "overview", name: "Overview", icon: Home, href: "/dashboard" },
   { id: "outbound", name: "Outbound", icon: PhoneOutgoing, href: "/dashboard/outbound" },
+  { id: "queue", name: "Dial queue", icon: ListChecks, href: "/dashboard/queue" },
   { id: "calls", name: "Calls", icon: Phone, href: "/dashboard/calls" },
   { id: "calendar", name: "Calendar", icon: Calendar, href: "/dashboard/calendar" },
   { id: "placements", name: "Placements", icon: MapPin, href: "/dashboard/placements" },

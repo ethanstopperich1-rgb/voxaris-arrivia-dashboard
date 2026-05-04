@@ -36,12 +36,13 @@ export function GlowingCard({
         className,
       )}
     >
-      {/* Orbiting accent dot — circles the outer ring */}
+      {/* Orbiting accent dot — rides the OUTSIDE perimeter of the card
+          (4px past each edge) so it never crosses the value/label text. */}
       <span
         aria-hidden
         className={cn(
-          "absolute z-10 h-2.5 w-2.5 rounded-full",
-          "bg-cyan-400 shadow-[0_0_18px_4px_rgba(34,211,238,0.7)]",
+          "pointer-events-none absolute z-20 h-2 w-2 rounded-full",
+          "bg-cyan-300 shadow-[0_0_14px_4px_rgba(34,211,238,0.8)]",
           "animate-orbit-dot",
         )}
       />

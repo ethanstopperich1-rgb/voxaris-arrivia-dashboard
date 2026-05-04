@@ -16,18 +16,19 @@ const config: Config = {
       animation: {
         "border-beam":
           "border-beam calc(var(--duration)*1s) infinite linear",
-        // Orbiting-dot ring for the "Live Calls" glow card.
-        "orbit-dot": "orbit-dot 6s linear infinite",
+        // Square-perimeter orbit — the dot rides ON the card edge,
+        // never inside the content area, so it never cuts through text.
+        "orbit-dot": "orbit-dot 8s linear infinite",
       },
       keyframes: {
         "border-beam": {
           "100%": { "offset-distance": "100%" },
         },
         "orbit-dot": {
-          "0%, 100%": { top: "10%", right: "10%" },
-          "25%": { top: "10%", right: "calc(100% - 35px)" },
-          "50%": { top: "calc(100% - 30px)", right: "calc(100% - 35px)" },
-          "75%": { top: "calc(100% - 30px)", right: "10%" },
+          "0%, 100%":  { top: "-4px",                    left: "-4px" },
+          "25%":       { top: "-4px",                    left: "calc(100% - 4px)" },
+          "50%":       { top: "calc(100% - 4px)",        left: "calc(100% - 4px)" },
+          "75%":       { top: "calc(100% - 4px)",        left: "-4px" },
         },
       },
     },

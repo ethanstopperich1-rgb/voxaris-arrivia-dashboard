@@ -9,6 +9,9 @@ import { FallbackPanel } from "./components/FallbackPanel";
 import { RealtimeRefresh } from "./components/RealtimeRefresh";
 import { TodayAppointmentsCard } from "./components/TodayAppointmentsCard";
 import { TopPlacementsCard } from "./components/TopPlacementsCard";
+import { InFlightCalls } from "./components/InFlightCalls";
+import { OutcomeBreakdown } from "./components/OutcomeBreakdown";
+import { CostPerCallTile } from "./components/CostPerCallTile";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -19,9 +22,11 @@ type CallSessionRow = {
   agent_name: string | null;
   direction: string | null;
   sip_caller_number: string | null;
+  caller_name: string | null;
   started_at: string;
   ended_at: string | null;
   outcome: string | null;
+  summary_outcome: string | null;
   transfer_success: boolean | null;
   llm_prompt_tokens: number | null;
   llm_completion_tokens: number | null;
@@ -64,7 +69,7 @@ async function loadDashboard() {
     sb
       .from("call_sessions")
       .select(
-        "id, livekit_room_name, agent_name, direction, sip_caller_number, started_at, ended_at, outcome, transfer_success, llm_prompt_tokens, llm_completion_tokens, tts_characters, stt_audio_seconds, fallback_engaged",
+        "id, livekit_room_name, agent_name, direction, sip_caller_number, caller_name, started_at, ended_at, outcome, summary_outcome, transfer_success, llm_prompt_tokens, llm_completion_tokens, tts_characters, stt_audio_seconds, fallback_engaged",
       )
       .gte("started_at", since)
       .not("livekit_room_name", "is", null)
@@ -244,8 +249,44 @@ export default async function DashboardPage() {
         </p>
       </header>
 
+      <InFlightCalls calls={data.calls} />
+
       <AtAGlanceCounters counters={data.counters} />
-      <LatencyCards turns={data.turns} />
+
+      <OutcomeBreakdown
+        rows={data.calls.map((c) => ({
+          agent_name: c.agent_name,
+          outcome: c.summary_outcome ?? c.outcome,
+        }))}
+      />
+
+      <section className="grid gap-8 lg:grid-cols-3">
+        <CostPerCallTile
+          totals={{
+            callsCompleted: data.calls.filter((c) => c.ended_at !== null).length,
+            llmIn: data.calls.reduce((a, c) => a + Number(c.llm_prompt_tokens ?? 0), 0),
+            llmOut: data.calls.reduce((a, c) => a + Number(c.llm_completion_tokens ?? 0), 0),
+            ttsChars: data.calls.reduce((a, c) => a + Number(c.tts_characters ?? 0), 0),
+            sttSeconds: data.calls.reduce((a, c) => a + Number(c.stt_audio_seconds ?? 0), 0),
+            totalDurationSeconds: data.calls
+              .filter((c) => c.ended_at !== null)
+              .reduce(
+                (a, c) =>
+                  a +
+                  Math.max(
+                    0,
+                    (new Date(c.ended_at as string).getTime() -
+                      new Date(c.started_at).getTime()) /
+                      1000,
+                  ),
+                0,
+              ),
+          }}
+        />
+        <div className="lg:col-span-2">
+          <LatencyCards turns={data.turns} />
+        </div>
+      </section>
 
       <section className="grid gap-8 lg:grid-cols-2">
         <AgentSplit totals={data.agentTotals} />

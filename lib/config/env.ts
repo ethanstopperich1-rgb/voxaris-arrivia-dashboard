@@ -10,8 +10,10 @@ const EnvSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   NEXT_PUBLIC_APP_URL: z.string().url(),
   APP_API_KEY: z.string().min(8),
-  DASHBOARD_BASIC_AUTH_USER: z.string().min(1),
-  DASHBOARD_BASIC_AUTH_PASS: z.string().min(8),
+  // Optional: when both are unset the middleware short-circuits and the
+  // dashboard is publicly readable. Useful for review demos.
+  DASHBOARD_BASIC_AUTH_USER: z.string().optional().default(""),
+  DASHBOARD_BASIC_AUTH_PASS: z.string().optional().default(""),
 
   RETELL_API_KEY: z.string().min(1),
   RETELL_AGENT_ID: z.string().min(1),

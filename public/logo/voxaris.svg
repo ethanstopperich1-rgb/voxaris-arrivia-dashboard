@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 180" role="img" aria-label="Voxaris AI">
+  <defs>
+    <linearGradient id="vx-chrome" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="48%" stop-color="#e2e8f0"/>
+      <stop offset="55%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+    <linearGradient id="vx-tagline" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+  </defs>
+  <text x="300" y="92"
+        text-anchor="middle"
+        font-family="'Helvetica Neue','Inter','SF Pro Display',Arial,sans-serif"
+        font-weight="700"
+        font-size="78"
+        letter-spacing="2"
+        fill="url(#vx-chrome)">VOXARIS AI</text>
+  <text x="300" y="138"
+        text-anchor="middle"
+        font-family="'Helvetica Neue','Inter','SF Pro Display',Arial,sans-serif"
+        font-weight="300"
+        font-size="22"
+        letter-spacing="0.5"
+        fill="url(#vx-tagline)">Personalizing Your Outreach</text>
+</svg>
