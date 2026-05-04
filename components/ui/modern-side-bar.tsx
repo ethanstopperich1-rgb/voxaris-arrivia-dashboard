@@ -21,9 +21,6 @@ import {
   Menu,
   Phone,
   PhoneOutgoing,
-  Users,
-  DollarSign,
-  Activity,
   Calendar,
   MapPin,
   ListChecks,
@@ -51,9 +48,6 @@ const NAV: Item[] = [
   { id: "ops", name: "Engineering ops", icon: Wrench, href: "/dashboard/ops" },
   { id: "queue", name: "Dial queue", icon: ListChecks, href: "/dashboard/queue" },
   { id: "outbound", name: "Outbound", icon: PhoneOutgoing, href: "/dashboard/outbound" },
-  { id: "agents", name: "Agents", icon: Users, href: "/dashboard/agents" },
-  { id: "cost", name: "Cost", icon: DollarSign, href: "/dashboard/cost" },
-  { id: "system", name: "System", icon: Activity, href: "/dashboard/system" },
 ];
 
 export function Sidebar({ className = "" }: { className?: string }) {
