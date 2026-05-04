@@ -7,10 +7,10 @@
 // /dashboard/outbound?agent=deedy we render an explainer instead of
 // the dial form.
 
+import { redirect } from "next/navigation";
 import { OutboundCallForm } from "./OutboundCallForm";
 import { PageHeader } from "../components/agent/PageHeader";
 import { resolveAgent, agentMeta, dbAgentName } from "@/lib/dashboard/agent";
-import { PhoneOff } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -21,58 +21,26 @@ export default async function OutboundPage({
 }) {
   const sp = await searchParams;
   const agent = resolveAgent(sp);
-  const meta = agentMeta(agent);
 
-  // Deedy is inbound-only — show a friendly explainer, not the form.
-  if (agent === "deedy") {
-    return (
-      <main className="mx-auto flex max-w-4xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
-        <PageHeader
-          eyebrow="VOXARIS · DEEDY · OUTBOUND"
-          title="Deedy doesn't make outbound calls"
-          subtitle="Deedy is the after-hours inbound booking agent — guests dial her after scanning a QR code at the resort. She never cold-calls."
-          agent={agent}
-        />
-        <section className="rounded-xl border border-cyan-500/20 bg-cyan-500/[0.04] p-6">
-          <div className="flex items-start gap-4">
-            <PhoneOff className="mt-1 h-5 w-5 flex-shrink-0 text-cyan-400" />
-            <div>
-              <h2 className="text-sm font-semibold text-neutral-100">
-                Inbound only — by design
-              </h2>
-              <p className="mt-2 text-sm text-neutral-400">
-                Deedy's job is to qualify and book guests who actively scan
-                a QR code at the property. Cold-calling is out of scope:
-              </p>
-              <ul className="mt-3 ml-4 list-disc space-y-1 text-sm text-neutral-400">
-                <li>The QR scan is the consent + intent signal</li>
-                <li>No DNC/TCPA exposure (guest initiated the contact)</li>
-                <li>No outbound caller-ID asymmetry to manage</li>
-              </ul>
-              <p className="mt-3 text-sm text-neutral-400">
-                Outbound campaigns belong to <a
-                  href="/dashboard/outbound?agent=andie"
-                  className="text-cyan-300 underline"
-                >Andie</a>{" "}
-                (GVR member re-engagement). Switch to her tab above or
-                use that link.
-              </p>
-            </div>
-          </div>
-        </section>
-      </main>
-    );
+  // Outbound is Andie-only by design (Deedy is inbound-only — QR-scan
+  // guests dial in, she never cold-calls). Any link to /outbound
+  // without ?agent=andie quietly redirects so we don't have to maintain
+  // a Deedy-explainer fork.
+  if (agent !== "andie") {
+    redirect("/dashboard/outbound?agent=andie");
   }
 
-  const dbAgent = dbAgentName(agent) as "andie-gvr";
+  const meta = agentMeta("andie");
+  const dbAgent = dbAgentName("andie") as "andie-gvr";
 
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
       <PageHeader
-        eyebrow={`VOXARIS · ${meta.label.toUpperCase()} · OUTBOUND`}
+        eyebrow="VOXARIS · ANDIE · OUTBOUND"
         title={`Place a call as ${meta.label}`}
         subtitle={`Dispatch ${meta.label} (${meta.sublabel}) to dial a number now. The agent runs the full conversation flow the moment the recipient picks up.`}
-        agent={agent}
+        agent="andie"
+        agentsOnly={["andie"]}
       />
 
       <OutboundCallForm lockedAgent={dbAgent} />

@@ -12,9 +12,12 @@ type Props = {
   title: string;
   subtitle?: string;
   agent: AgentSlug;
+  /** Restrict the agent switcher to this list (e.g. outbound +
+      queue pages where only Andie is applicable). */
+  agentsOnly?: readonly AgentSlug[];
 };
 
-export function PageHeader({ eyebrow, title, subtitle, agent }: Props) {
+export function PageHeader({ eyebrow, title, subtitle, agent, agentsOnly }: Props) {
   return (
     <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
       <div className="min-w-0">
@@ -31,7 +34,7 @@ export function PageHeader({ eyebrow, title, subtitle, agent }: Props) {
         )}
       </div>
       <Suspense fallback={null}>
-        <AgentSwitcher active={agent} />
+        <AgentSwitcher active={agent} only={agentsOnly} />
       </Suspense>
     </header>
   );

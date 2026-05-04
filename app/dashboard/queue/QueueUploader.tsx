@@ -109,7 +109,10 @@ function scoreColor(score: number): string {
 
 export function QueueUploader() {
   const [text, setText] = useState("");
-  const [agent, setAgent] = useState<"andie-gvr" | "deedy-vba">("andie-gvr");
+  // Outbound queue is Andie-only; the agent constant is kept here
+  // for the parser + insert calls but there's no longer a toggle
+  // since Deedy doesn't run outbound campaigns.
+  const agent = "andie-gvr" as const;
   const [insertPending, startInsert] = useTransition();
   const [scorePending, startScore] = useTransition();
   const [scored, setScored] = useState<ScoredView[] | null>(null);
@@ -212,22 +215,14 @@ export function QueueUploader() {
       <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
         <div>
           <label className="block text-[10px] font-medium uppercase tracking-widest text-neutral-500">
-            Default agent
+            Agent
           </label>
-          <div className="mt-1 inline-flex rounded-md border border-neutral-800 bg-neutral-900 p-0.5 text-xs">
-            {(["andie-gvr", "deedy-vba"] as const).map((a) => (
-              <button
-                key={a}
-                onClick={() => setAgent(a)}
-                className={`px-3 py-1 rounded ${
-                  agent === a
-                    ? "bg-cyan-500/15 text-cyan-300"
-                    : "text-neutral-400 hover:text-neutral-200"
-                }`}
-              >
-                {a === "andie-gvr" ? "Andie" : "Deedy"}
-              </button>
-            ))}
+          {/* Andie is the only outbound agent — Deedy is inbound-only
+              (QR-scan guests dial her, she never cold-calls). Static
+              label, no toggle. */}
+          <div className="mt-1 inline-flex items-center gap-2 rounded-md border border-violet-500/30 bg-violet-500/[0.06] px-3 py-1 text-xs">
+            <span className="font-semibold text-violet-200">Andie</span>
+            <span className="text-[10px] text-neutral-500">GVR · Re-engagement</span>
           </div>
         </div>
         <label className="inline-flex items-center gap-2 rounded-md border border-dashed border-neutral-700 bg-neutral-900/40 px-3 py-2 text-xs text-neutral-300 hover:border-cyan-500/40 hover:text-cyan-200 cursor-pointer">

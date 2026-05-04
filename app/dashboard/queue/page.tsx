@@ -1,6 +1,7 @@
 // /dashboard/queue — outbound batch dial queue management, scoped to
 // the active agent. CSV upload + queue table + concurrency snapshot.
 
+import { redirect } from "next/navigation";
 import { supabaseAdmin } from "@/lib/clients/supabase-admin";
 import { QueueUploader } from "./QueueUploader";
 import { PageHeader } from "../components/agent/PageHeader";
@@ -127,16 +128,25 @@ export default async function QueuePage({
 }) {
   const sp = await searchParams;
   const agent = resolveAgent(sp);
-  const meta = agentMeta(agent);
-  const data = await loadQueue(agent);
+
+  // Dial queue is Andie-only by design (Deedy is inbound-only — QR-scan
+  // guests dial in, she never cold-calls). Any link to /queue without
+  // ?agent=andie quietly redirects.
+  if (agent !== "andie") {
+    redirect("/dashboard/queue?agent=andie");
+  }
+
+  const meta = agentMeta("andie");
+  const data = await loadQueue("andie");
 
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
       <PageHeader
-        eyebrow={`VOXARIS · ${meta.label.toUpperCase()} · DIAL QUEUE`}
+        eyebrow="VOXARIS · ANDIE · DIAL QUEUE"
         title={`${meta.label}'s outbound queue`}
         subtitle={`Upload a list, the cron auto-dials ${meta.label} in batches of 20 every 30 min, M–F 9am–6pm ET. Concurrency-capped at 20 live calls.`}
-        agent={agent}
+        agent="andie"
+        agentsOnly={["andie"]}
       />
 
       <section className="grid gap-4 md:grid-cols-4">

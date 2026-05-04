@@ -2,6 +2,11 @@
 // active state can preserve scroll position when toggling. Each tab is
 // just a Link that bumps the `agent` query param — the parent page
 // re-renders with the corresponding agent's data.
+//
+// `only` prop filters the visible agents. When only one agent is
+// visible (e.g. Andie on outbound/queue pages where Deedy isn't
+// applicable), we render a static label instead of a one-tab
+// switcher.
 "use client";
 
 import Link from "next/link";
@@ -23,9 +28,43 @@ const AGENTS = [
   },
 ] as const;
 
-export function AgentSwitcher({ active }: { active: "deedy" | "andie" }) {
+type AgentSlug = (typeof AGENTS)[number]["slug"];
+
+export function AgentSwitcher({
+  active,
+  only,
+}: {
+  active: AgentSlug;
+  only?: readonly AgentSlug[];
+}) {
+  // Hooks must run unconditionally on every render (rules of hooks).
   const pathname = usePathname() || "/dashboard";
   const params = useSearchParams();
+
+  const visibleAgents = only
+    ? AGENTS.filter((a) => only.includes(a.slug))
+    : AGENTS;
+
+  // Single-agent case: static badge, no tab strip.
+  if (visibleAgents.length <= 1) {
+    const a = visibleAgents[0];
+    if (!a) return null;
+    return (
+      <div className="inline-flex items-center gap-3 rounded-2xl border border-neutral-800 bg-neutral-950/80 px-4 py-2.5">
+        <span
+          className={cn(
+            "bg-gradient-to-r bg-clip-text text-sm font-semibold tracking-tight text-transparent",
+            a.accent,
+          )}
+        >
+          {a.label}
+        </span>
+        <span className="text-[10px] font-medium uppercase tracking-widest text-neutral-500">
+          {a.sublabel}
+        </span>
+      </div>
+    );
+  }
 
   function hrefFor(slug: string) {
     const next = new URLSearchParams(params?.toString() ?? "");
@@ -35,13 +74,11 @@ export function AgentSwitcher({ active }: { active: "deedy" | "andie" }) {
 
   return (
     <div className="inline-flex w-full items-center gap-1 overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-950/80 p-1 sm:w-auto">
-      {AGENTS.map((a) => {
+      {visibleAgents.map((a) => {
         const isActive = a.slug === active;
         return (
           <Link
             key={a.slug}
-            // typed-routes can't statically prove a query-string href; we
-            // build it from a known pathname so the cast is safe.
             href={hrefFor(a.slug) as never}
             scroll={false}
             className={cn(
@@ -70,9 +107,6 @@ export function AgentSwitcher({ active }: { active: "deedy" | "andie" }) {
             >
               {a.sublabel}
             </span>
-            {/* Active state communicated via background + ring + colored
-                gradient label above. No underline (it kept escaping the
-                outer rounded container's bottom edge). */}
           </Link>
         );
       })}
