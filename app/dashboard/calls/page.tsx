@@ -1,9 +1,18 @@
-// Calls list — Linear-style table of recent voice-agent sessions.
-// Joins call_sessions with tool_invocations (counted) + has-recording flag.
+// Calls list — Linear-style table of recent voice-agent sessions for
+// the active agent. Joins call_sessions with tool_invocations (counted)
+// + has-recording flag. Agent is locked by the top-of-page switcher;
+// outcome and date range stay filterable inline.
 
 import Link from "next/link";
 import { supabaseAdmin } from "@/lib/clients/supabase-admin";
 import { CallsFilters } from "./CallsFilters";
+import { PageHeader } from "../components/agent/PageHeader";
+import {
+  resolveAgent,
+  dbAgentName,
+  agentMeta,
+  type AgentSlug,
+} from "@/lib/dashboard/agent";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -83,24 +92,19 @@ function outcomeColor(outcome: string | null): string {
   }
 }
 
-function agentLabel(a: string | null): string {
-  if (a === "deedy-vba") return "Deedy";
-  if (a === "andie-gvr") return "Andie";
-  return a ?? "—";
-}
-
-async function loadCalls(sp: SearchParams) {
+async function loadCalls(agent: AgentSlug, sp: SearchParams) {
   const sb = supabaseAdmin();
+  const dbAgent = dbAgentName(agent);
   let q = sb
     .from("call_sessions")
     .select(
       "id, livekit_room_name, agent_name, direction, sip_caller_number, caller_name, started_at, ended_at, summary_outcome, recording_url, recording_egress_id",
     )
+    .eq("agent_name", dbAgent)
     .not("livekit_room_name", "is", null)
     .order("started_at", { ascending: false })
     .limit(100);
 
-  if (sp.agent && sp.agent !== "all") q = q.eq("agent_name", sp.agent);
   if (sp.outcome && sp.outcome !== "all") q = q.eq("summary_outcome", sp.outcome);
   if (sp.from) q = q.gte("started_at", sp.from);
   if (sp.to) q = q.lte("started_at", sp.to);
@@ -136,19 +140,18 @@ export default async function CallsPage({
   searchParams: Promise<SearchParams>;
 }) {
   const sp = await searchParams;
-  const { calls, toolCounts } = await loadCalls(sp);
+  const agent = resolveAgent(sp);
+  const meta = agentMeta(agent);
+  const { calls, toolCounts } = await loadCalls(agent, sp);
 
   return (
     <main className="mx-auto flex max-w-7xl flex-col gap-6 px-8 py-12">
-      <header>
-        <p className="text-xs uppercase tracking-widest text-cyan-400">
-          VOXARIS · CALLS
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold text-neutral-100">Recent Calls</h1>
-        <p className="text-sm text-neutral-400">
-          Last 100 voice sessions across Deedy and Andie.
-        </p>
-      </header>
+      <PageHeader
+        eyebrow={`VOXARIS · ${meta.label.toUpperCase()} · CALLS`}
+        title={`${meta.label}'s Recent Calls`}
+        subtitle={`Last 100 voice sessions handled by ${meta.label} (${meta.sublabel}).`}
+        agent={agent}
+      />
 
       <CallsFilters initial={sp} />
 
@@ -157,7 +160,6 @@ export default async function CallsPage({
           <thead className="bg-neutral-900/80 text-xs uppercase tracking-wider text-neutral-500">
             <tr>
               <th className="px-4 py-3 text-left font-medium">Started</th>
-              <th className="px-4 py-3 text-left font-medium">Agent</th>
               <th className="px-4 py-3 text-left font-medium">Direction</th>
               <th className="px-4 py-3 text-left font-medium">Caller</th>
               <th className="px-4 py-3 text-left font-medium">Duration</th>
@@ -169,8 +171,8 @@ export default async function CallsPage({
           <tbody className="divide-y divide-neutral-800/70">
             {calls.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-4 py-12 text-center text-neutral-500">
-                  No calls match these filters.
+                <td colSpan={7} className="px-4 py-12 text-center text-neutral-500">
+                  No {meta.label} calls match these filters.
                 </td>
               </tr>
             )}
@@ -190,9 +192,6 @@ export default async function CallsPage({
                     >
                       {fmtDateTime(c.started_at)}
                     </Link>
-                  </td>
-                  <td className="px-4 py-3 text-neutral-300">
-                    {agentLabel(c.agent_name)}
                   </td>
                   <td className="px-4 py-3 text-neutral-400">
                     {c.direction ?? "—"}

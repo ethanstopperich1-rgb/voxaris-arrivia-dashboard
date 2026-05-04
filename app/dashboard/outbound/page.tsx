@@ -1,37 +1,63 @@
-// Outbound dialer page — pick an agent, type a phone, click Dial.
-// The agent dials out and runs its conversation when the call connects.
+// Outbound dialer page — agent is locked by the top-of-page switcher,
+// the form just collects phone + name + dynamic-variable overrides
+// before dispatching the call.
+
 import { OutboundCallForm } from "./OutboundCallForm";
+import { PageHeader } from "../components/agent/PageHeader";
+import { resolveAgent, agentMeta, dbAgentName } from "@/lib/dashboard/agent";
 
 export const dynamic = "force-dynamic";
 
-export default function OutboundPage() {
+export default async function OutboundPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ agent?: string }>;
+}) {
+  const sp = await searchParams;
+  const agent = resolveAgent(sp);
+  const meta = agentMeta(agent);
+  const dbAgent = dbAgentName(agent) as "deedy-vba" | "andie-gvr";
+
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-6 px-8 py-12">
-      <header>
-        <p className="text-xs uppercase tracking-widest text-cyan-400">
-          VOXARIS · OUTBOUND
-        </p>
-        <h1 className="mt-2 text-3xl font-semibold text-neutral-100">
-          Place an outbound call
-        </h1>
-        <p className="text-sm text-neutral-400">
-          Dispatch Deedy or Andie to dial a number. The agent runs its full
-          conversation flow the moment the recipient picks up.
-        </p>
-      </header>
+      <PageHeader
+        eyebrow={`VOXARIS · ${meta.label.toUpperCase()} · OUTBOUND`}
+        title={`Place a call as ${meta.label}`}
+        subtitle={`Dispatch ${meta.label} (${meta.sublabel}) to dial a number now. The agent runs the full conversation flow the moment the recipient picks up.`}
+        agent={agent}
+      />
 
-      <OutboundCallForm />
+      <OutboundCallForm lockedAgent={dbAgent} />
 
       <section className="rounded-xl border border-neutral-800 bg-neutral-950/60 p-5">
         <h2 className="mb-3 text-sm font-semibold text-neutral-200">How it works</h2>
         <ol className="ml-4 list-decimal space-y-1 text-sm text-neutral-400">
-          <li>Pick the agent and number, optionally pass the recipient&apos;s name for personalized greeting.</li>
+          <li>
+            {meta.label} is selected (use the top tabs to switch agent). Type the
+            number you want dialed.
+          </li>
+          <li>
+            Optionally fill the recipient name + dynamic variables — they get
+            substituted into {meta.label}'s prompt at runtime.
+          </li>
           <li>Voxaris dispatches the agent and dials out instantly.</li>
-          <li>On answer the agent greets, qualifies, and uses its tools (booking, scheduler link, warm transfer).</li>
+          <li>
+            On answer the agent greets, qualifies, and uses its tools (
+            {agent === "deedy"
+              ? "opc_book, send_sms_confirmation, transfer_to_human"
+              : "transfer_to_specialist, send_scheduler_link, verify_me_to_caller"}
+            ).
+          </li>
           <li>
             Track the call live in{" "}
-            <a href="/dashboard/calls" className="text-cyan-300 underline">Recent Calls</a>{" "}
-            — recording, transcript, and summary land automatically when the call ends.
+            <a
+              href={`/dashboard/calls?agent=${agent}`}
+              className="text-cyan-300 underline"
+            >
+              {meta.label}'s recent calls
+            </a>{" "}
+            — recording, transcript, and summary land automatically when the
+            call ends.
           </li>
         </ol>
       </section>

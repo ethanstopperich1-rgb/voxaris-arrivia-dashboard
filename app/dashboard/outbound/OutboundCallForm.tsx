@@ -84,8 +84,8 @@ function firstNameOf(full: string): string {
   return full.trim().split(/\s+/)[0] ?? "";
 }
 
-export function OutboundCallForm() {
-  const [agent, setAgent] = useState<Agent>("deedy-vba");
+export function OutboundCallForm({ lockedAgent }: { lockedAgent?: Agent } = {}) {
+  const [agent, setAgent] = useState<Agent>(lockedAgent ?? "deedy-vba");
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
   const [advanced, setAdvanced] = useState(true);
@@ -220,29 +220,31 @@ export function OutboundCallForm() {
       onSubmit={onSubmit}
       className="rounded-xl border border-neutral-800 bg-neutral-950/60 p-6"
     >
-      {/* Agent picker */}
-      <div className="mb-5">
-        <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-neutral-500">
-          Agent
-        </label>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {AGENTS.map((a) => (
-            <button
-              key={a.value}
-              type="button"
-              onClick={() => setAgent(a.value)}
-              className={`rounded-lg border px-4 py-3 text-left transition ${
-                agent === a.value
-                  ? "border-cyan-500/40 bg-cyan-500/5 text-neutral-100"
-                  : "border-neutral-800 bg-neutral-900/50 text-neutral-300 hover:border-neutral-700"
-              }`}
-            >
-              <div className="text-sm font-semibold">{a.label}</div>
-              <div className="mt-0.5 text-xs text-neutral-400">{a.sub}</div>
-            </button>
-          ))}
+      {/* Agent picker — hidden when the page locks the agent via URL */}
+      {!lockedAgent && (
+        <div className="mb-5">
+          <label className="mb-2 block text-xs font-medium uppercase tracking-widest text-neutral-500">
+            Agent
+          </label>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {AGENTS.map((a) => (
+              <button
+                key={a.value}
+                type="button"
+                onClick={() => setAgent(a.value)}
+                className={`rounded-lg border px-4 py-3 text-left transition ${
+                  agent === a.value
+                    ? "border-cyan-500/40 bg-cyan-500/5 text-neutral-100"
+                    : "border-neutral-800 bg-neutral-900/50 text-neutral-300 hover:border-neutral-700"
+                }`}
+              >
+                <div className="text-sm font-semibold">{a.label}</div>
+                <div className="mt-0.5 text-xs text-neutral-400">{a.sub}</div>
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Core fields */}
       <div className="grid gap-5 md:grid-cols-2">

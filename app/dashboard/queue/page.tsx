@@ -1,7 +1,15 @@
-// /dashboard/queue — outbound batch dial queue management.
-// CSV upload + live queue table + concurrency snapshot.
+// /dashboard/queue — outbound batch dial queue management, scoped to
+// the active agent. CSV upload + queue table + concurrency snapshot.
+
 import { supabaseAdmin } from "@/lib/clients/supabase-admin";
 import { QueueUploader } from "./QueueUploader";
+import { PageHeader } from "../components/agent/PageHeader";
+import {
+  resolveAgent,
+  dbAgentName,
+  agentMeta,
+  type AgentSlug,
+} from "@/lib/dashboard/agent";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -17,6 +25,8 @@ type QueueRow = {
   last_attempted_at: string | null;
   last_error: string | null;
   livekit_room_name: string | null;
+  ai_score: number | null;
+  ai_score_reason: string | null;
   created_at: string;
 };
 
@@ -45,39 +55,38 @@ function statusBadge(status: string): string {
   }
 }
 
-async function loadQueue() {
+async function loadQueue(agent: AgentSlug) {
   const sb = supabaseAdmin();
+  const dbAgent = dbAgentName(agent);
 
   const [rowsRes, statsRes, inFlightRes] = await Promise.all([
     sb
       .from("dial_queue")
       .select(
-        "id, agent_name, phone_number, member_name, status, attempts, max_attempts, last_attempted_at, last_error, livekit_room_name, created_at",
+        "id, agent_name, phone_number, member_name, status, attempts, max_attempts, last_attempted_at, last_error, livekit_room_name, ai_score, ai_score_reason, created_at",
       )
+      .eq("agent_name", dbAgent)
       .order("created_at", { ascending: false })
       .limit(200),
-    sb.from("dial_queue").select("agent_name, status"),
+    sb
+      .from("dial_queue")
+      .select("status")
+      .eq("agent_name", dbAgent),
     sb
       .from("call_sessions")
       .select("agent_name", { count: "exact" })
+      .eq("agent_name", dbAgent)
       .is("ended_at", null),
   ]);
 
   const rows: QueueRow[] = (rowsRes.data ?? []) as QueueRow[];
 
-  // Compute stats
-  const stats = new Map<string, Map<string, number>>();
-  for (const r of (statsRes.data ?? []) as { agent_name: string; status: string }[]) {
-    const a = stats.get(r.agent_name) ?? new Map();
-    a.set(r.status, (a.get(r.status) ?? 0) + 1);
-    stats.set(r.agent_name, a);
+  const stats = new Map<string, number>();
+  for (const r of (statsRes.data ?? []) as { status: string }[]) {
+    stats.set(r.status, (stats.get(r.status) ?? 0) + 1);
   }
 
-  const inFlight = new Map<string, number>();
-  for (const r of (inFlightRes.data ?? []) as { agent_name: string }[]) {
-    inFlight.set(r.agent_name, (inFlight.get(r.agent_name) ?? 0) + 1);
-  }
-
+  const inFlight = (inFlightRes.data ?? []).length;
   return { rows, stats, inFlight };
 }
 
@@ -85,13 +94,21 @@ function StatTile({
   label,
   value,
   hint,
+  accent,
 }: {
   label: string;
   value: string | number;
   hint?: string;
+  accent?: "cyan" | "violet";
 }) {
+  const accentClass =
+    accent === "violet"
+      ? "border-violet-500/30 bg-violet-500/[0.04]"
+      : accent === "cyan"
+        ? "border-cyan-500/30 bg-cyan-500/[0.04]"
+        : "border-neutral-800 bg-neutral-950/50";
   return (
-    <div className="rounded-2xl border border-neutral-800 bg-neutral-950/50 p-4">
+    <div className={`rounded-2xl border p-4 ${accentClass}`}>
       <p className="text-[10px] font-medium uppercase tracking-widest text-neutral-500">
         {label}
       </p>
@@ -103,40 +120,45 @@ function StatTile({
   );
 }
 
-export default async function QueuePage() {
-  const data = await loadQueue();
-  const andie = data.stats.get("andie-gvr") ?? new Map();
-  const deedy = data.stats.get("deedy-vba") ?? new Map();
+export default async function QueuePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ agent?: string }>;
+}) {
+  const sp = await searchParams;
+  const agent = resolveAgent(sp);
+  const meta = agentMeta(agent);
+  const data = await loadQueue(agent);
 
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-6 px-8 py-12">
-      <header>
-        <p className="text-xs uppercase tracking-widest text-cyan-400">VOXARIS · DIAL QUEUE</p>
-        <h1 className="mt-2 text-3xl font-semibold text-neutral-100">Outbound queue</h1>
-        <p className="text-sm text-neutral-400">
-          Upload a list, the cron auto-dials in batches of 20 every 30 min,
-          M–F 9am–9pm ET. Concurrency-capped at 20 live calls per agent.
-        </p>
-      </header>
+      <PageHeader
+        eyebrow={`VOXARIS · ${meta.label.toUpperCase()} · DIAL QUEUE`}
+        title={`${meta.label}'s outbound queue`}
+        subtitle={`Upload a list, the cron auto-dials ${meta.label} in batches of 20 every 30 min, M–F 9am–6pm ET. Concurrency-capped at 20 live calls.`}
+        agent={agent}
+      />
 
       <section className="grid gap-4 md:grid-cols-4">
         <StatTile
-          label="Andie · pending"
-          value={andie.get("pending") ?? 0}
-          hint={`${data.inFlight.get("andie-gvr") ?? 0} in flight now`}
+          label="Pending"
+          value={data.stats.get("pending") ?? 0}
+          hint={`${data.inFlight} in flight now`}
+          accent={meta.accent}
         />
         <StatTile
-          label="Andie · completed"
-          value={andie.get("completed") ?? 0}
+          label="Dialing"
+          value={data.stats.get("dialing") ?? 0}
         />
         <StatTile
-          label="Deedy · pending"
-          value={deedy.get("pending") ?? 0}
-          hint={`${data.inFlight.get("deedy-vba") ?? 0} in flight now`}
+          label="Completed"
+          value={data.stats.get("completed") ?? 0}
         />
         <StatTile
-          label="Deedy · completed"
-          value={deedy.get("completed") ?? 0}
+          label="Failed / DNC"
+          value={
+            (data.stats.get("failed") ?? 0) + (data.stats.get("dnc") ?? 0)
+          }
         />
       </section>
 
@@ -144,7 +166,9 @@ export default async function QueuePage() {
 
       <section className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-950/60">
         <header className="flex items-center justify-between border-b border-neutral-800 bg-neutral-900/40 px-4 py-3">
-          <h2 className="text-sm font-semibold text-neutral-100">Recent queue rows</h2>
+          <h2 className="text-sm font-semibold text-neutral-100">
+            {meta.label}'s queue rows
+          </h2>
           <span className="text-[10px] uppercase tracking-widest text-neutral-500">
             {data.rows.length} of last 200
           </span>
@@ -153,9 +177,9 @@ export default async function QueuePage() {
           <thead className="bg-neutral-900/30 text-left text-[10px] uppercase tracking-widest text-neutral-500">
             <tr>
               <th className="px-4 py-2 font-medium">Created</th>
-              <th className="px-4 py-2 font-medium">Agent</th>
               <th className="px-4 py-2 font-medium">Recipient</th>
               <th className="px-4 py-2 font-medium">Phone</th>
+              <th className="px-4 py-2 font-medium">AI Score</th>
               <th className="px-4 py-2 font-medium">Status</th>
               <th className="px-4 py-2 font-medium">Attempts</th>
               <th className="px-4 py-2 font-medium">Last attempt</th>
@@ -164,8 +188,12 @@ export default async function QueuePage() {
           <tbody className="divide-y divide-neutral-900">
             {data.rows.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-12 text-center text-neutral-500">
-                  Queue is empty. Add rows above to get started.
+                <td
+                  colSpan={7}
+                  className="px-4 py-12 text-center text-neutral-500"
+                >
+                  No {meta.label} queue rows yet. Upload a list above to get
+                  started.
                 </td>
               </tr>
             )}
@@ -179,12 +207,29 @@ export default async function QueuePage() {
                     minute: "2-digit",
                   })}
                 </td>
-                <td className="px-4 py-3 text-neutral-200">
-                  {r.agent_name === "andie-gvr" ? "Andie" : "Deedy"}
+                <td className="px-4 py-3 text-neutral-300">
+                  {r.member_name ?? "—"}
                 </td>
-                <td className="px-4 py-3 text-neutral-300">{r.member_name ?? "—"}</td>
                 <td className="px-4 py-3 font-mono text-xs text-neutral-400">
                   {maskPhone(r.phone_number)}
+                </td>
+                <td className="px-4 py-3 text-xs">
+                  {r.ai_score == null ? (
+                    <span className="text-neutral-600">unscored</span>
+                  ) : (
+                    <span
+                      title={r.ai_score_reason ?? ""}
+                      className={
+                        r.ai_score >= 70
+                          ? "font-semibold text-emerald-400"
+                          : r.ai_score >= 40
+                            ? "text-amber-300"
+                            : "text-neutral-500"
+                      }
+                    >
+                      {r.ai_score}
+                    </span>
+                  )}
                 </td>
                 <td className="px-4 py-3">
                   <span

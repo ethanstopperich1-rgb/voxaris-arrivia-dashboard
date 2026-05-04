@@ -1,16 +1,11 @@
 "use client";
 
-// Filter bar for /dashboard/calls. Pushes search params via the App Router
-// so the server component re-fetches with the new filters applied.
+// Filter bar for /dashboard/calls. Agent is no longer a filter on this
+// bar — the top-of-page AgentSwitcher owns that. Outcome + date-range
+// remain filterable here.
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
-
-const AGENTS = [
-  { value: "all", label: "All agents" },
-  { value: "deedy-vba", label: "Deedy (Arrivia)" },
-  { value: "andie-gvr", label: "Andie (GVR)" },
-];
 
 const OUTCOMES = [
   { value: "all", label: "All outcomes" },
@@ -26,7 +21,7 @@ const OUTCOMES = [
 export function CallsFilters({
   initial,
 }: {
-  initial: { agent?: string; outcome?: string; from?: string; to?: string };
+  initial: { outcome?: string; from?: string; to?: string };
 }) {
   const router = useRouter();
   const sp = useSearchParams();
@@ -47,19 +42,6 @@ export function CallsFilters({
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <select
-        defaultValue={initial.agent ?? "all"}
-        onChange={(e) => update("agent", e.target.value)}
-        className={baseSelect}
-        aria-label="Agent"
-      >
-        {AGENTS.map((a) => (
-          <option key={a.value} value={a.value}>
-            {a.label}
-          </option>
-        ))}
-      </select>
-
       <select
         defaultValue={initial.outcome ?? "all"}
         onChange={(e) => update("outcome", e.target.value)}
