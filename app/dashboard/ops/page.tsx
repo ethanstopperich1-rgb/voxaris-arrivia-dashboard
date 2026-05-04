@@ -239,7 +239,7 @@ async function loadDashboard() {
 export default async function DashboardPage() {
   const data = await loadDashboard();
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-8 px-8 py-12">
+    <main className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
       <RealtimeRefresh />
       <header>
         <p className="text-xs uppercase tracking-widest text-cyan-400">VOXARIS · ENGINEERING OPS</p>

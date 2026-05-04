@@ -19,7 +19,7 @@ export default async function OutboundPage({
   const dbAgent = dbAgentName(agent) as "deedy-vba" | "andie-gvr";
 
   return (
-    <main className="mx-auto flex max-w-4xl flex-col gap-6 px-8 py-12">
+    <main className="mx-auto flex max-w-4xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
       <PageHeader
         eyebrow={`VOXARIS · ${meta.label.toUpperCase()} · OUTBOUND`}
         title={`Place a call as ${meta.label}`}

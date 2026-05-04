@@ -33,7 +33,9 @@ export default function DashboardLayout({
           aria-hidden
           className="pointer-events-none absolute -top-32 right-0 h-[420px] w-[520px] rounded-full bg-cyan-500/[0.08] blur-3xl"
         />
-        <div className="relative z-10">{children}</div>
+        {/* Mobile only: extra top padding so the fixed-position hamburger
+            (top-4 left-4 in the sidebar) never sits over content. */}
+        <div className="relative z-10 pt-14 md:pt-0">{children}</div>
       </div>
     </div>
   );

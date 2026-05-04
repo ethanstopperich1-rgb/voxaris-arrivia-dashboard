@@ -131,7 +131,7 @@ export default async function QueuePage({
   const data = await loadQueue(agent);
 
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-6 px-8 py-12">
+    <main className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
       <PageHeader
         eyebrow={`VOXARIS · ${meta.label.toUpperCase()} · DIAL QUEUE`}
         title={`${meta.label}'s outbound queue`}
@@ -173,7 +173,8 @@ export default async function QueuePage({
             {data.rows.length} of last 200
           </span>
         </header>
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[720px] text-sm">
           <thead className="bg-neutral-900/30 text-left text-[10px] uppercase tracking-widest text-neutral-500">
             <tr>
               <th className="px-4 py-2 font-medium">Created</th>
@@ -257,6 +258,7 @@ export default async function QueuePage({
             ))}
           </tbody>
         </table>
+        </div>
       </section>
     </main>
   );

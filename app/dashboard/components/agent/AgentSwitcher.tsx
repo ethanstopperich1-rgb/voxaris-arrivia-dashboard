@@ -34,7 +34,7 @@ export function AgentSwitcher({ active }: { active: "deedy" | "andie" }) {
   }
 
   return (
-    <div className="inline-flex items-center gap-1 rounded-2xl border border-neutral-800 bg-neutral-950/80 p-1">
+    <div className="inline-flex w-full items-center gap-1 rounded-2xl border border-neutral-800 bg-neutral-950/80 p-1 sm:w-auto">
       {AGENTS.map((a) => {
         const isActive = a.slug === active;
         return (
@@ -45,7 +45,7 @@ export function AgentSwitcher({ active }: { active: "deedy" | "andie" }) {
             href={hrefFor(a.slug) as never}
             scroll={false}
             className={cn(
-              "group relative flex flex-col items-start rounded-xl px-5 py-2.5 transition",
+              "group relative flex flex-1 flex-col items-start rounded-xl px-3 py-2 transition sm:flex-none sm:px-5 sm:py-2.5",
               isActive
                 ? "bg-neutral-900/80 ring-1 ring-neutral-800"
                 : "hover:bg-neutral-900/40",

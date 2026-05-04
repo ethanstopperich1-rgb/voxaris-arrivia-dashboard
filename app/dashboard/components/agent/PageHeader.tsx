@@ -17,7 +17,7 @@ type Props = {
 export function PageHeader({ eyebrow, title, subtitle, agent }: Props) {
   return (
     <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-      <div>
+      <div className="min-w-0">
         {eyebrow && (
           <p className="text-xs uppercase tracking-widest text-cyan-400">
             {eyebrow}

@@ -81,7 +81,7 @@ export default async function CalendarPage({
       : `Next 30 days · ${booked.length} confirmed · ${pending.length} pending member booking${pending.length === 1 ? "" : "s"}.`;
 
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-6 px-8 py-12">
+    <main className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
       <PageHeader
         eyebrow={`VOXARIS · ${meta.label.toUpperCase()} · CALENDAR`}
         title={`Upcoming ${titleNoun}`}

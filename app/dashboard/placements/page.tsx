@@ -29,7 +29,7 @@ async function loadPlacements(): Promise<PlacementRow[]> {
 export default async function PlacementsPage() {
   const placements = await loadPlacements();
   return (
-    <main className="mx-auto flex max-w-6xl flex-col gap-6 px-8 py-12">
+    <main className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
       <header>
         <p className="text-xs uppercase tracking-widest text-cyan-400">
           VOXARIS · PLACEMENTS

@@ -145,7 +145,7 @@ export default async function CallsPage({
   const { calls, toolCounts } = await loadCalls(agent, sp);
 
   return (
-    <main className="mx-auto flex max-w-7xl flex-col gap-6 px-8 py-12">
+    <main className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
       <PageHeader
         eyebrow={`VOXARIS · ${meta.label.toUpperCase()} · CALLS`}
         title={`${meta.label}'s Recent Calls`}
@@ -155,8 +155,8 @@ export default async function CallsPage({
 
       <CallsFilters initial={sp} />
 
-      <div className="overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950/60">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-xl border border-neutral-800 bg-neutral-950/60">
+        <table className="w-full min-w-[720px] text-sm">
           <thead className="bg-neutral-900/80 text-xs uppercase tracking-wider text-neutral-500">
             <tr>
               <th className="px-4 py-3 text-left font-medium">Started</th>
