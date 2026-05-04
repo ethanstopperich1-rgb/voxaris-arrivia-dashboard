@@ -149,9 +149,9 @@ fetching.
 | `/dashboard/placements` | Placements CRUD — slug + name + premium offer + QR target URL; Download QR button generates a 1024px PNG; scan tracking via `/api/scan/[slug]` (sha256-hashed IP, 302 redirect) |
 | `/dashboard/agents`, `/cost`, `/system` | Stub pages, planned for Phase 2 |
 
-UI components from 21st.dev (modern-side-bar, grid-pattern, border-beam,
+UI components from `21st.dev` (modern-side-bar, grid-pattern, border-beam,
 glowing-card) restyled to dark theme with cyan accents. Arrivia logo
-(official SVG from arrivia.com, inverted for dark mode) in the sidebar
+(official SVG from `arrivia.com`, inverted for dark mode) in the sidebar
 header.
 
 ### Schema (Supabase, 14 migrations)
@@ -212,7 +212,7 @@ for backward compatibility.
 - `pino` structured logger
 - `lucide-react` icons
 - `framer-motion` for live counter animations
-- 21st.dev components (sidebar, grid-pattern, border-beam, glowing-card)
+- `21st.dev` components (sidebar, grid-pattern, border-beam, glowing-card)
 
 ### Infrastructure
 
