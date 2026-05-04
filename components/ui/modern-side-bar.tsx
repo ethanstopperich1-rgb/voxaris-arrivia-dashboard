@@ -13,7 +13,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   ChevronLeft,
   ChevronRight,
@@ -52,6 +52,7 @@ const NAV: Item[] = [
 
 export function Sidebar({ className = "" }: { className?: string }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -66,6 +67,16 @@ export function Sidebar({ className = "" }: { className?: string }) {
     href === "/dashboard"
       ? pathname === "/dashboard"
       : pathname?.startsWith(href);
+
+  // Preserve `?agent=` across nav so clicking sidebar entries while
+  // viewing Andie keeps you on Andie (instead of bouncing back to
+  // Deedy default on every page).
+  const activeAgent = searchParams?.get("agent");
+  const hrefWithAgent = (href: string) => {
+    if (!activeAgent) return href;
+    const sep = href.includes("?") ? "&" : "?";
+    return `${href}${sep}agent=${activeAgent}`;
+  };
 
   return (
     <>
@@ -171,7 +182,7 @@ export function Sidebar({ className = "" }: { className?: string }) {
                     // don't exist yet (calls/agents/cost/system are
                     // stubbed below). Safe — Next will 404 gracefully
                     // until each page lands.
-                    href={item.href as never}
+                    href={hrefWithAgent(item.href) as never}
                     onClick={() => {
                       if (window.innerWidth < 768) setIsOpen(false);
                     }}
