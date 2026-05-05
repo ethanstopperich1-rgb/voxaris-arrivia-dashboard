@@ -22,7 +22,7 @@ export function DemoEligibilityCard({ deedyNumber }: { deedyNumber: string }) {
   if (choice === "no") {
     return (
       <div className="flex flex-col items-center px-6 py-10 text-center">
-        <p className="text-lg font-bold uppercase tracking-wide text-[#0891b2]">
+        <p className="text-lg font-bold uppercase tracking-wide text-[#002D5D]">
           Thanks for your interest!
         </p>
         <p className="mt-6 text-base leading-relaxed text-neutral-700">
@@ -38,7 +38,7 @@ export function DemoEligibilityCard({ deedyNumber }: { deedyNumber: string }) {
         <button
           type="button"
           onClick={() => setChoice(null)}
-          className="mt-8 inline-flex items-center justify-center gap-2 rounded-md border-2 border-[#0891b2] px-6 py-3 text-sm font-semibold uppercase tracking-wider text-[#0891b2] transition hover:bg-[#0891b2] hover:text-white"
+          className="mt-8 inline-flex items-center justify-center gap-2 rounded-md border-2 border-[#00A0AF] px-6 py-3 text-sm font-semibold uppercase tracking-wider text-[#00A0AF] transition hover:bg-[#00A0AF] hover:text-white"
         >
           <Check className="h-4 w-4" />
           Have a great vacation!
@@ -53,7 +53,7 @@ export function DemoEligibilityCard({ deedyNumber }: { deedyNumber: string }) {
   return (
     <div className="flex flex-col px-6 py-8">
       {/* Greeting */}
-      <p className="text-center text-lg font-bold uppercase tracking-wide text-[#0891b2]">
+      <p className="text-center text-lg font-bold uppercase tracking-wide text-[#002D5D]">
         Thanks for contacting us!
       </p>
       <p className="mt-1 text-center text-sm text-neutral-500">
@@ -108,7 +108,7 @@ export function DemoEligibilityCard({ deedyNumber }: { deedyNumber: string }) {
             type="checkbox"
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
-            className="mt-0.5 h-4 w-4 cursor-pointer rounded border-neutral-400 accent-[#0891b2]"
+            className="mt-0.5 h-4 w-4 cursor-pointer rounded border-neutral-400 accent-[#00A0AF]"
           />
           <span>
             I consent to be contacted about this offer via automated call
@@ -126,7 +126,7 @@ export function DemoEligibilityCard({ deedyNumber }: { deedyNumber: string }) {
           className={cn(
             "mt-5 flex w-full items-center justify-center gap-2 rounded-md py-3 text-sm font-semibold uppercase tracking-wider transition",
             canSubmit
-              ? "bg-[#0891b2] text-white hover:bg-[#0e7490]"
+              ? "bg-[#00A0AF] text-white hover:bg-[#008594]"
               : "cursor-not-allowed bg-neutral-200 text-neutral-400",
           )}
         >

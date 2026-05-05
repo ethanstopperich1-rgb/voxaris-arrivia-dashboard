@@ -1,27 +1,23 @@
 // /demo — public landing page guests hit when they scan the demo QR
 // code at the resort. NOT auth-gated (middleware only covers
-// /dashboard/*). Mirrors the canonical Arrivia eligibility-check
-// design: teal header with Arrivia wordmark + white card with the
-// 18+ gate + a tap-to-call CTA that fires the actual phone dial on
-// the guest's device.
+// /dashboard/*). Uses the official Arrivia brand palette pulled
+// directly from public/logo/arrivia.svg:
 //
-// Eligible (yes)  → tel:DEEDY_NUMBER triggers the native iOS/Android
-//                   call dialog with Deedy's inbound LK number.
-// Ineligible (no) → graceful "we hope you enjoy your stay" close.
+//   navy   #002D5D  — primary, header bg + headings
+//   teal   #00A0AF  — accent, CTA button
+//   teal2  #8FDADE  — pale teal, decorative
 //
-// Per-call dispatch metadata: when the guest taps the call button
-// their phone dials Deedy directly. The dispatch rule routes the
-// call to her, the dispatch metadata travels via the dialed number's
-// PN binding, and Deedy answers with the after-hours opener.
+// Eligible (yes)  → tel:DEEDY_NUMBER triggers the native call dialog
+//                   on the guest's phone, dialing Deedy.
+// Ineligible (no) → graceful "have a great vacation" close.
 
 import { DemoEligibilityCard } from "./DemoEligibilityCard";
 import Image from "next/image";
 
 export const dynamic = "force-static";
 
-// Deedy's public inbound LK Phone Number. Hard-coded here because
-// this is the customer-facing number, not an env-driven config —
-// QR codes printed at the resort can't be updated dynamically.
+// Deedy's public inbound LK Phone Number. Hard-coded — printed QR
+// codes can't be updated dynamically.
 const DEEDY_NUMBER = "+14072586810";
 
 export const metadata = {
@@ -32,16 +28,16 @@ export const metadata = {
 
 export default function DemoPage() {
   return (
-    <main className="flex min-h-screen w-full flex-col bg-gradient-to-b from-[#0891b2] via-[#0891b2] to-[#0e7490] text-neutral-900">
-      {/* Header — Arrivia wordmark over teal */}
+    <main className="flex min-h-screen w-full flex-col bg-gradient-to-b from-[#002D5D] via-[#002D5D] to-[#001f43] text-neutral-900">
+      {/* Header — Arrivia wordmark inverted to white over navy */}
       <header className="flex w-full justify-center pt-10 pb-8">
         <Image
           src="/logo/arrivia.svg"
           alt="Arrivia"
-          width={180}
-          height={48}
+          width={200}
+          height={56}
           priority
-          className="h-10 w-auto brightness-0 invert"
+          className="h-12 w-auto brightness-0 invert"
         />
       </header>
 
