@@ -24,6 +24,14 @@ export function RealtimeRefresh(): null {
         router.refresh();
       }, 750);
     };
+    // Listen to every table the dashboard surfaces so any page that
+    // mounts this component auto-refreshes when relevant data lands:
+    //   call_sessions (insert + update) → live calls, calls list
+    //   agent_events                    → ops view + transcripts
+    //   appointments                    → calendar + executive funnel
+    //   queue_items                     → dial queue table
+    //   tool_invocations                → top objections card
+    //   placements / placement_scans    → placements admin
     const channel = sb
       .channel("dashboard")
       .on(
@@ -39,6 +47,31 @@ export function RealtimeRefresh(): null {
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "agent_events" },
+        schedule,
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "appointments" },
+        schedule,
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "queue_items" },
+        schedule,
+      )
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "tool_invocations" },
+        schedule,
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "placements" },
+        schedule,
+      )
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "placement_scans" },
         schedule,
       )
       .subscribe();
