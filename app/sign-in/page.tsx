@@ -55,18 +55,22 @@ export default function SignInPage() {
         </div>
 
         <div className="relative overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-950/80 p-6 backdrop-blur">
-          {/* Co-brand strip — small, restrained, lives ABOVE the form  */}
+          {/* Co-brand strip — small, restrained, lives ABOVE the form.
+              Arrivia wordmark on a white pill so brand colors
+              (navy + teal) render properly against the dark card. */}
           <div className="mb-5 flex items-center justify-between border-b border-neutral-800/70 pb-4">
             <span className="text-[10px] font-medium uppercase tracking-widest text-cyan-300/80">
               Live Ops
             </span>
-            <Image
-              src="/logo/arrivia.svg"
-              alt="Arrivia"
-              width={90}
-              height={20}
-              className="h-5 w-auto opacity-70 brightness-0 invert"
-            />
+            <div className="inline-flex items-center justify-center rounded bg-white px-2 py-1 shadow-sm">
+              <Image
+                src="/logo/arrivia.svg"
+                alt="Arrivia"
+                width={90}
+                height={20}
+                className="h-4 w-auto"
+              />
+            </div>
           </div>
           <SignInForm />
           <BorderBeam size={180} duration={12} colorFrom="#22d3ee" colorTo="#06b6d4" />

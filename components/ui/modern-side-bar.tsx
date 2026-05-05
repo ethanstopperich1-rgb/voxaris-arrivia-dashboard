@@ -112,20 +112,25 @@ export function Sidebar({ className = "" }: { className?: string }) {
         )}
       >
         {/* Header — Arrivia wordmark (the platform) over Voxaris (the
-            engine that runs it). Image is the official SVG from
-            arrivia.com saved to /public/logo/arrivia.svg.  */}
+            engine that runs it). Logo is the official navy + teal
+            arrivia.svg. Wrapped in a white rounded pill so the brand
+            colors render with proper contrast against the dark
+            sidebar (navy text on dark = unreadable; on white = clean
+            and on-brand). */}
         <div className="flex items-center justify-between p-4 border-b border-neutral-800">
           {!isCollapsed && (
             <div className="flex items-center gap-2.5">
-              <div className="flex flex-col gap-1.5 leading-tight">
-                <Image
-                  src="/logo/arrivia.svg"
-                  alt="Arrivia"
-                  width={120}
-                  height={28}
-                  priority
-                  className="h-7 w-auto brightness-0 invert"
-                />
+              <div className="flex flex-col gap-2 leading-tight">
+                <div className="inline-flex items-center justify-center rounded-md bg-white px-2.5 py-1.5 shadow-sm">
+                  <Image
+                    src="/logo/arrivia.svg"
+                    alt="Arrivia"
+                    width={140}
+                    height={36}
+                    priority
+                    className="h-7 w-auto"
+                  />
+                </div>
                 <span className="text-[10px] uppercase tracking-widest text-cyan-400">
                   Voxaris · Live Ops
                 </span>
@@ -133,14 +138,16 @@ export function Sidebar({ className = "" }: { className?: string }) {
             </div>
           )}
           {isCollapsed && (
-            <Image
-              src="/logo/arrivia.svg"
-              alt="Arrivia"
-              width={32}
-              height={32}
-              priority
-              className="h-7 w-auto mx-auto brightness-0 invert"
-            />
+            <div className="mx-auto inline-flex items-center justify-center rounded-md bg-white p-1 shadow-sm">
+              <Image
+                src="/logo/arrivia.svg"
+                alt="Arrivia"
+                width={32}
+                height={32}
+                priority
+                className="h-6 w-auto"
+              />
+            </div>
           )}
           <button
             onClick={() => setIsCollapsed((v) => !v)}
