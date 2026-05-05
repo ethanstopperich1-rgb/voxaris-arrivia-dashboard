@@ -15,7 +15,17 @@ type Call = {
   sip_caller_number: string | null;
   caller_name: string | null;
   started_at: string;
+  ended_at: string | null;
 };
+
+// A call is treated as "in flight" only if:
+//   1. It has a livekit_room_name (it's a real LK call)
+//   2. ended_at is NULL (room_ended webhook hasn't landed)
+//   3. started_at is within the last STALE_CUTOFF_MS
+// (3) protects against the webhook silently dropping room_ended —
+// without it, every old row sticks on the dashboard forever showing
+// "LIVE 19:21". Real demo calls never run >15 min.
+const STALE_CUTOFF_MS = 15 * 60 * 1000;
 
 function maskPhone(p: string | null): string {
   if (!p) return "anonymous";
@@ -77,7 +87,13 @@ function Row({ c }: { c: Call }) {
 }
 
 export function InFlightCalls({ calls }: { calls: Call[] }) {
-  const liveCalls = calls.filter((c) => c.livekit_room_name !== null);
+  const cutoff = Date.now() - STALE_CUTOFF_MS;
+  const liveCalls = calls.filter(
+    (c) =>
+      c.livekit_room_name !== null &&
+      c.ended_at === null &&
+      new Date(c.started_at).getTime() >= cutoff,
+  );
   return (
     <section className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-950/60">
       <header className="flex items-center justify-between border-b border-neutral-800 bg-neutral-900/40 px-4 py-3">

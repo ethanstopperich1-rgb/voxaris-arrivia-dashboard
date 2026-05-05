@@ -106,9 +106,26 @@ function fmtDayTime(iso: string): string {
   return `${day} ${time}`;
 }
 
+// Calls older than this with no ended_at are treated as ended — the
+// LK room_ended webhook occasionally drops, and without this guard
+// every silent failure pegs the "live calls" KPI forever.
+const LIVE_STALE_MS = 15 * 60 * 1000;
+
+// Match for this agent. Two ways a row can belong to Deedy:
+//   1. agent_name = 'deedy-vba' (worker telemetry has landed)
+//   2. agent_name IS NULL AND livekit_room_name like 'deedy-%'
+//      (room_started webhook landed but worker hasn't tagged it yet)
+// PostgREST .or() string applies at the row level.
+const AGENT_ROOM_PREFIX: Record<AgentSlug, string> = {
+  deedy: "deedy-",
+  andie: "andie-",
+};
+
 export async function loadAgentDashboard(agent: AgentSlug): Promise<AgentDashboardData> {
   const sb = supabaseAdmin();
   const dbAgent = AGENT_DB_NAME[agent];
+  const roomPrefix = AGENT_ROOM_PREFIX[agent];
+  const agentMatchOr = `agent_name.eq.${dbAgent},and(agent_name.is.null,livekit_room_name.like.${roomPrefix}*)`;
   const now = new Date();
   const today0 = startOfTodayUTC();
   const yesterday0 = shiftDays(today0, -1);
@@ -141,17 +158,20 @@ export async function loadAgentDashboard(agent: AgentSlug): Promise<AgentDashboa
       .select(
         "id, agent_name, started_at, ended_at, summary_outcome, outcome, transfer_success, livekit_room_name",
       )
-      .eq("agent_name", dbAgent)
+      .or(agentMatchOr)
       .gte("started_at", thirtyDaysAgo.toISOString())
       .order("started_at", { ascending: false })
       .limit(5000),
     // Live (in-flight) calls for this agent.
+    // We pull started_at so we can drop stale rows whose room_ended
+    // webhook never landed (anything older than LIVE_STALE_MS).
     sb
       .from("call_sessions")
-      .select("id")
-      .eq("agent_name", dbAgent)
+      .select("id, started_at")
+      .or(agentMatchOr)
       .is("ended_at", null)
-      .not("livekit_room_name", "is", null),
+      .not("livekit_room_name", "is", null)
+      .gte("started_at", new Date(Date.now() - LIVE_STALE_MS).toISOString()),
     // Objection lookups for this agent (last 30d).
     sb
       .from("tool_invocations")

@@ -111,7 +111,12 @@ async function loadDashboard() {
 
   // ── At-a-glance counters
   const callsLast6h = calls.length;
-  const callsInFlight = calls.filter((c) => c.ended_at == null).length;
+  // Stale guard: if ended_at never landed but started >15 min ago,
+  // count it as ended for the in-flight KPI (room_ended webhook drops).
+  const liveCutoff = Date.now() - 15 * 60 * 1000;
+  const callsInFlight = calls.filter(
+    (c) => c.ended_at == null && new Date(c.started_at).getTime() >= liveCutoff,
+  ).length;
   const completedDurations = calls
     .filter((c) => c.ended_at != null)
     .map((c) => (new Date(c.ended_at as string).getTime() - new Date(c.started_at).getTime()) / 1000)
