@@ -44,8 +44,7 @@ const NAV: Item[] = [
   { id: "calendar", name: "Calendar", icon: Calendar, href: "/dashboard/calendar" },
   { id: "calls", name: "Calls", icon: Phone, href: "/dashboard/calls" },
   { id: "placements", name: "Placements", icon: MapPin, href: "/dashboard/placements" },
-  // Operations — engineering / admin
-  { id: "ops", name: "Engineering ops", icon: Wrench, href: "/dashboard/ops" },
+  // Operations — admin only (engineering ops view hidden from clients)
   { id: "queue", name: "Dial queue", icon: ListChecks, href: "/dashboard/queue" },
   { id: "outbound", name: "Outbound", icon: PhoneOutgoing, href: "/dashboard/outbound" },
 ];

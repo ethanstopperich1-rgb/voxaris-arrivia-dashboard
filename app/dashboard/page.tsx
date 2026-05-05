@@ -70,11 +70,7 @@ export default async function DashboardPage({
             </span>
           </h1>
           <p className="mt-1 text-sm text-neutral-500">
-            Executive view · auto-refreshing · for engineering health see{" "}
-            <a href="/dashboard/ops" className="text-cyan-400 underline-offset-2 hover:underline">
-              /ops
-            </a>
-            .
+            Executive view · auto-refreshing.
           </p>
         </div>
         <Suspense fallback={null}>
@@ -140,11 +136,7 @@ export default async function DashboardPage({
           Powered by Voxaris · {agent === "deedy" ? "Arrivia" : "GVR"} program
         </p>
         <p>
-          Engineering ops at{" "}
-          <a href="/dashboard/ops" className="text-cyan-400 hover:underline">
-            /dashboard/ops
-          </a>{" "}
-          · Calendar at{" "}
+          Calendar at{" "}
           <a href="/dashboard/calendar" className="text-cyan-400 hover:underline">
             /dashboard/calendar
           </a>
