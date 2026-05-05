@@ -32,7 +32,7 @@ export const metadata = {
 
 export default function DemoPage() {
   return (
-    <main className="flex min-h-screen w-full flex-col bg-gradient-to-b from-[#0d9488] via-[#0d9488] to-[#0a7e74] text-neutral-900">
+    <main className="flex min-h-screen w-full flex-col bg-gradient-to-b from-[#0891b2] via-[#0891b2] to-[#0e7490] text-neutral-900">
       {/* Header — Arrivia wordmark over teal */}
       <header className="flex w-full justify-center pt-10 pb-8">
         <Image
