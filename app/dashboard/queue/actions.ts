@@ -60,7 +60,7 @@ export async function bulkEnqueue(rows: RowInput[]): Promise<{
       metadata: r.metadata ?? {},
       ai_score: r.ai_score ?? null,
       ai_score_reason: r.ai_score_reason ?? null,
-      ai_score_model: r.ai_score != null ? "grok-4-1-fast-non-reasoning" : null,
+      ai_score_model: r.ai_score != null ? "gpt-4o-mini" : null,
       ai_scored_at: r.ai_score != null ? now : null,
     })),
   );

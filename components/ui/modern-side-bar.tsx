@@ -27,6 +27,7 @@ import {
   Wrench,
   X,
   Search,
+  Radio,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -47,6 +48,7 @@ const NAV: Item[] = [
   // Operations — admin only (engineering ops view hidden from clients)
   { id: "queue", name: "Dial queue", icon: ListChecks, href: "/dashboard/queue" },
   { id: "outbound", name: "Outbound", icon: PhoneOutgoing, href: "/dashboard/outbound" },
+  { id: "rvm", name: "RVM Cowboy", icon: Radio, href: "/dashboard/rvm" },
 ];
 
 export function Sidebar({ className = "" }: { className?: string }) {

@@ -57,9 +57,10 @@ export default async function OutboundPage({
           </li>
           <li>Voxaris dispatches the agent and dials out instantly.</li>
           <li>
-            On answer Andie greets, runs discovery, walks through the four
-            benefit pillars, and either warm-transfers to a specialist or
-            sends a Microsoft Bookings link.
+            On answer Andie opens with the required recording disclosure,
+            confirms the member's identity (enrollment date + email on file),
+            asks one or two questions about upcoming travel plans, and
+            warm-transfers to a GVR closer with that context already loaded in.
           </li>
           <li>
             Track the call live in{" "}

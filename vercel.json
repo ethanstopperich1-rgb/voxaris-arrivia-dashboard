@@ -5,7 +5,9 @@
   "crons": [
     { "path": "/api/cron/prewarm", "schedule": "*/5 * * * *" },
     { "path": "/api/cron/cleanup", "schedule": "0 7 * * *" },
-    { "path": "/api/cron/dial-batch", "schedule": "*/30 13-22 * * 1-5" }
+    { "path": "/api/cron/dial-batch", "schedule": "*/30 13-22 * * 1-5" },
+    { "path": "/api/cron/rvm-rollup", "schedule": "0 6 * * *" },
+    { "path": "/api/cron/rvm-health", "schedule": "0 * * * *" }
   ],
   "functions": {
     "app/api/retell/custom-llm/route.ts": { "maxDuration": 60 },

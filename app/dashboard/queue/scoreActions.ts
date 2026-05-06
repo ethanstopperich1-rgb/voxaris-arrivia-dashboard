@@ -5,8 +5,9 @@
 // the rows enriched with a 0-100 score + a short reason. The page
 // then sorts and highlights the top 20.
 //
-// Model: xai/grok-4-1-fast-non-reasoning  (cheap + fast for scoring)
-// Auth: XAI_API_KEY on the server (already on Vercel).
+// Model: openai/gpt-4o-mini  (cheap + fast for scoring)
+// Auth: OPENAI_API_KEY on the server (already on Vercel).
+// Migrated 2026-05-05 — Grok 4.1 fast non-reasoning was deprecated.
 //
 // Heuristic the prompt asks the model to apply:
 //   - Returning callers (last_call_date != "never") who haven't booked
@@ -18,7 +19,7 @@
 //     because the original interest is fresh.
 //   - DNC, "not_interested" hints in metadata = floor (5-15).
 
-const SCORING_MODEL = "grok-4-1-fast-non-reasoning";
+const SCORING_MODEL = "gpt-4o-mini";
 
 export type ScoredRow = {
   agent_name: "andie-gvr" | "deedy-vba";
@@ -83,13 +84,13 @@ export async function scoreLeads(rows: RawRow[]): Promise<{
     return { scored: [], fallbackUsed: false };
   }
 
-  const apiKey = process.env.XAI_API_KEY ?? "";
+  const apiKey = process.env.OPENAI_API_KEY ?? "";
   if (!apiKey) {
     // Graceful fallback: deterministic priority by metadata richness.
     return {
       scored: heuristicFallback(rows),
       fallbackUsed: true,
-      error: "XAI_API_KEY missing — used heuristic fallback.",
+      error: "OPENAI_API_KEY missing — used heuristic fallback.",
     };
   }
 
@@ -101,7 +102,7 @@ export async function scoreLeads(rows: RawRow[]): Promise<{
   const payload = buildUserPayload(head);
 
   try {
-    const res = await fetch("https://api.x.ai/v1/chat/completions", {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
