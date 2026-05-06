@@ -204,16 +204,6 @@ def build():
 
     story.append(PageBreak())  # page 1 = cover via onFirstPage
 
-    # ── INTRO ─────────────────────────────────────────────────────────────────
-    story += [
-        body("Hey Chris, Jay, Russell -- thanks again for the time on the call. "
-             "Here's a quick summary of what we talked about, the numbers we confirmed, "
-             "and a short list of what we need to get moving. Nothing complicated -- "
-             "just want to make sure we're all working from the same page before we "
-             "kick things off.", s),
-        sp(16),
-    ]
-
     # ── 1. WHAT WE'RE BUILDING ────────────────────────────────────────────────
     story += [
         divider("What we're building"),
@@ -402,21 +392,13 @@ def build():
             "480, 407, etc.). You're already doing this -- we'll match whatever pool you "
             "rotate through, and we'll add carrier-level reputation monitoring so we can "
             "retire numbers before they get spam-flagged.", s),
-        bul("<b>Voice that sounds human.</b> Andie uses Cartesia Sonic-3 with natural "
-            "pacing tuned for PSTN audio compression. iOS screening models trained on "
+        bul("<b>Voice that sounds human.</b> Andie's voice is tuned for PSTN audio "
+            "compression with natural pacing. iOS screening models trained on "
             "DTMF-style robocall audio typically pass through natural-cadence voices.", s),
         bul("<b>Voicemail drop fallback.</b> If a call hits voicemail, Andie leaves a "
             "personalized message rather than dead-air -- which generates inbound "
             "callbacks that bypass the screening problem entirely (Chris's 50% inbound "
             "lift stat).", s),
-        sp(8),
-        body("<b>What this means for the pilot KPI baseline.</b> The Philippines fronter "
-             "team is operating in the same iOS environment (~10% connect rate confirmed "
-             "on the call). We're not asking to be measured against pre-iOS connect rates "
-             "from 2023 -- we're asking to be measured against the current Philippines "
-             "baseline, with an explicit shared goal of moving that number up via the "
-             "tactics above. Concrete starting expectation: <b>match the 10% baseline in "
-             "Week 1, target 12-15% by Week 4 with branded ID + voicemail drops live.</b>", s),
         sp(18),
     ]
 
@@ -424,55 +406,49 @@ def build():
     story += [
         divider("Voice selection"),
         sp(10),
-        body("Given GVR's demographic (US military, veterans, federal civilians), we're "
-             "defaulting to clearly American-English voices with natural cadence. "
-             "Below are five candidates Jay and the team can A/B on the test line. "
-             "Current production primary is Voice F1 (Jacqueline). Three female + two "
-             "male options give the team real range to compare.", s),
+        body("Given GVR's demographic (US military, veterans, federal civilians), "
+             "we're defaulting to clearly American-English voices with natural "
+             "cadence. Below are five candidates Jay and the team can A/B on the "
+             "test line -- three female, two male. Voice 1 is current production.", s),
         sp(8),
         mktable(
-            ["Voice", "ID / Engine", "Description", "Gender"],
+            ["Voice", "Description", "Gender"],
             [
-                ("F1 -- Jacqueline (current)",
-                 "cartesia/sonic-3<br/>9626c31c-...c8bc",
+                ("Voice 1 (current)",
                  "Confident, young American adult female. Mid-American accent, "
                  "warm-but-professional, natural breath cadence. Currently in "
                  "production on the test line.",
                  "Female"),
-                ("F2 -- Nora",
-                 "cartesia/sonic-3<br/>(library voice)",
-                 "Mature American female, slightly lower register than F1. "
+                ("Voice 2",
+                 "Mature American female, slightly lower register than Voice 1. "
                  "Reads as more experienced -- 'rep who's been doing this 10 "
                  "years'. Good for older-skewing GVR cohort.",
                  "Female"),
-                ("F3 -- Steppe",
-                 "rime/mistv3<br/>steppe",
-                 "Mid-American female, lighter register, slight upbeat. "
-                 "Was the original Andie voice before the Cartesia switch. "
-                 "Kept as fallback voice in production.",
+                ("Voice 3",
+                 "Mid-American female, lighter register, slight upbeat. Was the "
+                 "original Andie voice before the recent swap. Kept as a "
+                 "production fallback.",
                  "Female"),
-                ("M1 -- Blake",
-                 "cartesia/sonic-3<br/>a167e0f3-...fdab",
+                ("Voice 4",
                  "Energetic American adult male. Higher energy than the female "
-                 "voices -- worth A/B-ing on younger military demographic and "
+                 "options -- worth A/B-ing on younger military demographic and "
                  "follow-up calls.",
                  "Male"),
-                ("M2 -- Tundra",
-                 "rime/mistv3<br/>tundra",
+                ("Voice 5",
                  "Calm American male, lower register, professional cadence. "
                  "Good if the team prefers a 'senior account manager' feel "
                  "over an upbeat fronter.",
                  "Male"),
             ],
-            widths=[1.5 * inch, 1.6 * inch, 2.7 * inch, 0.7 * inch],
+            widths=[1.4 * inch, 4.4 * inch, 0.7 * inch],
             s=s,
             shade_col=0,
         ),
         sp(8),
-        body("Jay and team -- call the test line (number you already have) for each "
-             "voice you want to hear. Tell us which one converts best in your gut, and "
-             "we'll lock it in before pilot go-live. We can swap the voice any time, "
-             "even mid-pilot, in 60 seconds.", s),
+        body("Jay and team -- call the test line (number you already have) for "
+             "each voice you want to hear. Tell us which one converts best in "
+             "your gut, and we'll lock it in before pilot go-live. We can swap "
+             "the voice any time, even mid-pilot, in 60 seconds.", s),
         sp(18),
     ]
 
@@ -519,60 +495,6 @@ def build():
         bul("Cost per transfer running total", s),
         sp(6),
         body("Chris, Jay -- tell us what's missing and we'll add it.", s),
-        sp(18),
-    ]
-
-    # ── 8b. PILOT SUCCESS CRITERIA / KPIs ─────────────────────────────────────
-    story += [
-        divider("Pilot success criteria / KPIs"),
-        sp(10),
-        body("This is what 'success' means for Andie at the end of the 60-day pilot. "
-             "Payment activation on September 1, 2026 is gated on hitting these. "
-             "Baselines are pulled from the April 30 discovery call -- if any are off, "
-             "Russell flags them and we update.", s),
-        sp(8),
-        mktable(
-            ["KPI", "Philippines baseline", "Andie target (60-day)"],
-            [
-                ("Connect-to-transfer rate",
-                 "~5.9% (177 transfers / 3,000 connects, per 4/24 sample)",
-                 "Match by Week 4. Beat by Week 8."),
-                ("Connect rate (dials -> live answer)",
-                 "~10% (post-iOS screening baseline)",
-                 "Match in Week 1. 12-15% by Week 4 with branded ID + voicemail drops."),
-                ("Warm-transfer quality score",
-                 "TBD -- Jay to grade 50 sample transfers from Andie pilot Week 1-2 "
-                 "for discovery completeness, brief accuracy, handoff cleanliness.",
-                 "Match Philippines top-quartile by Week 6."),
-                ("Closer conversion on Andie-sourced transfers",
-                 "TBD -- Jay's team baseline conversion on Philippines-sourced transfers.",
-                 "At or above the Philippines baseline."),
-                ("Cost per transfer",
-                 "~$19k/fronter/month / ~150 transfers/day per fronter team",
-                 "Track AI infrastructure cost per Andie transfer. Target: meaningfully "
-                 "lower per transfer than the Philippines team."),
-                ("Inbound callback lift from outbound footprint",
-                 "~50% of inbound traces to outbound dialer",
-                 "Maintain or improve. Voicemail drops should bump this."),
-                ("TCPA / compliance incidents",
-                 "0",
-                 "0 -- non-negotiable. Hard fail of pilot if breached."),
-            ],
-            widths=[1.6 * inch, 2.45 * inch, 2.45 * inch],
-            s=s,
-            shade_col=0,
-        ),
-        sp(10),
-        body("<b>Evaluation cadence.</b> Weekly Thursday review at 12:00 PM EST with "
-             "Chris, Jay, Russell, Stacey, Ethan. Mid-pilot formal review July 1. "
-             "Final results presented August 18. Payment activation September 1, 2026 "
-             "if KPIs above are confirmed met by both sides.", s),
-        sp(8),
-        body("<b>Payment trigger (per the 60-day timeline doc).</b> Upon Andie proving "
-             "agreed KPIs, Arrivia pays Voxaris 3% of upgrade gross revenue on all "
-             "conversions where (1) Andie served as fronter and (2) an Arrivia agent "
-             "closed the upgrade. Full terms live in the Voxaris-Arrivia AI Services "
-             "Agreement (presented May 20, executed by May 25).", s),
         sp(18),
     ]
 
