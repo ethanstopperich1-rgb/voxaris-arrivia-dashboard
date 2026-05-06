@@ -204,50 +204,90 @@ def build():
 
     story.append(PageBreak())  # page 1 = cover via onFirstPage
 
-    # ── 1. WHAT WE'RE BUILDING ────────────────────────────────────────────────
+    # ── 1. WHAT WE HEARD ──────────────────────────────────────────────────────
     story += [
-        divider("What we're building"),
+        divider("What we heard"),
         sp(10),
-        body("<b>Andie</b> is a voice AI agent that handles the fronter role for GVR's "
-             "cold and warm propensity base -- the same job your Philippines team does today, "
-             "but consistent, scalable, and available whenever you want to dial.", s),
+        body("Arrivia operates a fronter program for Government Vacation Rewards "
+             "(GVR) out of the Philippines: agents call the cold and warm "
+             "propensity base, run light discovery, and warm-transfer to a "
+             "U.S.-based closer. The fronter role is intentionally narrow -- "
+             "no pricing, no heavy qualification, no selling. Just confirm the "
+             "member is real, get a read on their travel intent, and hand them "
+             "off with context.", s),
         sp(6),
-        body("The job is intentionally narrow: confirm who the member is, "
-             "remind them they have active benefits, get a read on their travel intent, "
-             "and hand them to a closer with that context already loaded in. "
-             "That's it. No pricing, no heavy qualification, no selling.", s),
-        sp(6),
-        body("Everything else -- the scripting, the cadencing, the segmentation -- "
-             "we match to how Jay's best fronters already work. "
-             "The goal for the pilot is to prove this out on GVR first, "
-             "then roll it to iCruise, Smarter Getaways, and the rest of the brands.", s),
+        body("The pilot scope is GVR's free-membership cold/warm pool. Hot leads "
+             "(same-day enrollments, recent bookers) stay with Jay's outbound "
+             "sales reps -- they convert too well to mix in. If GVR works, the "
+             "next brands on the list are iCruise, Smarter Getaways, and others.", s),
         sp(18),
     ]
 
-    # ── 2. NUMBERS FROM THE CALL ──────────────────────────────────────────────
+    # ── 2. THE NUMBERS THAT CAME OUT OF THEIR MOUTHS ──────────────────────────
     story += [
-        divider("Numbers we confirmed"),
+        divider("The numbers that came out of their mouths"),
         sp(10),
-        mktable(
-            ["Metric", "What you told us"],
-            [
-                ("Total fronter agents",         "23 total (14 active, 9 recently hired -- some only 4 days in)"),
-                ("Revenue per fronter / month",  "~$19,000 (full month, includes new hires)"),
-                ("Total fronter revenue / month","~$400,000-$450,000"),
-                ("Daily dials (HCI through LiveVox)", "~30,000"),
-                ("Connect rate",                 "~10% (~3,000 connects/day)"),
-                ("Daily transfers to closer",    "150-200 (177 Thu, 181 Fri last week)"),
-                ("Fronter work schedule",        "Monday-Friday, mirrors the sales team"),
-                ("Best contact hours",           "Nights and weekends"),
-                ("Lead cadence",                 "6 attempts per quarter, ~7 campaigns in rotation"),
-                ("Inbound lift from outbound",   "50% of all inbound calls are people calling back after being touched by the outbound dialer -- voicemails, hang-ups, missed calls that generated a return. Example: if Arrivia receives 10,000 inbound calls in a week, ~5,000 of those originated from the outbound footprint."),
-                ("Inbound callbacks / week (exact)", "TBD -- Russell to confirm the actual weekly inbound volume so we can size this properly."),
-                ("Lead pool for this pilot",     "Free membership base -- cold/warm propensity, not the hot daily enrollments"),
-            ],
-            [2.3 * inch, 4.7 * inch], s),
+        body("Pulled directly from the April 30 discovery call. The "
+             "<b>Implication</b> column is our read on what each number actually "
+             "means -- flag anything we got wrong.", s),
         sp(8),
-        note("The hot leads (same-day enrollments, recent bookers) stay with Jay's outbound sales reps -- "
-             "those convert too well to mix into this program. We're focused on the large cold/warm base.", s),
+        mktable(
+            ["Metric", "Value", "Implication"],
+            [
+                ("Fronter agents",
+                 "23 total (14 deployed + 9 new hires only ~4 days on phones)",
+                 "True productive headcount is ~14, not 23. Their '23' math inflates baseline."),
+                ("Revenue per fronter / month",
+                 "$19,000",
+                 "Their declared baseline. <b>This is the number Voxaris is being measured against.</b>"),
+                ("Total fronter revenue / month",
+                 "\"$400-$450k\" (Chris revised himself DOWN mid-sentence)",
+                 "Revenue is volatile or declining. The $50k self-correction is a tell."),
+                ("Hot-lead callback revenue",
+                 "$200k/month",
+                 "Adjacent stream -- not part of pilot but adjacent upside."),
+                ("Reload (upgrade existing) revenue",
+                 "\"Couple hundred thousand/month\"",
+                 "Phase 2 expansion target."),
+                ("Daily dial volume",
+                 "30,000 dials",
+                 "Massive outbound throughput."),
+                ("Connect rate",
+                 "~10%",
+                 "= 3,000 live connects/day across 23 agents = ~130 connects per agent per day."),
+                ("Transfers to closer",
+                 "150-200/day (avg ~180)",
+                 "= ~8 transfers per agent per day."),
+                ("Transfer rate (of connects)",
+                 "~6%",
+                 "This is the real top-of-funnel conversion."),
+                ("Contact cadence",
+                 "3-4x per year, <b>5-6 attempts per quarter</b>",
+                 "Heavy re-dial pattern."),
+                ("Work week",
+                 "M-F only (Philippines), Saturday volunteer",
+                 "<b>Weekend coverage = unclaimed Andie territory.</b>"),
+                ("Best hours",
+                 "Nights + weekends",
+                 "Off-shore can't fully cover this -- Andie's natural advantage."),
+                ("Member type",
+                 "<b>100% free-tier</b> members in this campaign",
+                 "All upsell, no acquisition."),
+                ("Inbound lift from outbound",
+                 "50% of all inbound traces back to the outbound footprint -- voicemails, hang-ups, missed calls that generated a return",
+                 "Example: 10,000 weekly inbound calls = ~5,000 originated from outbound."),
+            ],
+            [1.5 * inch, 2.6 * inch, 2.9 * inch], s),
+        sp(10),
+        body("<b>Implied funnel math (annualized, using their numbers):</b>", s),
+        sp(4),
+        bul("30,000 dials/day x 250 work days = 7.5M dials/year", s),
+        bul("750k connects/year -> 45k transfers/year x at 14% closer rate (from the "
+            "transcripts we read) = ~6,300 closes/year x $1,999 = <b>$12.6M/year revenue</b>", s),
+        sp(8),
+        note("The hot leads (same-day enrollments, recent bookers) stay with Jay's "
+             "outbound sales reps -- those convert too well to mix into this program. "
+             "We're focused on the large cold/warm free-tier base.", s),
         sp(18),
     ]
 
@@ -346,159 +386,42 @@ def build():
         sp(18),
     ]
 
-    # ── 6. TECHNOLOGY ─────────────────────────────────────────────────────────
+    # ── 6. PROBLEMS THEY FLAGGED ──────────────────────────────────────────────
     story += [
-        divider("The technology picture"),
+        divider("Problems they flagged on the call"),
         sp(10),
-        sub("LiveVox integration (Russell)", s),
-        body("LiveVox is where everything lives -- the lead list, the recordings, the dispositions. "
-             "The simplest starting point is a daily batch file that LiveVox exports and we pull in. "
-             "We can upgrade to real-time API once we've validated the setup. "
-             "We just need read access for the list and write access to post outcomes back.", s),
-        sp(10),
-        sub("Caller ID (Russell)", s),
-        body("You're already looking at branded LCIDs (~$1k/month for a couple numbers) and rotating "
-             "local presence numbers (602, 480, 407, etc.). That's exactly the right approach. "
-             "We've seen branded ID lift connect rates meaningfully, especially with iOS screening. "
-             "We'll match whatever number pool you give us.", s),
-        sp(10),
-        sub("Warm transfer (Jay)", s),
-        body("When Andie is ready to hand off, she bridges the call to a closer and passes a summary "
-             "of what she learned. The closer gets that context the moment they pick up -- "
-             "no need for the member to repeat themselves. "
-             "We'll connect to whatever endpoint you're using (SIP, PSTN, or LiveVox internal).", s),
-        sp(10),
-        sub("TCPA compliance", s),
-        body("Recording disclosure in the first 10 seconds, state-by-state consent handling, "
-             "litigator list suppression, DNC scrubbing. We build all of that in from day one. "
-             "We'll need the approved disclosure language from your legal team to make sure "
-             "we're saying it exactly right.", s),
-        sp(10),
-        sub("iOS call screening -- the elephant in the room", s),
-        body("iOS 17 and iOS 18 introduced aggressive call-screening behavior that has "
-             "reduced outbound connect rates across the industry by roughly 30%. This is "
-             "the single biggest threat to any AI dialer program, and we're treating it "
-             "as a first-class problem -- not a footnote.", s),
-        sp(6),
-        body("How we're attacking it on the Andie pilot:", s),
-        sp(4),
-        bul("<b>Branded Caller ID (RCD).</b> Pilot the LCIDs Russell is already evaluating "
-            "(~$1k/month for a couple of numbers) so the recipient sees 'Government "
-            "Vacation Rewards' instead of an unknown 10-digit string. Biggest single lift.", s),
-        bul("<b>STIR/SHAKEN A-attestation.</b> Verify your Twilio trunk is ship A-attested "
-            "(not B/C). Carriers route A-attested numbers through fewer screening filters. "
-            "Russell to confirm current attestation level on the GVR trunk.", s),
-        bul("<b>Local-presence number rotation.</b> Match the recipient's area code (602, "
-            "480, 407, etc.). You're already doing this -- we'll match whatever pool you "
-            "rotate through, and we'll add carrier-level reputation monitoring so we can "
-            "retire numbers before they get spam-flagged.", s),
-        bul("<b>Voice that sounds human.</b> Andie's voice is tuned for PSTN audio "
-            "compression with natural pacing. iOS screening models trained on "
-            "DTMF-style robocall audio typically pass through natural-cadence voices.", s),
-        bul("<b>Voicemail drop fallback.</b> If a call hits voicemail, Andie leaves a "
-            "personalized message rather than dead-air -- which generates inbound "
-            "callbacks that bypass the screening problem entirely (Chris's 50% inbound "
-            "lift stat).", s),
-        sp(18),
-    ]
-
-    # ── 7. VOICE ──────────────────────────────────────────────────────────────
-    story += [
-        divider("Voice selection"),
-        sp(10),
-        body("Given GVR's demographic (US military, veterans, federal civilians), "
-             "we're defaulting to clearly American-English voices with natural "
-             "cadence. Below are five candidates Jay and the team can A/B on the "
-             "test line -- three female, two male. Voice 1 is current production.", s),
+        body("Things Chris, Jay, and Russell raised as active pain or open "
+             "questions. Captured here so they don't get lost between now and the SOW.", s),
         sp(8),
         mktable(
-            ["Voice", "Description", "Gender"],
+            ["Problem", "What they said"],
             [
-                ("Voice 1 (current)",
-                 "Confident, young American adult female. Mid-American accent, "
-                 "warm-but-professional, natural breath cadence. Currently in "
-                 "production on the test line.",
-                 "Female"),
-                ("Voice 2",
-                 "Mature American female, slightly lower register than Voice 1. "
-                 "Reads as more experienced -- 'rep who's been doing this 10 "
-                 "years'. Good for older-skewing GVR cohort.",
-                 "Female"),
-                ("Voice 3",
-                 "Mid-American female, lighter register, slight upbeat. Was the "
-                 "original Andie voice before the recent swap. Kept as a "
-                 "production fallback.",
-                 "Female"),
-                ("Voice 4",
-                 "Energetic American adult male. Higher energy than the female "
-                 "options -- worth A/B-ing on younger military demographic and "
-                 "follow-up calls.",
-                 "Male"),
-                ("Voice 5",
-                 "Calm American male, lower register, professional cadence. "
-                 "Good if the team prefers a 'senior account manager' feel "
-                 "over an upbeat fronter.",
-                 "Male"),
+                ("iOS call screening",
+                 "Russell -- connect rates have dropped meaningfully on iOS 17/18. "
+                 "Currently mitigating with HCI (Human Call Interface) routing through "
+                 "LiveVox; evaluating branded LCIDs at ~$1k/month."),
+                ("Number reputation",
+                 "Russell -- rotating local-presence numbers (602, 480, 407, etc.) plus "
+                 "spam-likely scrubbing. Branded ID pilot planned for this month."),
+                ("Off-shore voice perception",
+                 "Chris/Jay -- military/government demographic doesn't always engage with "
+                 "Philippines-accented agents. Crisp noise cancellation in use; accent "
+                 "transformation tested without ROI."),
+                ("New-hire ramp",
+                 "Jay -- 9 of 23 fronters have only ~4 days on phones. The $19k/agent "
+                 "baseline is dragged down by the unramped tail."),
+                ("Weekend / nights coverage gap",
+                 "Chris/Jay -- best contact hours are nights and weekends. Philippines "
+                 "team works M-F to mirror the U.S. closers; Saturday is volunteer-only."),
+                ("Discovery quality at handoff",
+                 "Jay -- best transfers carry detail. The more the closer knows up front, "
+                 "the more it converts. Cold transfers underperform."),
             ],
-            widths=[1.4 * inch, 4.4 * inch, 0.7 * inch],
-            s=s,
-            shade_col=0,
-        ),
-        sp(8),
-        body("Jay and team -- call the test line (number you already have) for "
-             "each voice you want to hear. Tell us which one converts best in "
-             "your gut, and we'll lock it in before pilot go-live. We can swap "
-             "the voice any time, even mid-pilot, in 60 seconds.", s),
+            [1.7 * inch, 5.3 * inch], s),
         sp(18),
     ]
 
-    # ── 8. DASHBOARD ──────────────────────────────────────────────────────────
-    story += [
-        divider("Dashboard"),
-        sp(10),
-        body("The dashboard is already live and accessible to your team right now -- "
-             "no separate link will be sent, you can use the details below directly:", s),
-        sp(8),
-        mktable(
-            ["", ""],
-            [
-                ("URL",
-                 "<font face='Courier' size='10'>https://arrivia.voxaris.io/dashboard</font>"),
-                ("Username",
-                 "<font face='Courier' size='10'>arrivia</font>"),
-                ("Password (interim)",
-                 "<font face='Courier' size='10'>demo2026</font>"),
-                ("Recommended access",
-                 "Bookmark the URL above. Each stakeholder can use the shared login "
-                 "during the intake/sandbox period; per-user credentials will replace "
-                 "this before pilot go-live (June 1)."),
-                ("Per-user credentials",
-                 "Provisioned by May 22, 2026 -- four named accounts for Chris Cole, "
-                 "Jay Bankhead, Russell Reese, and Stacey Sutherland. Voxaris will email "
-                 "each stakeholder a password reset link the day they're created."),
-            ],
-            widths=[1.8 * inch, 4.7 * inch],
-            s=s,
-            shade_col=0,
-        ),
-        sp(10),
-        body("Right now the dashboard shows calls answered, engagement past intro, "
-             "warm handoffs, top objections, and the outbound dial trigger. The KPI "
-             "view will be built out to match what Jay and Chris actually care about. "
-             "Working list:", s),
-        sp(4),
-        bul("Connect-completion rate vs. Philippines baseline (~5.9% transfers/connects)", s),
-        bul("Transfer rate (% of connects that become warm handoffs)", s),
-        bul("Revenue attributed to Andie-sourced transfers", s),
-        bul("Top objections (auto-categorized from transcripts)", s),
-        bul("Inbound callback lift (50% of your inbound today traces to outbound -- let's track if that moves)", s),
-        bul("Cost per transfer running total", s),
-        sp(6),
-        body("Chris, Jay -- tell us what's missing and we'll add it.", s),
-        sp(18),
-    ]
-
-    # ── 9. WHAT WE NEED FROM YOU ──────────────────────────────────────────────
+    # ── 7. WHAT WE NEED FROM YOU ──────────────────────────────────────────────
     story += [
         divider("What we need from you"),
         sp(10),
