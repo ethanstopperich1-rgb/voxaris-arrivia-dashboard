@@ -214,7 +214,7 @@ async function processAgent(
           ai_score_reason: got.ai_score_reason,
           ai_score_model: scored.fallbackUsed
             ? "heuristic"
-            : "grok-4-1-fast-non-reasoning",
+            : "gpt-4o-mini",
           ai_scored_at: now,
           updated_at: now,
         })

@@ -5,6 +5,7 @@ import { sha256 } from "@/lib/utils/hash";
 import { initCallMemory } from "@/lib/memory/redis-memory";
 import { logger } from "@/lib/observability/logger";
 import { env } from "@/lib/config/env";
+import { getCallbackContext, clearCallbackContext } from "@/lib/rvm/drop-cache";
 
 export const runtime = "nodejs";
 
@@ -56,6 +57,38 @@ export async function POST(req: Request) {
   const from = parsed.data.call_inbound.from_number ?? "unknown";
   const to = parsed.data.call_inbound.to_number ?? "";
   const e = env();
+
+  // ─── RVM Callback — short-circuit with hot callback context ───────────
+  // If the Twilio webhook already stored an RVM context for this caller,
+  // Andy gets it as dynamic vars and knows to skip the standard opener.
+  if (from !== "unknown") {
+    const rvmCtx = await getCallbackContext(from).catch(() => null);
+    if (rvmCtx?.isRvmCallback) {
+      // Consume the context — one-shot per call
+      void clearCallbackContext(from).catch(() => {});
+
+      logger.info({ from, leadId: rvmCtx.leadId }, "retell/inbound: RVM callback detected");
+
+      return NextResponse.json({
+        call_inbound: {
+          override_agent_id: e.RETELL_AGENT_ID,
+          dynamic_variables: {
+            brand: "GVR",
+            env: e.NODE_ENV,
+            is_rvm_callback: "true",
+            member_name: rvmCtx.firstName,
+            enrollment_date: rvmCtx.enrollmentDate,
+            offer_display: rvmCtx.offerDisplay ?? "travel savings credits",
+            campaign_name: rvmCtx.campaignName,
+            is_returning_caller: "true",
+            last_call_date: "just now via voicemail",
+            last_call_outcome: "rvm_callback",
+          },
+        },
+      });
+    }
+  }
+  // ─────────────────────────────────────────────────────────────────────
 
   // ─── DEEDY (Arrivia VBA) — short-circuit, no GVR memory lookup ────
   // Deedy is stateless per scan (no cross-call memory). The flow uses

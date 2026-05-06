@@ -56,6 +56,8 @@ function classifyObjection(text: string): string {
   if (/already|prior|been|attended/.test(s)) return "Already attended";
   if (/email|mail|send|text|link/.test(s)) return "Channel preference";
   if (/think|consider|talk to|discuss/.test(s)) return "Wants to think";
+  if (/robot|ai\b|artificial|automated|computer|real person|human/.test(s)) return "AI detection";
+  if (/sign.?up|remember|enroll|registered|when did|how did you get/.test(s)) return "Don't recall enrollment";
   return "Other";
 }
 
@@ -308,8 +310,6 @@ export async function loadAgentDashboard(agent: AgentSlug): Promise<AgentDashboa
       const o = c.summary_outcome || c.outcome || "";
       return !["wrong-person", "dnc", "voicemail"].includes(o);
     }).length;
-    // Andie's temp-check ≥8 isn't logged separately yet — proxy with
-    // (transferred OR scheduler-link-sent) calls = "warm enough".
     const transferredOrLink = appts.filter(
       (a) => a.status === "link-sent",
     ).length + calls.filter((c) => c.transfer_success === true).length;
@@ -320,7 +320,7 @@ export async function loadAgentDashboard(agent: AgentSlug): Promise<AgentDashboa
       { label: "Calls answered", value: totalCalls },
       { label: "Engaged past intro", value: engaged },
       { label: "Warm hand-offs", value: transferredOrLink },
-      { label: "Transferred to specialist", value: transferred },
+      { label: "Transferred to closer", value: transferred },
       { label: "Scheduler links sent", value: linkSent, hint: "fallback path" },
     ];
   }

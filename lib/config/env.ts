@@ -61,6 +61,20 @@ const EnvSchema = z.object({
     .default(""),
   WELCOME_TEAM_EMAIL: z.string().email().optional(),
 
+  // ── RVM Cowboy ──────────────────────────────────────────────────────────
+  RIME_API_KEY: z.string().min(1).optional(),
+  RIME_VOICE_CLONE_ID: z.string().optional().default(""),   // populated after studio session
+  DROP_COWBOY_API_KEY: z.string().min(1).optional(),
+  DROP_COWBOY_ACCOUNT_ID: z.string().optional().default(""),
+  DEEPGRAM_API_KEY: z.string().min(1).optional(),           // QC transcription
+  REALRESOLVE_API_KEY: z.string().min(1).optional(),        // litigator scrub
+  RND_API_KEY: z.string().min(1).optional(),                // reassigned numbers database
+  FEDERAL_DNC_API_KEY: z.string().min(1).optional(),
+  RVM_STORAGE_BUCKET: z.string().default("rvm-audio"),
+  RVM_DAILY_CAP: z.coerce.number().int().positive().default(2500),
+  RVM_CONCURRENT_GENERATIONS: z.coerce.number().int().positive().default(20),
+  SLACK_WEBHOOK_URL: z.string().url().optional(),
+
   DEMO_MODE: bool.default("true"),
   ANSWER_CARD_ONLY_MODE: bool.default("false"),
   ALLOW_FULL_RAG: bool.default("true"),
@@ -130,5 +144,8 @@ function defaultsForTest(): Record<string, string> {
     BACKUP_SPECIALIST_NUMBER: "+10000000000",
     SPECIALIST_SMS_NUMBER: "+10000000000",
     SPECIALIST_EMAIL: "ops@example.com",
+    RVM_STORAGE_BUCKET: "rvm-audio",
+    RVM_DAILY_CAP: "2500",
+    RVM_CONCURRENT_GENERATIONS: "20",
   };
 }
