@@ -1,14 +1,11 @@
-// HICV-themed eligibility card for Cassie demo — three states:
-//   1. Family Play Pass hero + greeting + 18+ question + consent + CTA
+// HICV-aesthetic eligibility card — three states, hospitality-warm palette:
+//   1. Family Play Pass anchor + 18+ question + consent + orange CTA
 //   2. ineligible (NO) — graceful close, "have a great vacation"
 //   3. eligible (YES + checked + tapped CTA) — tel: link auto-dials
 //      Cassie on the guest's phone (native iOS/Android call dialog)
 //
-// Same UX flow as /demo's DemoEligibilityCard (Deedy/Andie). The only
-// brand-specific element is the HICV-green Family Play Pass hero
-// block above the eligibility check — anchors the offer for HICV
-// guests so they know what they're claiming before they read the
-// 18+ question.
+// Brand: matches hicv.com — white card, orange accents, neutral text.
+// No green-block enterprise vibe. No screaming hero blocks. Clean form.
 "use client";
 
 import { useState } from "react";
@@ -18,9 +15,8 @@ import { cn } from "@/lib/utils";
 type Choice = null | "yes" | "no";
 
 // HICV brand palette
-const HICV_GREEN = "#00703C";
-const HICV_GREEN_DARK = "#004D29";
 const HICV_ORANGE = "#E64A19";
+const HICV_ORANGE_HOVER = "#B8331A";
 
 export function CassieEligibilityCard({
   cassieNumber,
@@ -36,7 +32,7 @@ export function CassieEligibilityCard({
       <div className="flex flex-col items-center px-6 py-10 text-center">
         <p
           className="text-lg font-bold uppercase tracking-wide"
-          style={{ color: HICV_GREEN_DARK }}
+          style={{ color: HICV_ORANGE }}
         >
           Thanks for your interest!
         </p>
@@ -54,10 +50,10 @@ export function CassieEligibilityCard({
         <button
           type="button"
           onClick={() => setChoice(null)}
-          className="mt-8 inline-flex items-center justify-center gap-2 rounded-md border-2 px-6 py-3 text-sm font-semibold uppercase tracking-wider transition hover:text-white"
+          className="mt-8 inline-flex items-center justify-center gap-2 rounded-full border-2 px-6 py-3 text-sm font-semibold uppercase tracking-wider transition hover:text-white"
           style={{
-            borderColor: HICV_GREEN,
-            color: HICV_GREEN,
+            borderColor: HICV_ORANGE,
+            color: HICV_ORANGE,
           }}
         >
           <Check className="h-4 w-4" />
@@ -67,56 +63,29 @@ export function CassieEligibilityCard({
     );
   }
 
-  // DEFAULT STATE — Family Play Pass hero + eligibility check + CTA
+  // DEFAULT STATE — eligibility check + CTA
   const canSubmit = choice === "yes" && consent;
 
   return (
-    <div className="flex flex-col px-6 py-8">
-      {/* HICV Family Play Pass hero — anchors the offer */}
-      <div
-        className="rounded-xl px-5 py-4 text-center text-white shadow-md"
-        style={{ backgroundColor: HICV_GREEN }}
-      >
-        <p className="text-[11px] font-semibold uppercase tracking-widest opacity-90">
-          Holiday Inn Club Vacations
-        </p>
-        <p className="mt-1 text-2xl font-extrabold tracking-tight">
-          Family Play Pass
-        </p>
-        <p
-          className="mt-1 text-3xl font-black"
-          style={{ color: HICV_ORANGE }}
-        >
-          $125
-        </p>
-        <p className="text-[11px] font-medium uppercase tracking-wider opacity-90">
-          in resort activity credit · up to 5 people · up to 5 days
-        </p>
-      </div>
-
-      {/* Greeting */}
-      <p
-        className="mt-6 text-center text-lg font-bold uppercase tracking-wide"
-        style={{ color: HICV_GREEN_DARK }}
-      >
-        Thanks for contacting us!
-      </p>
-      <p className="mt-1 text-center text-sm text-neutral-500">
-        Let&apos;s get started.
+    <div className="flex flex-col px-6 py-8 md:px-8">
+      {/* Top label — sets context without screaming */}
+      <p className="text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-500">
+        Family Play Pass · Eligibility
       </p>
 
-      <div className="mt-6 border-t border-neutral-200 pt-6">
-        <p className="text-center text-base font-bold uppercase tracking-wide text-neutral-900">
-          Eligibility Check
-        </p>
-        <p className="mt-2 text-center text-xs text-neutral-500">
-          Please confirm the following to continue
-        </p>
+      <h2 className="mt-2 text-center text-2xl font-extrabold leading-tight text-neutral-900">
+        Let&apos;s get you set up.
+      </h2>
+      <p className="mt-2 text-center text-sm text-neutral-600">
+        A quick check, then we&apos;ll connect you with Cassie to lock in your
+        time.
+      </p>
 
+      <div className="mt-8 border-t border-neutral-200 pt-6">
         {/* 18+ question */}
-        <p className="mt-6 text-center text-base text-neutral-800">
+        <p className="text-center text-base font-medium text-neutral-800">
           Are you{" "}
-          <span className="font-semibold">18 years of age or older?</span>
+          <span className="font-bold">18 years of age or older?</span>
         </p>
 
         {/* YES / NO buttons */}
@@ -125,7 +94,7 @@ export function CassieEligibilityCard({
             type="button"
             onClick={() => setChoice("yes")}
             className={cn(
-              "inline-flex items-center justify-center gap-2 rounded-md border-2 py-3 text-sm font-semibold uppercase tracking-wider transition",
+              "inline-flex items-center justify-center gap-2 rounded-full border-2 py-3 text-sm font-semibold uppercase tracking-wider transition",
               choice === "yes"
                 ? "border-emerald-600 bg-emerald-600 text-white"
                 : "border-emerald-600 bg-white text-emerald-700 hover:bg-emerald-50",
@@ -138,8 +107,8 @@ export function CassieEligibilityCard({
             type="button"
             onClick={() => setChoice("no")}
             className={cn(
-              "inline-flex items-center justify-center gap-2 rounded-md border-2 py-3 text-sm font-semibold uppercase tracking-wider transition",
-              "border-rose-500 bg-white text-rose-600 hover:bg-rose-50",
+              "inline-flex items-center justify-center gap-2 rounded-full border-2 py-3 text-sm font-semibold uppercase tracking-wider transition",
+              "border-neutral-300 bg-white text-neutral-600 hover:bg-neutral-50",
             )}
           >
             <X className="h-4 w-4" />
@@ -154,7 +123,7 @@ export function CassieEligibilityCard({
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
             className="mt-0.5 h-4 w-4 cursor-pointer rounded border-neutral-400"
-            style={{ accentColor: HICV_GREEN }}
+            style={{ accentColor: HICV_ORANGE }}
           />
           <span>
             I consent to be contacted about this offer via automated call
@@ -162,7 +131,7 @@ export function CassieEligibilityCard({
           </span>
         </label>
 
-        {/* CTA — tel: link triggers native iOS/Android call dialog */}
+        {/* CTA — orange pill matching hicv.com "See Offer Details" */}
         <a
           href={canSubmit ? `tel:${cassieNumber}` : undefined}
           onClick={(e) => {
@@ -170,26 +139,37 @@ export function CassieEligibilityCard({
           }}
           aria-disabled={!canSubmit}
           className={cn(
-            "mt-5 flex w-full items-center justify-center gap-2 rounded-md py-3 text-sm font-semibold uppercase tracking-wider transition",
+            "mt-6 flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm font-bold uppercase tracking-wider shadow-md transition",
             canSubmit
-              ? "text-white hover:opacity-90"
-              : "cursor-not-allowed bg-neutral-200 text-neutral-400",
+              ? "text-white hover:shadow-lg"
+              : "cursor-not-allowed bg-neutral-200 text-neutral-400 shadow-none",
           )}
-          style={canSubmit ? { backgroundColor: HICV_GREEN } : undefined}
+          style={canSubmit ? { backgroundColor: HICV_ORANGE } : undefined}
+          onMouseEnter={(e) => {
+            if (canSubmit) {
+              (e.target as HTMLElement).style.backgroundColor =
+                HICV_ORANGE_HOVER;
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (canSubmit) {
+              (e.target as HTMLElement).style.backgroundColor = HICV_ORANGE;
+            }
+          }}
         >
           Talk to Cassie
           <ArrowRight className="h-4 w-4" />
         </a>
 
         {/* Microcopy — sets expectations before the dial */}
-        <p className="mt-3 text-center text-[11px] leading-snug text-neutral-500">
+        <p className="mt-4 text-center text-[11px] leading-snug text-neutral-500">
           Cassie is an AI booking agent. She&apos;ll qualify you and book your
           ninety-minute resort preview right on the call. The $75 reservation
           deposit goes on your folio and comes off when you arrive.
         </p>
 
-        {/* TCPA / legal disclaimer — same as /demo */}
-        <p className="mt-6 text-[9px] leading-relaxed text-neutral-500">
+        {/* TCPA / legal disclaimer */}
+        <p className="mt-6 border-t border-neutral-100 pt-4 text-[9px] leading-relaxed text-neutral-400">
           THIS ADVERTISING MATERIAL IS BEING USED FOR THE PURPOSE OF
           SOLICITING SALES OF TIMESHARE INTERESTS. NO PURCHASE REQUIRED.
           MUST BE 18 OR OLDER. FOR INDIVIDUAL RESORT GUESTS ONLY. FL DEPT
