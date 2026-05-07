@@ -350,28 +350,6 @@ def build():
         sp(18),
     ]
 
-    # ── 6. THINGS WORTH FLAGGING ──────────────────────────────────────────────
-    story += [
-        divider("Things worth flagging"),
-        sp(10),
-        body("A few items came up on the call that aren't blockers but are "
-             "worth keeping on the radar. Yell if any of these need a real "
-             "conversation before pilot.", s),
-        sp(8),
-        bul("<b>Off-shore voice perception.</b> The military/government demographic "
-            "doesn't always engage with Philippines-accented agents. Crisp is "
-            "doing what it can; accent transformation didn't pencil out.", s),
-        bul("<b>New-hire ramp.</b> 9 of 23 fronters have ~4 days on phones, "
-            "which drags the $19k/agent baseline. Real productive headcount is "
-            "closer to 14.", s),
-        bul("<b>Weekend / nights coverage gap.</b> Best contact hours are "
-            "nights and weekends, but Philippines mirrors the U.S. closer "
-            "schedule. Saturday is volunteer-only.", s),
-        bul("<b>Discovery quality at handoff.</b> Jay said it best -- the more "
-            "the closer knows before they pick up, the more it converts. Cold "
-            "transfers underperform.", s),
-        sp(18),
-    ]
 
     story += [
         sp(4),
