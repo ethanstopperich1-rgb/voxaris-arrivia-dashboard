@@ -1,12 +1,14 @@
-// Eligibility card — three states:
-//   1. greeting + 18-plus question + consent checkbox + CTA
+// HICV-themed eligibility card for Cassie demo — three states:
+//   1. Family Play Pass hero + greeting + 18+ question + consent + CTA
 //   2. ineligible (NO) — graceful close, "have a great vacation"
 //   3. eligible (YES + checked + tapped CTA) — tel: link auto-dials
 //      Cassie on the guest's phone (native iOS/Android call dialog)
 //
-// Byte-for-byte port of DemoEligibilityCard (Deedy's /demo) per Stacey:
-// keep the demo page brand-consistent across agents. Only the prop
-// name + tel: target differ. The on-call agent handles brand framing.
+// Same UX flow as /demo's DemoEligibilityCard (Deedy/Andie). The only
+// brand-specific element is the HICV-green Family Play Pass hero
+// block above the eligibility check — anchors the offer for HICV
+// guests so they know what they're claiming before they read the
+// 18+ question.
 "use client";
 
 import { useState } from "react";
@@ -14,6 +16,11 @@ import { Check, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Choice = null | "yes" | "no";
+
+// HICV brand palette
+const HICV_GREEN = "#00703C";
+const HICV_GREEN_DARK = "#004D29";
+const HICV_ORANGE = "#E64A19";
 
 export function CassieEligibilityCard({
   cassieNumber,
@@ -27,7 +34,10 @@ export function CassieEligibilityCard({
   if (choice === "no") {
     return (
       <div className="flex flex-col items-center px-6 py-10 text-center">
-        <p className="text-lg font-bold uppercase tracking-wide text-[#002D5D]">
+        <p
+          className="text-lg font-bold uppercase tracking-wide"
+          style={{ color: HICV_GREEN_DARK }}
+        >
           Thanks for your interest!
         </p>
         <p className="mt-6 text-base leading-relaxed text-neutral-700">
@@ -38,12 +48,17 @@ export function CassieEligibilityCard({
           to be eligible for this offer.
         </p>
         <p className="mt-4 text-base leading-relaxed text-neutral-700">
-          We hope you enjoy your stay and have a wonderful vacation!
+          We hope you enjoy your stay at Holiday Inn Club Vacations and
+          have a wonderful trip!
         </p>
         <button
           type="button"
           onClick={() => setChoice(null)}
-          className="mt-8 inline-flex items-center justify-center gap-2 rounded-md border-2 border-[#00A0AF] px-6 py-3 text-sm font-semibold uppercase tracking-wider text-[#00A0AF] transition hover:bg-[#00A0AF] hover:text-white"
+          className="mt-8 inline-flex items-center justify-center gap-2 rounded-md border-2 px-6 py-3 text-sm font-semibold uppercase tracking-wider transition hover:text-white"
+          style={{
+            borderColor: HICV_GREEN,
+            color: HICV_GREEN,
+          }}
         >
           <Check className="h-4 w-4" />
           Have a great vacation!
@@ -52,13 +67,38 @@ export function CassieEligibilityCard({
     );
   }
 
-  // DEFAULT STATE — eligibility check + CTA
+  // DEFAULT STATE — Family Play Pass hero + eligibility check + CTA
   const canSubmit = choice === "yes" && consent;
 
   return (
     <div className="flex flex-col px-6 py-8">
+      {/* HICV Family Play Pass hero — anchors the offer */}
+      <div
+        className="rounded-xl px-5 py-4 text-center text-white shadow-md"
+        style={{ backgroundColor: HICV_GREEN }}
+      >
+        <p className="text-[11px] font-semibold uppercase tracking-widest opacity-90">
+          Holiday Inn Club Vacations
+        </p>
+        <p className="mt-1 text-2xl font-extrabold tracking-tight">
+          Family Play Pass
+        </p>
+        <p
+          className="mt-1 text-3xl font-black"
+          style={{ color: HICV_ORANGE }}
+        >
+          $125
+        </p>
+        <p className="text-[11px] font-medium uppercase tracking-wider opacity-90">
+          in resort activity credit · up to 5 people · up to 5 days
+        </p>
+      </div>
+
       {/* Greeting */}
-      <p className="text-center text-lg font-bold uppercase tracking-wide text-[#002D5D]">
+      <p
+        className="mt-6 text-center text-lg font-bold uppercase tracking-wide"
+        style={{ color: HICV_GREEN_DARK }}
+      >
         Thanks for contacting us!
       </p>
       <p className="mt-1 text-center text-sm text-neutral-500">
@@ -113,11 +153,12 @@ export function CassieEligibilityCard({
             type="checkbox"
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
-            className="mt-0.5 h-4 w-4 cursor-pointer rounded border-neutral-400 accent-[#00A0AF]"
+            className="mt-0.5 h-4 w-4 cursor-pointer rounded border-neutral-400"
+            style={{ accentColor: HICV_GREEN }}
           />
           <span>
             I consent to be contacted about this offer via automated call
-            or text.
+            or text. Recorded for quality and assurance purposes.
           </span>
         </label>
 
@@ -131,19 +172,27 @@ export function CassieEligibilityCard({
           className={cn(
             "mt-5 flex w-full items-center justify-center gap-2 rounded-md py-3 text-sm font-semibold uppercase tracking-wider transition",
             canSubmit
-              ? "bg-[#00A0AF] text-white hover:bg-[#008594]"
+              ? "text-white hover:opacity-90"
               : "cursor-not-allowed bg-neutral-200 text-neutral-400",
           )}
+          style={canSubmit ? { backgroundColor: HICV_GREEN } : undefined}
         >
-          Check My Eligibility
+          Talk to Cassie
           <ArrowRight className="h-4 w-4" />
         </a>
 
-        {/* TCPA / legal disclaimer */}
+        {/* Microcopy — sets expectations before the dial */}
+        <p className="mt-3 text-center text-[11px] leading-snug text-neutral-500">
+          Cassie is an AI booking agent. She&apos;ll qualify you and book your
+          ninety-minute resort preview right on the call. The $75 reservation
+          deposit goes on your folio and comes off when you arrive.
+        </p>
+
+        {/* TCPA / legal disclaimer — same as /demo */}
         <p className="mt-6 text-[9px] leading-relaxed text-neutral-500">
           THIS ADVERTISING MATERIAL IS BEING USED FOR THE PURPOSE OF
           SOLICITING SALES OF TIMESHARE INTERESTS. NO PURCHASE REQUIRED.
-          NOT 18 OR OLDER, FOR INDIVIDUALS RESORT GUESTS ONLY. R. DEPT
+          MUST BE 18 OR OLDER. FOR INDIVIDUAL RESORT GUESTS ONLY. FL DEPT
           OF BUSINESS &amp; PROFESSIONAL REGULATION ID 12-15.
         </p>
       </div>
