@@ -28,9 +28,20 @@ export const dynamic = "force-dynamic";
 //     live concurrency).
 //   SCORE_REFRESH_HOURS — re-score a row's priority if its score is
 //     older than this. Keeps rankings honest as the queue ages.
-const POOL_SIZE = 100;
-const BATCH_SIZE = 20;
-const MAX_CONCURRENT_PER_AGENT = 20;
+const POOL_SIZE = 200;
+// BATCH_SIZE = how many we dial PER cron tick (1 minute interval). With
+// concurrency cap at 100 and avg dial duration ~45s, the queue tops up
+// continuously — 50 per tick keeps the pipe full without hammering the
+// LiveKit dispatcher in a single burst.
+const BATCH_SIZE = 50;
+// MAX_CONCURRENT_PER_AGENT = the absolute ceiling on simultaneous calls
+// per agent. Sized for Arrivia's 30,000 dials/day target:
+//   30k dials / 12hr business window = ~42 dials/min
+//   weighted avg dial duration: 0.9 * 30s (VM/no-answer) + 0.1 * 180s (live) = 45s
+//   concurrent slots needed: 42 * 45/60 = ~32
+//   cap of 100 = ~3x headroom; bump higher (up to LiveKit plan ceiling
+//   of 600 on the $500/mo plan) once we have live throughput data
+const MAX_CONCURRENT_PER_AGENT = 100;
 const SCORE_REFRESH_HOURS = 24;
 // Deedy is INBOUND-ONLY (after-hours QR-scan booking agent — guests
 // dial her, she never dials them). Only Andie runs outbound campaigns.

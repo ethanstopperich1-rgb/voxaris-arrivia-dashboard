@@ -4,6 +4,7 @@
 import { redirect } from "next/navigation";
 import { supabaseAdmin } from "@/lib/clients/supabase-admin";
 import { QueueUploader } from "./QueueUploader";
+import { TriggerNowButton } from "./TriggerNowButton";
 import { PageHeader } from "../components/agent/PageHeader";
 import { RealtimeRefresh } from "../components/RealtimeRefresh";
 import {
@@ -146,10 +147,13 @@ export default async function QueuePage({
       <PageHeader
         eyebrow="VOXARIS · ANDIE · DIAL QUEUE"
         title={`${meta.label}'s outbound queue`}
-        subtitle={`Upload a list, the cron auto-dials ${meta.label} in batches of 20 every 30 min, M–F 9am–6pm ET. Concurrency-capped at 20 live calls.`}
+        subtitle={`Upload a list, the cron auto-dials ${meta.label} every minute, M–F 9am–6pm ET. Concurrency-capped at 100 live calls.`}
         agent="andie"
         agentsOnly={["andie"]}
       />
+
+      <TriggerNowButton />
+
 
       <section className="grid gap-4 md:grid-cols-4">
         <StatTile

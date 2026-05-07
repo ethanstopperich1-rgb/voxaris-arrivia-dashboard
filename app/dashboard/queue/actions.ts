@@ -100,3 +100,45 @@ export async function clearAllPending(
   revalidatePath("/dashboard/queue");
   return { ok: true, cleared: count ?? 0 };
 }
+
+/**
+ * Manual trigger for the dial-batch cron — fires the cron endpoint
+ * once with the CRON_SECRET header so we don't have to wait for the
+ * next scheduled tick. Used during testing / launch validation when
+ * you want to load N leads, click "Run now," and watch the queue
+ * drain. Exact same code path as the scheduled run.
+ */
+export async function triggerDialBatchNow(): Promise<{
+  ok: boolean;
+  summary?: unknown;
+  error?: string;
+}> {
+  const cronSecret = process.env.CRON_SECRET ?? "";
+  if (!cronSecret) {
+    return { ok: false, error: "CRON_SECRET not configured on server" };
+  }
+  const baseUrl =
+    process.env.NEXT_PUBLIC_APP_URL ?? "https://arrivia.voxaris.io";
+
+  try {
+    const res = await fetch(`${baseUrl}/api/cron/dial-batch`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${cronSecret}` },
+      cache: "no-store",
+    });
+    const summary = await res.json();
+    if (!res.ok) {
+      return {
+        ok: false,
+        error: `dial-batch returned ${res.status}: ${JSON.stringify(summary).slice(0, 200)}`,
+      };
+    }
+    revalidatePath("/dashboard/queue");
+    return { ok: true, summary };
+  } catch (err) {
+    return {
+      ok: false,
+      error: err instanceof Error ? err.message : String(err),
+    };
+  }
+}
