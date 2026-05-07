@@ -204,241 +204,172 @@ def build():
 
     story.append(PageBreak())  # page 1 = cover via onFirstPage
 
-    # ── 1. NUMBERS YOU GAVE US ─────────────────────────────────────────────────
+    # ── 1. QUICK RECAP ────────────────────────────────────────────────────────
     story += [
-        divider("Numbers you gave us"),
+        divider("Quick recap"),
         sp(10),
+        body("Here's what we caught from the April 30 call -- a snapshot of "
+             "the GVR fronter program as it runs today. Read through, and "
+             "wherever something's off or missing, just tell us. The rest of "
+             "this doc is questions and asks so we can fill in the gaps and "
+             "start building.", s),
+        sp(18),
+    ]
+
+    # ── 2. NUMBERS WE CAUGHT ──────────────────────────────────────────────────
+    story += [
+        divider("Numbers we caught"),
+        sp(10),
+        body("Quick reference -- if any of these read wrong, flag it.", s),
+        sp(8),
         mktable(
             ["Metric", "What you told us"],
             [
                 ("Fronter agents",                "23 total (14 deployed + 9 new hires only ~4 days on phones)"),
                 ("Revenue per fronter / month",   "$19,000"),
-                ("Total fronter revenue / month", "$400-$450k (Chris revised mid-sentence from $450k -> $400k)"),
+                ("Total fronter revenue / month", "$400-$450k"),
                 ("Hot-lead callback revenue",     "$200k/month"),
-                ("Reload (upgrade existing) revenue", "\"Couple hundred thousand/month\""),
+                ("Reload (upgrade) revenue",      "\"Couple hundred thousand/month\""),
                 ("Daily dial volume",             "30,000 dials"),
                 ("Connect rate",                  "~10% (~3,000 connects/day)"),
                 ("Transfers to closer",           "150-200/day (avg ~180; 177 Thu, 181 Fri last week)"),
-                ("Transfer rate (of connects)",   "~6%"),
-                ("Contact cadence",               "3-4x per year, 5-6 attempts per quarter, ~7 campaigns in rotation"),
+                ("Transfer rate of connects",     "~6%"),
+                ("Contact cadence",               "3-4x per year, 5-6 attempts per quarter, ~7 campaigns"),
                 ("Work week",                     "Monday-Friday (Philippines), Saturday volunteer"),
                 ("Best hours",                    "Nights and weekends"),
-                ("Member type",                   "100% free-tier members in this campaign"),
-                ("Inbound lift from outbound",    "~50% of inbound traces back to the outbound footprint (voicemails, hang-ups, missed calls that generated a return)"),
-                ("Inbound callbacks / week (exact)", "TBD -- Russell to confirm actual weekly inbound volume"),
-                ("Lead pool for this pilot",      "Free membership base -- cold/warm propensity, NOT the hot daily enrollments"),
+                ("Member type",                   "100% free-tier in this campaign"),
+                ("Inbound lift from outbound",    "~50% of inbound traces back to the outbound footprint"),
+                ("Lead pool for this pilot",      "Free-membership cold/warm base (NOT hot daily enrollments)"),
             ],
             [2.3 * inch, 4.7 * inch], s),
-        sp(8),
-        note("Hot leads (same-day enrollments, recent bookers) stay with Jay's "
-             "outbound sales reps -- those convert too well to mix into this program.", s),
         sp(18),
     ]
 
-    # ── 2. iOS CALL SCREENING ─────────────────────────────────────────────────
+    # ── 3. iOS CALL SCREENING ─────────────────────────────────────────────────
     story += [
-        divider("iOS call screening -- what you told us"),
+        divider("iOS call screening"),
         sp(10),
-        body("Russell flagged this on the April 30 call as a known and material "
-             "challenge for the outbound program. Recent iOS updates (17 / 18) "
-             "introduced aggressive call-screening behavior that has reduced "
-             "outbound connect rates by approximately 30 percent. Below is what "
-             "Arrivia is currently doing about it -- please verify and add "
-             "anything we missed.", s),
+        body("Russell flagged this as the big challenge -- recent iOS updates "
+             "have cut connect rates by roughly 30 percent. Here's what we heard "
+             "Arrivia is already doing about it. Russell, fill in anything we "
+             "missed.", s),
         sp(8),
-        mktable(
-            ["What you're already doing", "Detail you gave us"],
-            [
-                ("Human Call Interface (HCI) routing",
-                 "Russell -- LiveVox HCI ensures a human clicker confirms each "
-                 "dial, which keeps Arrivia inside legal dialing requirements "
-                 "and weeds out some screened numbers."),
-                ("Local-presence number rotation",
-                 "Russell -- numbers in matching area codes (602, 480, 407, "
-                 "etc.) rotated across the dial pool."),
-                ("Spam-likely scrubbing",
-                 "Russell -- a third-party service scrubs the dial list against "
-                 "spam-likely flags and provides a 3-letter brand acronym "
-                 "(name TBD on the call)."),
-                ("Branded LCID pilot (planned this month)",
-                 "Russell -- ~$1,000/month for a couple of branded LCIDs. "
-                 "Pilot is being scoped now; they want to change one variable "
-                 "at a time so they can measure the lift cleanly."),
-                ("Crisp noise cancellation (in use)",
-                 "Chris/Jay -- Crisp is on the Philippines floor for noise "
-                 "cancellation. Accent transformation was tested without ROI "
-                 "and turned off."),
-            ],
-            [2.0 * inch, 5.0 * inch], s),
-        sp(8),
-        note("Russell -- if any of the above is out of date, or if there's "
-             "another mitigation in flight we missed, flag it. The point of "
-             "logging this here is so the iOS context is part of the official "
-             "intake record, not a hallway conversation.", s),
+        bul("<b>HCI routing through LiveVox.</b> Human clicker confirms each "
+            "dial -- keeps you inside legal dialing requirements.", s),
+        bul("<b>Local-presence rotation.</b> Numbers in matching area codes "
+            "(602, 480, 407, etc.) rotated across the dial pool.", s),
+        bul("<b>Spam-likely scrubbing.</b> Third-party service scrubs against "
+            "spam flags and provides a 3-letter brand acronym (name TBD).", s),
+        bul("<b>Branded LCID pilot.</b> Planned for this month -- ~$1,000/month "
+            "for a couple of LCIDs. One variable at a time so the lift is "
+            "measurable.", s),
+        bul("<b>Crisp noise cancellation.</b> On the Philippines floor for "
+            "noise; accent transformation tested without ROI and turned off.", s),
         sp(18),
     ]
 
-    # ── 3. HOW THE CALL WORKS ─────────────────────────────────────────────────
+    # ── 4. WALK US THROUGH A DAY ──────────────────────────────────────────────
     story += [
-        divider("How the call works"),
+        divider("Walk us through a day"),
         sp(10),
-        body("Based on the call and the fronter transcripts Chris shared, here's how we're "
-             "building Andie's flow:", s),
+        body("We caught the high-level flow on the call. What we're missing is "
+             "the day-to-day texture. If you can answer any of these in a quick "
+             "voice memo or a Slack thread, that's plenty -- doesn't need to be "
+             "formal.", s),
         sp(8),
-    ]
-
-    steps = [
-        ("Recording disclosure", "Within the first 10-15 seconds, every time, no exceptions."),
-        ("Credibility check",    "Andie references the member's name, enrollment date, and email on file. "
-                                 "Simple stuff that proves the call is legitimate and they actually signed up."),
-        ("Light discovery",      "One or two questions about travel plans -- where they're thinking of going, "
-                                 "when, who's coming. Nothing heavy."),
-        ("Warm handoff",         "Andie transfers to a closer with a quick summary of what she learned. "
-                                 "The closer gets that context the moment the call connects."),
-    ]
-
-    step_data = [[Paragraph("<b>%s</b>" % a, s["td"]), Paragraph(b, s["td"])]
-                 for a, b in steps]
-    flow_table = Table(step_data, colWidths=[1.6 * inch, 5.4 * inch])
-    flow_table.setStyle(TableStyle([
-        ("BACKGROUND",    (0, 0), (0, -1), WARM_BG),
-        ("GRID",          (0, 0), (-1, -1), 0.35, TABLE_BORDER),
-        ("VALIGN",        (0, 0), (-1, -1), "TOP"),
-        ("TOPPADDING",    (0, 0), (-1, -1), 7),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 7),
-        ("LEFTPADDING",   (0, 0), (-1, -1), 8),
-        ("RIGHTPADDING",  (0, 0), (-1, -1), 8),
-        ("FONTNAME",      (0, 0), (0, -1), "Helvetica-Bold"),
-    ]))
-    story.append(flow_table)
-    story.append(sp(8))
-    story.append(note("No pricing gets discussed on the fronter call -- same as today. "
-                      "That stays with the closer.", s))
-    story.append(sp(18))
-
-    # ── 4. LEAD DATA WE'D USE ─────────────────────────────────────────────────
-    story += [
-        divider("Lead data -- what we pull from LiveVox"),
-        sp(10),
-        body("These are the fields that actually matter for personalizing the outreach. "
-             "All of this should already be in LiveVox. Russell, flag anything that's "
-             "missing or named differently in your system.", s),
-        sp(8),
-        mktable(
-            ["Field", "How Andie uses it"],
-            [
-                ("First name",               "Personalizes the opener"),
-                ("Enrollment date",          "Credibility -- 'you signed up back in March of 2023'"),
-                ("Email on file",            "Credibility -- confirms the call is legitimate"),
-                ("Lead source / brand",      "GVR vs. other Arrivia brands; campaign routing"),
-                ("Campaign / attempt number","Different tone for a 1st attempt vs. a 5th"),
-                ("Last disposition",         "Avoids repeating whatever didn't work last time"),
-                ("State / area code",        "Local presence number matching"),
-                ("Time zone",               "Makes sure we're not calling outside TCPA windows"),
-                ("TCPA consent flag",        "Hard gate -- no flag, no call"),
-                ("DNC / litigator flag",     "Hard suppression"),
-                ("Booking history",          "If they've actually traveled with GVR, that's a great opener"),
-            ],
-            [2.0 * inch, 5.0 * inch], s),
-        sp(8),
-        note("Per the call -- we're keeping it to what members already gave you at signup. "
-             "No address, no DOB, no payment info, nothing that would make an outbound call "
-             "feel creepy. Just enough to show we know who they are.", s),
+        bul("<b>Lead pool flow.</b> When does the daily list drop into LiveVox? "
+            "Who builds it, who QC's it, and how does it get split across the "
+            "fronter team?", s),
+        bul("<b>Clicker desk.</b> How many HCI clickers are running concurrently? "
+            "What's the click rate per clicker, and how does the dialer hand "
+            "voice passes to a fronter once a human picks up?", s),
+        bul("<b>A typical fronter shift.</b> Walk us through the first hour of a "
+            "fronter's day -- login, queue, first dial, first transfer. What do "
+            "they actually see on screen and click on?", s),
+        bul("<b>Transfer experience.</b> When a fronter warm-transfers, what "
+            "does the closer hear and see? Is there a brief, a screen pop, "
+            "anything in the CRM that shows up?", s),
+        bul("<b>Disposition + write-back.</b> After a call wraps, what gets "
+            "logged automatically vs typed in by the fronter? Where do "
+            "recordings, transcripts, and dispositions live in LiveVox?", s),
+        bul("<b>Performance review cadence.</b> How often does Jay's team review "
+            "fronter calls? What KPIs does each fronter see daily, weekly, "
+            "monthly?", s),
+        bul("<b>Compliance routine.</b> Who reviews recordings for disclosure "
+            "compliance? What happens when something gets flagged?", s),
         sp(18),
     ]
 
-    # ── 5. WRITE-BACK ──────────────────────────────────────────────────────────
+    # ── 5. MATERIALS WE'D LOVE TO GET ─────────────────────────────────────────
     story += [
-        divider("What Andie sends back after every call"),
+        divider("Materials we'd love to get"),
         sp(10),
-        body("After each call wraps, we push a record back into LiveVox "
-             "so the disposition, transcript, and discovery notes are all in the same "
-             "place your team already works.", s),
+        body("These are the things that let us start building Andie on real GVR "
+             "data instead of guessing. Whatever you can grab is great -- doesn't "
+             "have to be all at once.", s),
         sp(8),
         mktable(
-            ["Field", "What it contains"],
+            ["What", "Who'd grab it", "Quick context"],
             [
-                ("Outcome",                "transferred / declined / voicemail / no-answer / callback-requested / wrong-number"),
-                ("Transfer success",       "did the warm handoff actually connect"),
-                ("Closer transferred to",  "name or extension"),
-                ("What member confirmed",  "name, email match, travel intent"),
-                ("Objections raised",      "structured list for Jay's team to review"),
-                ("Call duration",          "fronter leg only"),
-                ("Recording disclosure",   "boolean -- compliance audit trail"),
-                ("Transcript link",        "full text of the conversation"),
-                ("Recording link",         "audio"),
-                ("Callback requested",     "boolean + requested time if applicable"),
-            ],
-            [2.2 * inch, 4.8 * inch], s),
-        sp(18),
-    ]
-
-    # ── 6. PROBLEMS THEY FLAGGED ──────────────────────────────────────────────
-    story += [
-        divider("Problems they flagged on the call"),
-        sp(10),
-        body("Things Chris, Jay, and Russell raised as active pain or open "
-             "questions. Captured here so they don't get lost between now and the SOW.", s),
-        sp(8),
-        mktable(
-            ["Problem", "What they said"],
-            [
-                ("Off-shore voice perception",
-                 "Chris/Jay -- military/government demographic doesn't always engage with "
-                 "Philippines-accented agents. Crisp noise cancellation in use; accent "
-                 "transformation tested without ROI."),
-                ("New-hire ramp",
-                 "Jay -- 9 of 23 fronters have only ~4 days on phones. The $19k/agent "
-                 "baseline is dragged down by the unramped tail."),
-                ("Weekend / nights coverage gap",
-                 "Chris/Jay -- best contact hours are nights and weekends. Philippines "
-                 "team works M-F to mirror the U.S. closers; Saturday is volunteer-only."),
-                ("Discovery quality at handoff",
-                 "Jay -- best transfers carry detail. The more the closer knows up front, "
-                 "the more it converts. Cold transfers underperform."),
-            ],
-            [1.7 * inch, 5.3 * inch], s),
-        sp(18),
-    ]
-
-    # ── 7. WHAT WE NEED FROM YOU ──────────────────────────────────────────────
-    story += [
-        divider("What we need from you"),
-        sp(10),
-        body("Short list, no drama. Just the things we can't build without:", s),
-        sp(8),
-        mktable(
-            ["What", "Who", "Why we need it"],
-            [
-                ("1,000 successful fronter transcripts",
+                ("Successful fronter call recordings or transcripts",
                  "Jay",
-                 "We model Andie's flow on your best fronters. Jay mentioned he can pull these."),
-                ("1,000 unsuccessful transcripts",
+                 "Aim for ~1,000 if possible. We model Andie's tone and flow "
+                 "directly on your best fronters. You mentioned you can pull these."),
+                ("Unsuccessful / declined / wrong-person recordings",
                  "Jay",
-                 "Equally useful -- knowing what didn't work is half the job."),
-                ("LiveVox API access or test environment",
-                 "Russell",
-                 "List in, dispositions out. Sandbox first so we don't touch production."),
+                 "~1,000 if possible. Knowing what didn't work is half the job."),
+                ("Current best-in-class fronter script",
+                 "Jay",
+                 "Whatever the team uses today, including the Balto-era version "
+                 "if it's still around."),
                 ("Approved recording disclosure language",
                  "Arrivia legal",
-                 "We're already disclosing in the first 10s -- just need the exact approved wording."),
-                ("Closer transfer endpoint",
-                 "Jay",
-                 "SIP, PSTN, or LiveVox internal -- wherever you want Andie to bridge the call."),
+                 "The exact verbatim wording -- we'll bake it into the opener."),
+                ("Forbidden phrases or claims list",
+                 "Jay + legal",
+                 "Anything Andie should never say. Pricing, comparisons, competitor "
+                 "names, MLA-flagged language, etc."),
+                ("LiveVox sandbox or sample export",
+                 "Russell",
+                 "Sandbox is ideal so we don't touch production. If that's a "
+                 "lift, a sample CSV with the field names works as a starting point."),
                 ("Lead field mapping from LiveVox",
                  "Russell",
-                 "The column names in your LiveVox export so we map them correctly."),
-                ("Voice selection",
+                 "Just the column names in your export -- we'll match them on our "
+                 "side."),
+                ("Closer transfer endpoint",
+                 "Jay",
+                 "SIP, PSTN, or LiveVox internal -- wherever you want Andie to "
+                 "bridge the call."),
+                ("Voice picked from the test line",
                  "Jay + team",
-                 "Call the test line, pick a voice, and let us know."),
-                ("Forbidden phrases / claims",
-                 "Jay + legal",
-                 "Anything you don't want Andie saying. Pricing, comparisons, competitor names, etc."),
+                 "Whenever you've got a few minutes, call the test number, "
+                 "listen, tell us which voice feels right."),
             ],
             [2.3 * inch, 1.0 * inch, 3.7 * inch], s),
+        sp(18),
+    ]
+
+    # ── 6. THINGS WORTH FLAGGING ──────────────────────────────────────────────
+    story += [
+        divider("Things worth flagging"),
+        sp(10),
+        body("A few items came up on the call that aren't blockers but are "
+             "worth keeping on the radar. Yell if any of these need a real "
+             "conversation before pilot.", s),
         sp(8),
-        note("That's it. Everything else we figure out as we go. The goal is to have Andie "
-             "running on a sandbox call list within two weeks of the SOW signing.", s),
+        bul("<b>Off-shore voice perception.</b> The military/government demographic "
+            "doesn't always engage with Philippines-accented agents. Crisp is "
+            "doing what it can; accent transformation didn't pencil out.", s),
+        bul("<b>New-hire ramp.</b> 9 of 23 fronters have ~4 days on phones, "
+            "which drags the $19k/agent baseline. Real productive headcount is "
+            "closer to 14.", s),
+        bul("<b>Weekend / nights coverage gap.</b> Best contact hours are "
+            "nights and weekends, but Philippines mirrors the U.S. closer "
+            "schedule. Saturday is volunteer-only.", s),
+        bul("<b>Discovery quality at handoff.</b> Jay said it best -- the more "
+            "the closer knows before they pick up, the more it converts. Cold "
+            "transfers underperform.", s),
         sp(18),
     ]
 
