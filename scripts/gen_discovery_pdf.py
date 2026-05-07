@@ -204,38 +204,10 @@ def build():
 
     story.append(PageBreak())  # page 1 = cover via onFirstPage
 
-    # ── 1. PURPOSE ─────────────────────────────────────────────────────────────
-    story += [
-        divider("Purpose of this document"),
-        sp(10),
-        body("This is what we heard on the April 30 discovery call -- numbers, "
-             "flow, lead data, problems, all in your words. <b>The whole point "
-             "of this document is verification.</b> Read each section and tell "
-             "us where we got something wrong, where a number is off, or where "
-             "we missed context. The sign-off block on the last page is how we "
-             "lock it in before the SOW gets drafted.", s),
-        sp(8),
-        body("Three things to keep in mind:", s),
-        sp(2),
-        bul("Numbers in this doc are <b>your numbers</b>, repeated back. If a "
-            "value looks wrong, that's the fix we need to capture before May 15.", s),
-        bul("The pilot scope is GVR's free-membership cold/warm pool. Hot leads "
-            "(same-day enrollments, recent bookers) stay with Jay's outbound "
-            "sales reps.", s),
-        bul("Nothing in this doc is a Voxaris commitment -- those live in the "
-            "SOW. This is intake.", s),
-        sp(18),
-    ]
-
-    # ── 2. NUMBERS YOU GAVE US ─────────────────────────────────────────────────
+    # ── 1. NUMBERS YOU GAVE US ─────────────────────────────────────────────────
     story += [
         divider("Numbers you gave us"),
         sp(10),
-        body("Each row below is a number Chris, Jay, or Russell stated on the "
-             "April 30 call. <b>Please verify each value</b> -- if anything is "
-             "wrong, off, or missing context, mark the row in the sign-off block "
-             "on the last page.", s),
-        sp(8),
         mktable(
             ["Metric", "What you told us"],
             [
