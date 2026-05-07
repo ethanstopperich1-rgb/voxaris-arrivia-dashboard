@@ -1,30 +1,27 @@
 // /cassie-demo — public landing page guests hit when they scan the
-// Cassie demo QR code (Holiday Inn Club Vacations × Arrivia VBA).
-// Mirrors /demo (Andie/Deedy) shell with the same Arrivia palette but
-// adds an HICV accent for the Family Play Pass offer card.
+// Cassie demo QR code. Mirrors /demo (Andie/Deedy) byte-for-byte —
+// same Arrivia palette, same eligibility flow, same TCPA disclaimer.
+// Only difference: tel: link points at Cassie's number (+14072586840),
+// not Deedy's. Per Stacey: keep the demo page brand-consistent across
+// agents. The on-call agent (Cassie) handles HICV-specific framing.
 //
 // Eligible (yes)  → tel:CASSIE_NUMBER triggers the native call dialog
-//                   on the guest's phone, dialing Cassie at HICV.
+//                   on the guest's phone, dialing Cassie.
 // Ineligible (no) → graceful "have a great vacation" close.
-//
-// Cassie's canonical OPC v2.0 script handles the call from there:
-// AI + recording disclosure, Family Play Pass hook, on-property gate,
-// 4 soft-qual questions, 8 hard-qual checks, three-slot assumptive
-// close, $75 folio deposit, SMS confirmation.
 
 import { CassieEligibilityCard } from "./CassieEligibilityCard";
 import Image from "next/image";
 
 export const dynamic = "force-static";
 
-// Cassie's public inbound LK Phone Number for HICV.
-// Hard-coded — printed QR codes can't be updated dynamically.
+// Cassie's public inbound LK Phone Number. Hard-coded — printed QR
+// codes can't be updated dynamically.
 const CASSIE_NUMBER = "+14072586840";
 
 export const metadata = {
-  title: "Holiday Inn Club Vacations · Family Play Pass",
+  title: "Arrivia · Eligibility Check",
   description:
-    "Check your eligibility for the Family Play Pass — $125 in resort activity credit when you take a quick ninety-minute look at the property.",
+    "Check your eligibility for the resort preview offer with Arrivia.",
 };
 
 export default function CassieDemoPage() {
@@ -51,7 +48,7 @@ export default function CassieDemoPage() {
 
       {/* Footer */}
       <footer className="flex items-center justify-between px-6 pb-6 text-[11px] text-white/70">
-        <span>AI-Powered · Always On · Holiday Inn Club Vacations × Arrivia</span>
+        <span>AI-Powered · Always On</span>
         <a
           href="https://arrivia.com"
           className="hover:text-white"

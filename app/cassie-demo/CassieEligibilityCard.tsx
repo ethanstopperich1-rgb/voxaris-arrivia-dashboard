@@ -1,12 +1,12 @@
-// Cassie / HICV eligibility card — three states:
-//   1. greeting + Family Play Pass hook + 18+ question + consent + CTA
+// Eligibility card — three states:
+//   1. greeting + 18-plus question + consent checkbox + CTA
 //   2. ineligible (NO) — graceful close, "have a great vacation"
 //   3. eligible (YES + checked + tapped CTA) — tel: link auto-dials
-//      Cassie at +1 407 258 6840 (native iOS/Android call dialog)
+//      Cassie on the guest's phone (native iOS/Android call dialog)
 //
-// Mirrors /demo/DemoEligibilityCard.tsx (Deedy/Andie) but with HICV
-// brand accent (green) on the Family Play Pass card and updated copy
-// pointing to the canonical OPC v2.0 flow Cassie runs on the call.
+// Byte-for-byte port of DemoEligibilityCard (Deedy's /demo) per Stacey:
+// keep the demo page brand-consistent across agents. Only the prop
+// name + tel: target differ. The on-call agent handles brand framing.
 "use client";
 
 import { useState } from "react";
@@ -14,10 +14,6 @@ import { Check, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type Choice = null | "yes" | "no";
-
-// HICV brand greens — used for the Play Pass hero block accent.
-const HICV_GREEN = "#00703C";
-const HICV_ORANGE = "#E64A19";
 
 export function CassieEligibilityCard({
   cassieNumber,
@@ -42,8 +38,7 @@ export function CassieEligibilityCard({
           to be eligible for this offer.
         </p>
         <p className="mt-4 text-base leading-relaxed text-neutral-700">
-          We hope you enjoy your stay at Holiday Inn Club Vacations and have
-          a wonderful trip!
+          We hope you enjoy your stay and have a wonderful vacation!
         </p>
         <button
           type="button"
@@ -57,39 +52,17 @@ export function CassieEligibilityCard({
     );
   }
 
-  // DEFAULT STATE — Family Play Pass hook + eligibility + CTA
+  // DEFAULT STATE — eligibility check + CTA
   const canSubmit = choice === "yes" && consent;
 
   return (
     <div className="flex flex-col px-6 py-8">
-      {/* HICV-accent Play Pass hero — visually anchors the offer */}
-      <div
-        className="rounded-xl px-5 py-4 text-center text-white shadow-md"
-        style={{ backgroundColor: HICV_GREEN }}
-      >
-        <p className="text-[11px] font-semibold uppercase tracking-widest opacity-90">
-          Holiday Inn Club Vacations
-        </p>
-        <p className="mt-1 text-2xl font-extrabold tracking-tight">
-          Family Play Pass
-        </p>
-        <p
-          className="mt-1 text-3xl font-black"
-          style={{ color: HICV_ORANGE }}
-        >
-          $125
-        </p>
-        <p className="text-[11px] font-medium uppercase tracking-wider opacity-90">
-          in resort activity credit · up to 5 people · up to 5 days
-        </p>
-      </div>
-
       {/* Greeting */}
-      <p className="mt-6 text-center text-base font-bold uppercase tracking-wide text-[#002D5D]">
-        Claim your Family Play Pass
+      <p className="text-center text-lg font-bold uppercase tracking-wide text-[#002D5D]">
+        Thanks for contacting us!
       </p>
       <p className="mt-1 text-center text-sm text-neutral-500">
-        A quick eligibility check, then we&apos;ll connect you with Cassie.
+        Let&apos;s get started.
       </p>
 
       <div className="mt-6 border-t border-neutral-200 pt-6">
@@ -144,7 +117,7 @@ export function CassieEligibilityCard({
           />
           <span>
             I consent to be contacted about this offer via automated call
-            or text. Recorded for quality and assurance purposes.
+            or text.
           </span>
         </label>
 
@@ -158,27 +131,19 @@ export function CassieEligibilityCard({
           className={cn(
             "mt-5 flex w-full items-center justify-center gap-2 rounded-md py-3 text-sm font-semibold uppercase tracking-wider transition",
             canSubmit
-              ? "text-white hover:opacity-90"
+              ? "bg-[#00A0AF] text-white hover:bg-[#008594]"
               : "cursor-not-allowed bg-neutral-200 text-neutral-400",
           )}
-          style={canSubmit ? { backgroundColor: HICV_GREEN } : undefined}
         >
-          Talk to Cassie
+          Check My Eligibility
           <ArrowRight className="h-4 w-4" />
         </a>
 
-        {/* Talking-points microcopy — sets expectations before the dial */}
-        <p className="mt-3 text-center text-[11px] leading-snug text-neutral-500">
-          Cassie is an AI booking agent. She&apos;ll qualify you and book your
-          ninety-minute resort preview right on the call. The $75 reservation
-          deposit goes on your folio and comes off when you arrive.
-        </p>
-
-        {/* TCPA / legal disclaimer — same as /demo */}
+        {/* TCPA / legal disclaimer */}
         <p className="mt-6 text-[9px] leading-relaxed text-neutral-500">
           THIS ADVERTISING MATERIAL IS BEING USED FOR THE PURPOSE OF
           SOLICITING SALES OF TIMESHARE INTERESTS. NO PURCHASE REQUIRED.
-          MUST BE 18 OR OLDER. FOR INDIVIDUAL RESORT GUESTS ONLY. FL DEPT
+          NOT 18 OR OLDER, FOR INDIVIDUALS RESORT GUESTS ONLY. R. DEPT
           OF BUSINESS &amp; PROFESSIONAL REGULATION ID 12-15.
         </p>
       </div>
