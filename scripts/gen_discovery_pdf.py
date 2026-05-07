@@ -235,6 +235,49 @@ def build():
         sp(18),
     ]
 
+    # ── 2. iOS CALL SCREENING ─────────────────────────────────────────────────
+    story += [
+        divider("iOS call screening -- what you told us"),
+        sp(10),
+        body("Russell flagged this on the April 30 call as a known and material "
+             "challenge for the outbound program. Recent iOS updates (17 / 18) "
+             "introduced aggressive call-screening behavior that has reduced "
+             "outbound connect rates by approximately 30 percent. Below is what "
+             "Arrivia is currently doing about it -- please verify and add "
+             "anything we missed.", s),
+        sp(8),
+        mktable(
+            ["What you're already doing", "Detail you gave us"],
+            [
+                ("Human Call Interface (HCI) routing",
+                 "Russell -- LiveVox HCI ensures a human clicker confirms each "
+                 "dial, which keeps Arrivia inside legal dialing requirements "
+                 "and weeds out some screened numbers."),
+                ("Local-presence number rotation",
+                 "Russell -- numbers in matching area codes (602, 480, 407, "
+                 "etc.) rotated across the dial pool."),
+                ("Spam-likely scrubbing",
+                 "Russell -- a third-party service scrubs the dial list against "
+                 "spam-likely flags and provides a 3-letter brand acronym "
+                 "(name TBD on the call)."),
+                ("Branded LCID pilot (planned this month)",
+                 "Russell -- ~$1,000/month for a couple of branded LCIDs. "
+                 "Pilot is being scoped now; they want to change one variable "
+                 "at a time so they can measure the lift cleanly."),
+                ("Crisp noise cancellation (in use)",
+                 "Chris/Jay -- Crisp is on the Philippines floor for noise "
+                 "cancellation. Accent transformation was tested without ROI "
+                 "and turned off."),
+            ],
+            [2.0 * inch, 5.0 * inch], s),
+        sp(8),
+        note("Russell -- if any of the above is out of date, or if there's "
+             "another mitigation in flight we missed, flag it. The point of "
+             "logging this here is so the iOS context is part of the official "
+             "intake record, not a hallway conversation.", s),
+        sp(18),
+    ]
+
     # ── 3. HOW THE CALL WORKS ─────────────────────────────────────────────────
     story += [
         divider("How the call works"),
@@ -340,13 +383,6 @@ def build():
         mktable(
             ["Problem", "What they said"],
             [
-                ("iOS call screening",
-                 "Russell -- connect rates have dropped meaningfully on iOS 17/18. "
-                 "Currently mitigating with HCI (Human Call Interface) routing through "
-                 "LiveVox; evaluating branded LCIDs at ~$1k/month."),
-                ("Number reputation",
-                 "Russell -- rotating local-presence numbers (602, 480, 407, etc.) plus "
-                 "spam-likely scrubbing. Branded ID pilot planned for this month."),
                 ("Off-shore voice perception",
                  "Chris/Jay -- military/government demographic doesn't always engage with "
                  "Philippines-accented agents. Crisp noise cancellation in use; accent "
@@ -404,30 +440,6 @@ def build():
         note("That's it. Everything else we figure out as we go. The goal is to have Andie "
              "running on a sandbox call list within two weeks of the SOW signing.", s),
         sp(18),
-    ]
-
-    # ── 8. VERIFICATION SIGN-OFF ──────────────────────────────────────────────
-    story += [
-        divider("Verification sign-off"),
-        sp(10),
-        body("This is the asks of this whole document. Two boxes per stakeholder. "
-             "Tick one. If a row above is wrong, write the correction in the "
-             "Notes column and we'll update the doc and re-circulate.", s),
-        sp(10),
-        mktable(
-            ["Stakeholder", "Confirmed as written", "Needs correction (notes)"],
-            [
-                ("Chris Cole, SVP Sales",        "[  ]  signed: ____________  date: ______",  ""),
-                ("Jay Bankhead, VP Memberships", "[  ]  signed: ____________  date: ______",  ""),
-                ("Russell Reese, Dir. Rev Ops",  "[  ]  signed: ____________  date: ______",  ""),
-                ("Stacey Sutherland, Voxaris",   "[  ]  signed: ____________  date: ______",  ""),
-            ],
-            [1.7 * inch, 2.7 * inch, 2.6 * inch], s),
-        sp(10),
-        note("Verification deadline: <b>May 15, 2026</b> -- to keep the May 20 SOW "
-             "presentation date on track. Email Stacey or Ethan with corrections, "
-             "or mark this doc directly and send back.", s),
-        sp(20),
     ]
 
     story += [
