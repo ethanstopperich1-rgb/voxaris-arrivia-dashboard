@@ -81,6 +81,17 @@ async function dispatchOne(
     direction: "outbound",
     phone_number: row.phone_number,
     queue_id: row.id,
+    // Enable Twilio AMD on this outbound call. The Andie worker
+    // (apps/andie/voxaris_andie/worker.py) reads `amd_result` from
+    // dispatch metadata to decide whether to play the live opener
+    // or the voicemail script. The actual AMD configuration happens
+    // in the worker's SIP participant creation — this flag tells
+    // the worker to attach `play_dialtone=false` and `wait_until_answered=true`
+    // with AMD timeouts. If the worker hasn't been wired for AMD yet,
+    // amd_result stays absent and Andie defaults to live opener
+    // (safe fallback — speaking the opener at a live human is always
+    // correct).
+    amd_enabled: row.agent_name === "andie-gvr",
     ...(row.member_name
       ? { caller_name: row.member_name, member_name: row.member_name }
       : {}),
