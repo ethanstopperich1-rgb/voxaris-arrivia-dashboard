@@ -204,90 +204,62 @@ def build():
 
     story.append(PageBreak())  # page 1 = cover via onFirstPage
 
-    # ── 1. WHAT WE HEARD ──────────────────────────────────────────────────────
+    # ── 1. PURPOSE ─────────────────────────────────────────────────────────────
     story += [
-        divider("What we heard"),
+        divider("Purpose of this document"),
         sp(10),
-        body("Arrivia operates a fronter program for Government Vacation Rewards "
-             "(GVR) out of the Philippines: agents call the cold and warm "
-             "propensity base, run light discovery, and warm-transfer to a "
-             "U.S.-based closer. The fronter role is intentionally narrow -- "
-             "no pricing, no heavy qualification, no selling. Just confirm the "
-             "member is real, get a read on their travel intent, and hand them "
-             "off with context.", s),
-        sp(6),
-        body("The pilot scope is GVR's free-membership cold/warm pool. Hot leads "
-             "(same-day enrollments, recent bookers) stay with Jay's outbound "
-             "sales reps -- they convert too well to mix in. If GVR works, the "
-             "next brands on the list are iCruise, Smarter Getaways, and others.", s),
+        body("This is what we heard on the April 30 discovery call -- numbers, "
+             "flow, lead data, problems, all in your words. <b>The whole point "
+             "of this document is verification.</b> Read each section and tell "
+             "us where we got something wrong, where a number is off, or where "
+             "we missed context. The sign-off block on the last page is how we "
+             "lock it in before the SOW gets drafted.", s),
+        sp(8),
+        body("Three things to keep in mind:", s),
+        sp(2),
+        bul("Numbers in this doc are <b>your numbers</b>, repeated back. If a "
+            "value looks wrong, that's the fix we need to capture before May 15.", s),
+        bul("The pilot scope is GVR's free-membership cold/warm pool. Hot leads "
+            "(same-day enrollments, recent bookers) stay with Jay's outbound "
+            "sales reps.", s),
+        bul("Nothing in this doc is a Voxaris commitment -- those live in the "
+            "SOW. This is intake.", s),
         sp(18),
     ]
 
-    # ── 2. THE NUMBERS THAT CAME OUT OF THEIR MOUTHS ──────────────────────────
+    # ── 2. NUMBERS YOU GAVE US ─────────────────────────────────────────────────
     story += [
-        divider("The numbers that came out of their mouths"),
+        divider("Numbers you gave us"),
         sp(10),
-        body("Pulled directly from the April 30 discovery call. The "
-             "<b>Implication</b> column is our read on what each number actually "
-             "means -- flag anything we got wrong.", s),
+        body("Each row below is a number Chris, Jay, or Russell stated on the "
+             "April 30 call. <b>Please verify each value</b> -- if anything is "
+             "wrong, off, or missing context, mark the row in the sign-off block "
+             "on the last page.", s),
         sp(8),
         mktable(
-            ["Metric", "Value", "Implication"],
+            ["Metric", "What you told us"],
             [
-                ("Fronter agents",
-                 "23 total (14 deployed + 9 new hires only ~4 days on phones)",
-                 "True productive headcount is ~14, not 23. Their '23' math inflates baseline."),
-                ("Revenue per fronter / month",
-                 "$19,000",
-                 "Their declared baseline. <b>This is the number Voxaris is being measured against.</b>"),
-                ("Total fronter revenue / month",
-                 "\"$400-$450k\" (Chris revised himself DOWN mid-sentence)",
-                 "Revenue is volatile or declining. The $50k self-correction is a tell."),
-                ("Hot-lead callback revenue",
-                 "$200k/month",
-                 "Adjacent stream -- not part of pilot but adjacent upside."),
-                ("Reload (upgrade existing) revenue",
-                 "\"Couple hundred thousand/month\"",
-                 "Phase 2 expansion target."),
-                ("Daily dial volume",
-                 "30,000 dials",
-                 "Massive outbound throughput."),
-                ("Connect rate",
-                 "~10%",
-                 "= 3,000 live connects/day across 23 agents = ~130 connects per agent per day."),
-                ("Transfers to closer",
-                 "150-200/day (avg ~180)",
-                 "= ~8 transfers per agent per day."),
-                ("Transfer rate (of connects)",
-                 "~6%",
-                 "This is the real top-of-funnel conversion."),
-                ("Contact cadence",
-                 "3-4x per year, <b>5-6 attempts per quarter</b>",
-                 "Heavy re-dial pattern."),
-                ("Work week",
-                 "M-F only (Philippines), Saturday volunteer",
-                 "<b>Weekend coverage = unclaimed Andie territory.</b>"),
-                ("Best hours",
-                 "Nights + weekends",
-                 "Off-shore can't fully cover this -- Andie's natural advantage."),
-                ("Member type",
-                 "<b>100% free-tier</b> members in this campaign",
-                 "All upsell, no acquisition."),
-                ("Inbound lift from outbound",
-                 "50% of all inbound traces back to the outbound footprint -- voicemails, hang-ups, missed calls that generated a return",
-                 "Example: 10,000 weekly inbound calls = ~5,000 originated from outbound."),
+                ("Fronter agents",                "23 total (14 deployed + 9 new hires only ~4 days on phones)"),
+                ("Revenue per fronter / month",   "$19,000"),
+                ("Total fronter revenue / month", "$400-$450k (Chris revised mid-sentence from $450k -> $400k)"),
+                ("Hot-lead callback revenue",     "$200k/month"),
+                ("Reload (upgrade existing) revenue", "\"Couple hundred thousand/month\""),
+                ("Daily dial volume",             "30,000 dials"),
+                ("Connect rate",                  "~10% (~3,000 connects/day)"),
+                ("Transfers to closer",           "150-200/day (avg ~180; 177 Thu, 181 Fri last week)"),
+                ("Transfer rate (of connects)",   "~6%"),
+                ("Contact cadence",               "3-4x per year, 5-6 attempts per quarter, ~7 campaigns in rotation"),
+                ("Work week",                     "Monday-Friday (Philippines), Saturday volunteer"),
+                ("Best hours",                    "Nights and weekends"),
+                ("Member type",                   "100% free-tier members in this campaign"),
+                ("Inbound lift from outbound",    "~50% of inbound traces back to the outbound footprint (voicemails, hang-ups, missed calls that generated a return)"),
+                ("Inbound callbacks / week (exact)", "TBD -- Russell to confirm actual weekly inbound volume"),
+                ("Lead pool for this pilot",      "Free membership base -- cold/warm propensity, NOT the hot daily enrollments"),
             ],
-            [1.5 * inch, 2.6 * inch, 2.9 * inch], s),
-        sp(10),
-        body("<b>Implied funnel math (annualized, using their numbers):</b>", s),
-        sp(4),
-        bul("30,000 dials/day x 250 work days = 7.5M dials/year", s),
-        bul("750k connects/year -> 45k transfers/year x at 14% closer rate (from the "
-            "transcripts we read) = ~6,300 closes/year x $1,999 = <b>$12.6M/year revenue</b>", s),
+            [2.3 * inch, 4.7 * inch], s),
         sp(8),
-        note("The hot leads (same-day enrollments, recent bookers) stay with Jay's "
-             "outbound sales reps -- those convert too well to mix into this program. "
-             "We're focused on the large cold/warm free-tier base.", s),
+        note("Hot leads (same-day enrollments, recent bookers) stay with Jay's "
+             "outbound sales reps -- those convert too well to mix into this program.", s),
         sp(18),
     ]
 
@@ -462,12 +434,36 @@ def build():
         sp(18),
     ]
 
+    # ── 8. VERIFICATION SIGN-OFF ──────────────────────────────────────────────
+    story += [
+        divider("Verification sign-off"),
+        sp(10),
+        body("This is the asks of this whole document. Two boxes per stakeholder. "
+             "Tick one. If a row above is wrong, write the correction in the "
+             "Notes column and we'll update the doc and re-circulate.", s),
+        sp(10),
+        mktable(
+            ["Stakeholder", "Confirmed as written", "Needs correction (notes)"],
+            [
+                ("Chris Cole, SVP Sales",        "[  ]  signed: ____________  date: ______",  ""),
+                ("Jay Bankhead, VP Memberships", "[  ]  signed: ____________  date: ______",  ""),
+                ("Russell Reese, Dir. Rev Ops",  "[  ]  signed: ____________  date: ______",  ""),
+                ("Stacey Sutherland, Voxaris",   "[  ]  signed: ____________  date: ______",  ""),
+            ],
+            [1.7 * inch, 2.7 * inch, 2.6 * inch], s),
+        sp(10),
+        note("Verification deadline: <b>May 15, 2026</b> -- to keep the May 20 SOW "
+             "presentation date on track. Email Stacey or Ethan with corrections, "
+             "or mark this doc directly and send back.", s),
+        sp(20),
+    ]
+
     story += [
         sp(4),
         hrule(),
         body("-- Ethan Stopperich, Voxaris", s),
         body("ethan@voxaris.io  |  voxaris.io", s),
-        body("May 5, 2026", s),
+        body("May 6, 2026", s),
     ]
 
     out = os.path.abspath(OUTPUT)
