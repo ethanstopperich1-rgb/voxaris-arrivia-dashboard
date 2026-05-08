@@ -38,9 +38,7 @@
     "ops:freeze": "tsx scripts/ops/freeze-demo-version.ts",
     "ops:rollback": "tsx scripts/ops/rollback-release.ts",
     "ops:export": "tsx scripts/ops/export-release.ts",
-    "ops:kill": "tsx scripts/ops/kill-switch.ts",
-    "rvm:batch": "tsx scripts/rvm/run-batch.ts",
-    "rvm:provision-numbers": "tsx scripts/rvm/provision-numbers.ts"
+    "ops:kill": "tsx scripts/ops/kill-switch.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.65.0",

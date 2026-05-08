@@ -377,22 +377,6 @@
       "risk_class": "low",
       "source": "Module-N-closer-2026",
       "last_verified": "2026-04-20"
-    },
-    {
-      "id": "FACT-RVM-CREDITS-DISPLAY-001",
-      "pillar": "savings_credits",
-      "scope": "rvm",
-      "category": "rvm_script_variable",
-      "canonical": "travel savings credits",
-      "display_value": "travel savings credits",
-      "allowed_phrases": ["travel savings credits", "savings credits", "credits in your account"],
-      "forbidden_phrases": ["cash", "gift card", "$500", "five hundred dollars", "points", "any specific dollar amount"],
-      "numeric_values": [],
-      "transfer_only": false,
-      "risk_class": "medium",
-      "notes": "The RVM script uses {savings_credits_display} resolved from this fact. Never hardcode a dollar amount in the script template — the offer value is set by Arrivia campaign config, not this file. If Arrivia authorizes a specific dollar figure for a campaign, it goes in rvm_campaigns.offer_display, not here.",
-      "source": "rvm-cowboy-spec-2026-05-05",
-      "last_verified": "2026-05-05"
     }
   ]
 }

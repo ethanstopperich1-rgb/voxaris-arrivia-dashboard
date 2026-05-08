@@ -60,8 +60,7 @@ function twiml(xml: string): Response {
 
 /**
  * Validate the Twilio webhook signature in production. Skipped in
- * dev/test so the sandbox dialer works locally. Same pattern as
- * /api/rvm/callback.
+ * dev/test so the sandbox dialer works locally.
  */
 function validateTwilioSignature(req: Request, rawBody: string): boolean {
   const e = env();
