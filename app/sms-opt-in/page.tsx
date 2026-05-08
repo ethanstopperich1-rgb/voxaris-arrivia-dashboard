@@ -49,9 +49,8 @@ export default function SmsOptInPage() {
           property.
         </li>
         <li>
-          Deedy then explicitly asks: <em>&ldquo;Is it okay if I text you the
-          appointment details?&rdquo;</em> An SMS is only sent if the consumer
-          answers affirmatively.
+          Deedy then reads the verbal consent disclosure below and only sends
+          an SMS if the consumer answers <strong>&ldquo;yes&rdquo;</strong>.
         </li>
         <li>
           The verbal consent, the consumer&apos;s phone number, and a
@@ -59,6 +58,47 @@ export default function SmsOptInPage() {
           recording, which is retained per our privacy policy.
         </li>
       </ol>
+
+      <h2 className="mt-10 mb-3 text-xl font-semibold text-white">
+        Verbal consent script
+      </h2>
+      <p className="mb-3 text-neutral-300">
+        The exact script Deedy reads on the call before any text is sent:
+      </p>
+      <blockquote className="mb-4 rounded-md border-l-4 border-cyan-500/60 bg-neutral-900/60 p-5 text-neutral-200">
+        <p className="mb-3">
+          <strong>Deedy:</strong> &ldquo;As part of confirming your
+          appointment with Westgate Lakes, we can send you an automated text
+          message with the date, time, and location. You&apos;ll receive
+          about one to three messages per appointment &mdash; a confirmation,
+          an optional reschedule if you ask to move it, and a reminder before
+          the visit.&rdquo;
+        </p>
+        <p className="mb-3">
+          &ldquo;Message and data rates may apply, depending on your mobile
+          phone service plan. You can reply HELP at any time for support, or
+          STOP to opt out completely. Our SMS terms are at
+          arrivia.voxaris.io/sms-terms and our privacy policy is at
+          arrivia.voxaris.io/sms-privacy.&rdquo;
+        </p>
+        <p className="mb-3">
+          &ldquo;Would you like me to text you the appointment details
+          &mdash; yes or no?&rdquo;
+        </p>
+        <p className="mb-3">
+          <strong>Customer:</strong> &ldquo;Yes please.&rdquo;
+        </p>
+        <p>
+          <strong>Deedy:</strong> &ldquo;Great &mdash; I&apos;ll send the
+          confirmation now.&rdquo;
+        </p>
+      </blockquote>
+      <p className="mb-6 text-sm text-neutral-400">
+        If the consumer answers &ldquo;no,&rdquo; declines, or does not give
+        an affirmative answer, no SMS is sent and the refusal is logged. The
+        consumer can later opt in by calling back and re-consenting on a
+        future recorded call.
+      </p>
 
       <h2 className="mt-10 mb-3 text-xl font-semibold text-white">
         What we send
