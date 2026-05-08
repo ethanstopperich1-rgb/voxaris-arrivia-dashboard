@@ -8,12 +8,9 @@
     { "path": "/api/cron/dial-batch", "schedule": "* 13-22 * * 1-5" }
   ],
   "functions": {
-    "app/api/retell/custom-llm/route.ts": { "maxDuration": 60 },
-    "app/api/retell/events/route.ts": { "maxDuration": 30 },
-    "app/api/retell/analyze/route.ts": { "maxDuration": 60 },
-    "app/api/tools/lookup-fact/route.ts": { "maxDuration": 5 },
-    "app/api/tools/create-transfer-context/route.ts": { "maxDuration": 10 },
-    "app/api/tools/warm-transfer/route.ts": { "maxDuration": 10 },
-    "app/api/tools/log-demo-event/route.ts": { "maxDuration": 5 }
+    "app/api/cron/dial-batch/route.ts": { "maxDuration": 60 },
+    "app/api/outbound/livekit-call/route.ts": { "maxDuration": 30 },
+    "app/api/webhooks/livekit/route.ts": { "maxDuration": 10 },
+    "app/api/twilio/callback-forward/route.ts": { "maxDuration": 10 }
   }
 }

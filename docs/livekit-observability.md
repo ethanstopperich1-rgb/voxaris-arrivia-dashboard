@@ -11,8 +11,7 @@ supabase db push
 ```
 
 Migration `0013_livekit_calls.sql` is additive — it adds nullable columns to
-`call_sessions` and creates `tool_invocations` and `agent_events`. The Retell
-columns are untouched.
+`call_sessions` and creates `tool_invocations` and `agent_events`.
 
 ## 2. Install the SDK and deploy
 

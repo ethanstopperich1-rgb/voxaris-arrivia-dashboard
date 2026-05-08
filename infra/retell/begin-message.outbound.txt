@@ -1,1 +1,0 @@
-Hi {{member_name}}, this is Andie calling from Government Vacation Rewards. I'm an AI assistant and this call may be recorded. I'm reaching out because you have {{incentive_amount}} of unused travel credits in your account, and I'd love to walk you through what they're for. Got a quick minute?

@@ -1,8 +1,8 @@
 {
-  "name": "gvr-retell-voice-agent",
+  "name": "gvr-livekit-voice-agent",
   "version": "1.0.0-demo",
   "private": true,
-  "description": "Voxaris zero-hallucination Retell voice agent for Arrivia / Government Vacation Rewards (GVR)",
+  "description": "Voxaris LiveKit voice agent (Andie outbound + Deedy inbound) for Arrivia / Government Vacation Rewards (GVR)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -13,15 +13,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "ws": "tsx ws-server/index.ts",
-    "ws:dev": "tsx watch ws-server/index.ts",
     "check:env": "tsx scripts/setup/check-env.ts",
-    "sync:prompts": "tsx scripts/setup/sync-prompts.ts",
-    "sync:from-retell": "tsx scripts/setup/sync-from-retell.ts",
-    "dial:outbound": "tsx scripts/ops/dial-outbound.ts",
-    "create:retell-agent": "tsx scripts/setup/create-retell-agent.ts",
-    "import:twilio-number": "tsx scripts/setup/import-twilio-number.ts",
-    "sync:retell-config": "tsx scripts/setup/sync-retell-config.ts",
     "seed:facts": "tsx scripts/seed/seed-facts.ts",
     "seed:cards": "tsx scripts/seed/seed-answer-cards.ts",
     "ingest:kb": "tsx scripts/seed/ingest-kb.ts",
@@ -31,14 +23,7 @@
     "eval:rag": "tsx scripts/eval/run-rag-eval.ts",
     "eval:validator": "tsx scripts/eval/run-validator-eval.ts",
     "eval:verifier": "tsx scripts/eval/run-verifier-eval.ts",
-    "eval:all": "tsx scripts/eval/run-all-evals.ts",
-    "dial:latency": "tsx scripts/telephony/latency-dialer.ts",
-    "dial:transfer": "tsx scripts/telephony/transfer-reliability.ts",
-    "ops:prewarm": "tsx scripts/ops/prewarm-agent.ts",
-    "ops:freeze": "tsx scripts/ops/freeze-demo-version.ts",
-    "ops:rollback": "tsx scripts/ops/rollback-release.ts",
-    "ops:export": "tsx scripts/ops/export-release.ts",
-    "ops:kill": "tsx scripts/ops/kill-switch.ts"
+    "eval:all": "tsx scripts/eval/run-all-evals.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.65.0",

@@ -8,7 +8,7 @@ export function supabaseAdmin(): SupabaseClient {
   const e = env();
   _client = createClient(e.NEXT_PUBLIC_SUPABASE_URL, e.SUPABASE_SERVICE_ROLE_KEY, {
     auth: { persistSession: false, autoRefreshToken: false },
-    global: { headers: { "X-Client-Info": "gvr-retell-voice-agent" } },
+    global: { headers: { "X-Client-Info": "gvr-livekit-voice-agent" } },
   });
   return _client;
 }

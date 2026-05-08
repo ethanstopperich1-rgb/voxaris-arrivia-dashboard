@@ -1,9 +1,0 @@
-{
-  "interaction_type": "response_required",
-  "response_id": 1,
-  "transcript": [
-    { "role": "agent", "content": "Thanks for calling Government Vacation Rewards. This call may be recorded for quality. I can help explain how travel savings dollars work and connect you with a GVR specialist. What would you like to know?" },
-    { "role": "user", "content": "What are travel savings dollars?" }
-  ],
-  "call": { "call_id": "call_test_001" }
-}
